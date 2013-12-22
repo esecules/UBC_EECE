@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+/home/eric/git/2013-L1A7/mp3/.metadata/.plugins/org.eclipse.jdt.core
