@@ -1,0 +1,22 @@
+
+<!!genre name!!>ROOT<!!end genre name!!>[
+<!!sub genre!!>
+<!!genre name!!>Jazz<!!end genre name!!>[
+<!!sub genre!!>
+<!!genre name!!>Blues<!!end genre name!!>[
+<!!album!!><!!album name!!>Black Ice<!!end album name!!><!!performer!!>AC / DC<!!end performer!!><!!songlist!!>[<!!song!!>Back in Black<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Piano Stuff<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Boulevard of Broken Dreams<!!end song!!><!!SongSplitPoint!!>]<!!end songlist!!><!!end album!!>]
+<!!end sub genre!!>, 
+<!!sub genre!!>
+<!!genre name!!>Funk<!!end genre name!!>[
+<!!album!!><!!album name!!>American Idiot<!!end album name!!><!!performer!!>Green Day<!!end performer!!><!!songlist!!>[<!!song!!>Back in Black<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Piano Stuff<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Boulevard of Broken Dreams<!!end song!!><!!SongSplitPoint!!>]<!!end songlist!!><!!end album!!>]
+<!!end sub genre!!>]
+<!!end sub genre!!>, 
+<!!sub genre!!>
+<!!genre name!!>Classical<!!end genre name!!>[
+<!!album!!><!!album name!!>Chopin Collections<!!end album name!!><!!performer!!>Evgeny Kissin<!!end performer!!><!!songlist!!>[<!!song!!>Back in Black<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Piano Stuff<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Boulevard of Broken Dreams<!!end song!!><!!SongSplitPoint!!>]<!!end songlist!!><!!end album!!>]
+<!!end sub genre!!>, 
+<!!sub genre!!>
+<!!genre name!!>Blues<!!end genre name!!>[
+<!!album!!><!!album name!!>Black Ice<!!end album name!!><!!performer!!>AC / DC<!!end performer!!><!!songlist!!>[<!!song!!>Back in Black<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Piano Stuff<!!end song!!><!!SongSplitPoint!!>, <!!song!!>Boulevard of Broken Dreams<!!end song!!><!!SongSplitPoint!!>]<!!end songlist!!><!!end album!!>]
+<!!end sub genre!!>]
+<!!END!!>

@@ -1,0 +1,17 @@
+import static org.junit.Assert.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class MP0CTest extends MP0C{
+	@Test
+	public void test() {
+		int expect =25;
+    	assertEquals(findPrimesMoreQuickly(100,false),expect);
+
+	}
+
+}
