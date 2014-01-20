@@ -1,0 +1,147 @@
+dseg at 30h
+x:    ds 2
+y:    ds 2
+bcd:  ds 3
+
+
+bseg
+mf:   dbit 1
+
+CSEG
+
+ljmp init
+
+
+$include(Read_and_Disp.asm)
+$include(math16.asm) 
+;----------------------------------------
+;	Checks the switches and buttons
+;	corresponding to the operation
+;	and branches to the appropriate 
+;	operation. The order of precedence
+;	is Mult > Div > Add > Sub
+;	then clears the X any Y registers
+; 	when the calculation is complete though
+; 	the answer remains in the BCD reg for 
+;	display.
+;----------------------------------------
+Calculate: 
+	;Switch registers are not bit addresable
+	mov a, SWC  
+	anl a,  #00000010B ;SW 17 Set
+	jnz Multiply
+	mov a, SWC
+	anl a, #00000001B ;SW 16 Set
+	jnz Divide 
+	;Key register is bit addressable
+	jnb KEY.3 , Addition
+	jnb KEY.2 , Subtraction
+	ret
+
+Multiply:
+	;mov HEX7 , #0C0h ;0 DEBUGGING
+	lcall GetY
+	lcall mul16
+	lcall hex2bcd ;Copy answer to the BCD reg
+	lcall Display_BCD
+	lcall CLR_XY
+	ret
+Divide:
+	;mov HEX7 , #0f9h    ;1 DEBUGGING
+	lcall GetY
+	lcall div16
+	lcall hex2bcd ;Copy answer to the BCD reg
+	lcall Display_BCD
+	lcall CLR_XY
+	ret
+Addition:
+	;mov HEX7 , #0a4h  ;2 DEBUGGING
+	lcall GetY
+	lcall add16
+	lcall hex2bcd  ;Copy answer to the BCD reg
+	lcall Display_BCD
+	lcall CLR_XY
+	ret
+Subtraction:
+	;mov HEX7 , #0b0h ;3 DEBUGGING
+	lcall GetY
+	lcall sub16
+	lcall hex2bcd  ;Copy answer to the BCD reg
+	lcall Display_BCD
+	lcall CLR_XY
+	ret
+CLR_XY:
+	Load_x(0)
+	Load_y(0)
+	ret
+;----------------------------------------
+;	Gets the Y operand and waits for
+;	the equals button to be pressed 
+;	to return.
+;----------------------------------------
+GetY:
+	lcall bcd2hex  	;Move BCD number on display to X
+	lcall xchg_xy	;EXCHANGE numbers in X and Y
+	lcall hex2bcd	;Move number now in X (old Y) to BCD Display
+	lcall Display_BCD
+	clr c
+	Read_Y:
+		lcall ReadNumber
+		jnb KEY.1 ,Break  
+		jnc Read_Y
+		lcall Shift_Digits
+		lcall Display_HEX
+		ljmp Read_Y
+	Break:
+	lcall bcd2hex  ;MOVE number on the display to X
+	lcall xchg_xy  ;EXCHANGE X and Y so that the first number entered is X and the second is Y
+	ret				
+
+;----------------------------------------
+;	Initializes the DE2 by clearing
+;	the registers for x, y, and bcd
+;	and displaying my student number
+;	for 2 seconds
+;----------------------------------------	
+init:
+	mov SP, #7FH
+	clr a
+	mov LEDRA, a
+	mov LEDRB, a
+	mov LEDRC, a
+	mov LEDG, a
+	mov HEX7, #19H     ;4
+	mov HEX6, #19H     ;4
+	mov HEX5, #12H	   ;5
+	mov HEX4, #0H      ;8
+	mov HEX3, #79H     ;1
+	mov HEX2, #79H     ;1
+	mov HEX1, #24H     ;2
+	mov HEX0, #24H     ;2
+	lcall Wait2Sec
+	mov HEX7, #7FH   ;blank 
+	mov HEX6, #7FH     
+	mov HEX5, #7FH	   
+	mov bcd+0, a
+	mov bcd+1, a
+	mov bcd+2, a
+	Load_X(0)
+	Load_y(0)
+	lcall Display_BCD
+
+;----------------------------------------
+;	loops through reading from the
+;	switches to take the input for
+;	the X operand and doing operations
+;	on X and Y
+;----------------------------------------	
+forever:
+	;mov HEX7 , #7fh  ; DEBUGGING
+	lcall ReadNumber
+	lcall Calculate
+	jnc forever
+	lcall Shift_Digits
+	lcall Display_HEX
+	ljmp forever
+	
+end

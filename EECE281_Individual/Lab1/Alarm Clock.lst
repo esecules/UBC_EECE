@@ -1,0 +1,2742 @@
+                 -1   $modde2
+0000              1   ;  MODDDE2: Register definition for DE2-8052 softcore
+0000              2   ;
+0000              3   ;   Copyright (C) 2011  Jesus Calvino-Fraga, jesusc at ece.ubc.ca
+0000              4   ;
+0000              5   ;   This library is free software; you can redistribute it and/or
+0000              6   ;   modify it under the terms of the GNU Lesser General Public
+0000              7   ;   License as published by the Free Software Foundation; either
+0000              8   ;   version 2.1 of the License, or (at your option) any later version.
+0000              9   ;
+0000             10   ;   This library is distributed in the hope that it will be useful,
+0000             11   ;   but WITHOUT ANY WARRANTY; without even the implied warranty of
+0000             12   ;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+0000             13   ;   Lesser General Public License for more details.
+0000             14   ;
+0000             15   ;   You should have received a copy of the GNU Lesser General Public
+0000             16   ;   License along with this library; if not, write to the Free Software
+0000             17   ;   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+0000             18   ;
+0000             19       
+0000             20   P0     DATA  080H  ;PORT 0
+0000             21   SP     DATA  081H  ;STACK POINTER
+0000             22   DPL    DATA  082H  ;DATA POINTER - LOW BYTE
+0000             23   DPH    DATA  083H  ;DATA POINTER - HIGH BYTE
+0000             24   PCON   DATA  087H  ;POWER CONTROL
+0000             25   TCON   DATA  088H  ;TIMER CONTROL
+0000             26   TMOD   DATA  089H  ;TIMER MODE
+0000             27   TL0    DATA  08AH  ;TIMER 0 - LOW BYTE
+0000             28   TL1    DATA  08BH  ;TIMER 1 - LOW BYTE
+0000             29   TH0    DATA  08CH  ;TIMER 0 - HIGH BYTE
+0000             30   TH1    DATA  08DH  ;TIMER 1 - HIGH BYTE
+0000             31   P1     DATA  090H  ;PORT 1
+0000             32   SCON   DATA  098H  ;SERIAL PORT CONTROL
+0000             33   SBUF   DATA  099H  ;SERIAL PORT BUFFER
+0000             34   P2     DATA  0A0H  ;PORT 2
+0000             35   IE     DATA  0A8H  ;INTERRUPT ENABLE
+0000             36   P3     DATA  0B0H  ;PORT 3
+0000             37   IP     DATA  0B8H  ;INTERRUPT PRIORITY
+0000             38   T2CON  DATA  0C8H  ;TIMER 2 CONTROL
+0000             39   T2MOD  DATA  0C9H  ;TIMER 2 MODE
+0000             40   RCAP2L DATA  0CAH  ;TIMER 2 CAPTURE REGISTER - LOW BYTE
+0000             41   RCAP2H DATA  0CBH  ;TIMER 2 CAPTURE REGISTER - HIGH BYTE
+0000             42   TL2    DATA  0CCH  ;TIMER 2 - LOW BYTE
+0000             43   TH2    DATA  0CDH  ;TIMER 2 - HIGH BYTE
+0000             44   PSW    DATA  0D0H  ;PROGRAM STATUS WORD
+0000             45   ACC    DATA  0E0H  ;ACCUMULATOR
+0000             46   B      DATA  0F0H  ;MULTIPLICATION REGISTER
+0000             47   IT0    BIT   088H  ;TCON.0 - EXT. INTERRUPT 0 TYPE
+0000             48   IE0    BIT   089H  ;TCON.1 - EXT. INTERRUPT 0 EDGE FLAG
+0000             49   IT1    BIT   08AH  ;TCON.2 - EXT. INTERRUPT 1 TYPE
+0000             50   IE1    BIT   08BH  ;TCON.3 - EXT. INTERRUPT 1 EDGE FLAG
+0000             51   TR0    BIT   08CH  ;TCON.4 - TIMER 0 ON/OFF CONTROL
+0000             52   TF0    BIT   08DH  ;TCON.5 - TIMER 0 OVERFLOW FLAG
+0000             53   TR1    BIT   08EH  ;TCON.6 - TIMER 1 ON/OFF CONTROL
+0000             54   TF1    BIT   08FH  ;TCON.7 - TIMER 1 OVERFLOW FLAG
+0000             55   RI     BIT   098H  ;SCON.0 - RECEIVE INTERRUPT FLAG
+0000             56   TI     BIT   099H  ;SCON.1 - TRANSMIT INTERRUPT FLAG
+0000             57   RB8    BIT   09AH  ;SCON.2 - RECEIVE BIT 8
+0000             58   TB8    BIT   09BH  ;SCON.3 - TRANSMIT BIT 8
+0000             59   REN    BIT   09CH  ;SCON.4 - RECEIVE ENABLE
+0000             60   SM2    BIT   09DH  ;SCON.5 - SERIAL MODE CONTROL BIT 2
+0000             61   SM1    BIT   09EH  ;SCON.6 - SERIAL MODE CONTROL BIT 1
+0000             62   SM0    BIT   09FH  ;SCON.7 - SERIAL MODE CONTROL BIT 0
+0000             63   EX0    BIT   0A8H  ;IE.0 - EXTERNAL INTERRUPT 0 ENABLE
+0000             64   ET0    BIT   0A9H  ;IE.1 - TIMER 0 INTERRUPT ENABLE
+0000             65   EX1    BIT   0AAH  ;IE.2 - EXTERNAL INTERRUPT 1 ENABLE
+0000             66   ET1    BIT   0ABH  ;IE.3 - TIMER 1 INTERRUPT ENABLE
+0000             67   ES     BIT   0ACH  ;IE.4 - SERIAL PORT INTERRUPT ENABLE
+0000             68   ET2    BIT   0ADH  ;IE.5 - TIMER 2 INTERRUPT ENABLE
+0000             69   EA     BIT   0AFH  ;IE.7 - GLOBAL INTERRUPT ENABLE
+0000             70   RXD    BIT   0B0H  ;P3.0 - SERIAL PORT RECEIVE INPUT
+0000             71   TXD    BIT   0B1H  ;P3.1 - SERIAL PORT TRANSMIT OUTPUT
+0000             72   INT0   BIT   0B2H  ;P3.2 - EXTERNAL INTERRUPT 0 INPUT
+0000             73   INT1   BIT   0B3H  ;P3.3 - EXTERNAL INTERRUPT 1 INPUT
+0000             74   T0     BIT   0B4H  ;P3.4 - TIMER 0 COUNT INPUT
+0000             75   T1     BIT   0B5H  ;P3.5 - TIMER 1 COUNT INPUT
+0000             76   WR     BIT   0B6H  ;P3.6 - WRITE CONTROL FOR EXT. MEMORY
+0000             77   RD     BIT   0B7H  ;P3.7 - READ CONTROL FOR EXT. MEMORY
+0000             78   PX0    BIT   0B8H  ;IP.0 - EXTERNAL INTERRUPT 0 PRIORITY
+0000             79   PT0    BIT   0B9H  ;IP.1 - TIMER 0 PRIORITY
+0000             80   PX1    BIT   0BAH  ;IP.2 - EXTERNAL INTERRUPT 1 PRIORITY
+0000             81   PT1    BIT   0BBH  ;IP.3 - TIMER 1 PRIORITY
+0000             82   PS     BIT   0BCH  ;IP.4 - SERIAL PORT PRIORITY
+0000             83   PT2    BIT   0BDH  ;IP.5 - TIMER 2 PRIORITY
+0000             84   CAP2   BIT   0C8H  ;T2CON.0 - CAPTURE OR RELOAD SELECT
+0000             85   CNT2   BIT   0C9H  ;T2CON.1 - TIMER OR COUNTER SELECT
+0000             86   TR2    BIT   0CAH  ;T2CON.2 - TIMER 2 ON/OFF CONTROL
+0000             87   EXEN2  BIT   0CBH  ;T2CON.3 - TIMER 2 EXTERNAL ENABLE FLAG
+0000             88   TCLK   BIT   0CCH  ;T2CON.4 - TRANSMIT CLOCK SELECT
+0000             89   RCLK   BIT   0CDH  ;T2CON.5 - RECEIVE CLOCK SELECTT
+0000             90   EXF2   BIT   0CEH  ;T2CON.6 - EXTERNAL TRANSITION FLAG
+0000             91   TF2    BIT   0CFH  ;T2CON.7 - TIMER 2 OVERFLOW FLAG
+0000             92   P      BIT   0D0H  ;PSW.0 - ACCUMULATOR PARITY FLAG
+0000             93   OV     BIT   0D2H  ;PSW.2 - OVERFLOW FLAG
+0000             94   RS0    BIT   0D3H  ;PSW.3 - REGISTER BANK SELECT 0
+0000             95   RS1    BIT   0D4H  ;PSW.4 - REGISTER BANK SELECT 1
+0000             96   F0     BIT   0D5H  ;PSW.5 - FLAG 0
+0000             97   AC     BIT   0D6H  ;PSW.6 - AUXILIARY CARRY FLAG
+0000             98   CY     BIT   0D7H  ;PSW.7 - CARRY FLAG
+0000             99   
+0000            100   ; For the altera DE2 configured with an 8051/8052 softcore processor
+0000            101   ; we have the following extra registers:
+0000            102   
+0000            103   HEX0   DATA  091H ; Zero turns the segment on
+0000            104   HEX1   DATA  092H ; 
+0000            105   HEX2   DATA  093H ; 
+0000            106   HEX3   DATA  094H ; 
+0000            107   HEX4   DATA  08EH ;
+0000            108   HEX5   DATA  08FH ;
+0000            109   HEX6   DATA  096H ;
+0000            110   HEX7   DATA  097H ;
+0000            111   
+0000            112   P0MOD  DATA  09AH ; Input/output mode bits for port 0.  '1' sets the port to output mode.
+0000            113   P1MOD  DATA  09BH ; Input/output mode bits for port 1
+0000            114   P2MOD  DATA  09CH ; Input/output mode bits for port 2
+0000            115   P3MOD  DATA  09DH ; Input/output mode bits for port 3
+0000            116   
+0000            117   LEDRA  DATA  0E8H ; LEDs LEDR0 to LEDR7 (bit addressable, ex: LEDRA.1 for LEDR1)
+0000            118   LEDRB  DATA  095H ; LEDs LEDR8 to LEDR15
+0000            119   LEDRC  DATA  09EH ; LEDs LEDR16, LEDR15, and LEDG8
+0000            120   LEDG   DATA  0F8H ; LEDs LEDG0 to LEDG7 (bit addressable, ex: LEDG.3 for LEDG3)
+0000            121   SWA    DATA  0E8H ; Switches SW0 to SW7 (bit addressable, ex: SWA.1 for SW1)
+0000            122   SWB    DATA  095H ; Switches SW8 to SW15
+0000            123   SWC    DATA  09EH ; Switches SW16 and SW17
+0000            124   KEY    DATA  0F8H ; KEY1=KEY.1, KEY2=KEY.2, KEY3=KEY.3.  KEY0 is the reset button! 
+0000            125   
+0000            126   LCD_CMD   DATA 0D8H ;
+0000            127   LCD_DATA  DATA 0D9H ;
+0000            128   LCD_MOD   DATA 0DAH ; Write 0xff to make LCD_DATA an output
+0000            129   LCD_RW    BIT  0D8H ; '0' writes to LCD
+0000            130   LCD_EN    BIT  0D9H ; Toggle from '1' to '0'
+0000            131   LCD_RS    BIT  0DAH ; '0' for commands, '1' for data
+0000            132   LCD_ON    BIT  0DBH ; Write '1' to power the LCD
+0000            133   LCD_BLON  BIT  0DCH ; Write '1' to turn on back light
+0000            134   
+0000            135   FLASH_CMD  data 0DBH ; The control bits of the flash memory:
+0000            136   ; bit 0: FL_RST_N  Set to 1 for normal operation
+0000            137   ; bit 1: FL_WE_N
+0000            138   ; bit 2: FL_OE_N
+0000            139   ; bit 3: FL_CE_N
+0000            140   FLASH_DATA data 0DCH ; 8-bit data bus of flash memory.
+0000            141   FLASH_MOD  data 0DDH ; 0xff makes FLASH_DATA output.  0x00 makes FLASH_DATA input.
+0000            142   FLASH_ADD0 data 0E1H ; address bits 0 to 7.
+0000            143   FLASH_ADD1 data 0E2H ; address bits 8 to 15.
+0000            144   FLASH_ADD2 data 0E3H ; address bits 16 to 21.
+0000            145   
+0030              2   DSEG at 30H
+0030              3   sec:         ds 1
+0031              4   min:        ds 1
+0032              5   hour:            ds 1
+0033              6   alrm_sec:        ds 1
+0034              7   alrm_min:   ds 1
+0035              8   alrm_hour:       ds 1
+0036              9   count10ms:       ds 1
+0037             10   noteLen:    ds 1
+0038             11   timer0Reload: ds 2
+003A             12   timer1Reload: ds 2
+003C             13   alrm_AM:  ds 1
+003D             14   AM:        ds 1
+003E             15   startNote:       ds 2
+0040             16   endNote:         ds 2
+0027             17   BSEG at 27H
+0027             18   legato:    dbit 1
+0028             19   buzzer:    dbit 1
+0029             20   set_alrm: dbit 1
+002A             21   
+0000             22   CSEG
+0000             23   org 0H
+0000 0213E3      24   ljmp init_intermediate
+0003             25   
+0003             26   org 03H
+0003 32          27   reti
+0004             28   
+000B             29   org 0BH
+000B 0213E6      30   ljmp Timer0_ISR_intermediate
+000E             31   
+0013             32   org 13H
+0013 32          33   reti
+0014             34   
+001B             35   org 1bh
+001B 0213E9      36   ljmp Timer1_ISR_intermediate
+001E             37   
+0023             38   org 23h
+0023 32          39   reti
+0024             40   
+002B             41   org 2bh
+002B 0213EC      42   ljmp Timer2_ISR_intermediate
+002E             43   
+002E             44   XTAL           EQU 33333333
+002E             45   FREQ_2              EQU 100 
+002E             46   TIMER2_RELOAD  EQU 65536-(XTAL/(12*FREQ_2))
+002E             47   
+                 -1   	$include (Music.asm)
+002E              1   ; This file contains all the song data and the infastructure to play them
+002E              2   rest EQU 65500
+002E              3   Note_F0  EQU     1913
+002E              4   FS0      EQU     5462
+002E              5   G0       EQU     8846
+002E              6   GS0      EQU     12034
+002E              7   A0       EQU     15030
+002E              8   AS0      EQU     17873
+002E              9   B0       EQU     20544
+002E             10   C1       EQU     23062
+002E             11   CS1      EQU     25452
+002E             12   D1       EQU     27701
+002E             13   DS1      EQU     29822
+002E             14   E1       EQU     31825
+002E             15   F1       EQU     33717
+002E             16   FS1      EQU     35505
+002E             17   G1       EQU     37191
+002E             18   GS1      EQU     38780
+002E             19   A1       EQU     40283
+002E             20   AS1      EQU     41700
+002E             21   B1       EQU     43040
+002E             22   C2       EQU     44302
+002E             23   CS2      EQU     45494
+002E             24   D2       EQU     46618
+002E             25   DS2      EQU     47679
+002E             26   E2       EQU     48682
+002E             27   F2       EQU     49628
+002E             28   FS2      EQU     50520
+002E             29   G2       EQU     51363
+002E             30   GS2      EQU     52159
+002E             31   A2       EQU     52909
+002E             32   AS2      EQU     53618
+002E             33   B2       EQU     54287
+002E             34   C3       EQU     54918
+002E             35   CS3      EQU     55514
+002E             36   D3       EQU     56076
+002E             37   DS3      EQU     56607
+002E             38   E3       EQU     57108
+002E             39   F3       EQU     57581
+002E             40   FS3      EQU     58028
+002E             41   G3       EQU     58449
+002E             42   GS3      EQU     58847
+002E             43   A3       EQU     59222
+002E             44   AS3      EQU     59577
+002E             45   B3       EQU     59911
+002E             46   C4       EQU     60227
+002E             47   CS4      EQU     60525
+002E             48   D4       EQU     60806
+002E             49   DS4      EQU     61071
+002E             50   E4       EQU     61322
+002E             51   F4       EQU     61558
+002E             52   FS4      EQU     61782
+002E             53   G4       EQU     61992
+002E             54   GS4      EQU     62191
+002E             55   A4       EQU     62379
+002E             56   AS4      EQU     62556
+002E             57   B4       EQU     62723
+002E             58   C5       EQU     62881
+002E             59   CS5      EQU     63030
+002E             60   D5       EQU     63171
+002E             61   DS5      EQU     63303
+002E             62   E5       EQU     63429
+002E             63   F5       EQU     63547
+002E             64   FS5      EQU     63659
+002E             65   G5       EQU     63764
+002E             66   GS5      EQU     63863
+002E             67   A5       EQU     63957
+002E             68   AS5      EQU     64046
+002E             69   B5       EQU     64129
+002E             70   C6       EQU     64208
+002E             71   CS6      EQU     64283
+002E             72   D6       EQU     64353
+002E             73   DS6      EQU     64419
+002E             74   E6       EQU     64482
+002E             75   F6       EQU     64541
+002E             76   FS6      EQU     64597
+002E             77   G6       EQU     64650
+002E             78   GS6      EQU     64699
+002E             79   A6       EQU     64746
+002E             80   AS6      EQU     64791
+002E             81   B6       EQU     64832
+002E             82   C7       EQU     64872
+002E             83   CS7      EQU     64909
+002E             84   D7       EQU     64944
+002E             85   DS7      EQU     64977
+002E             86   E7       EQU     65009
+002E             87   F7       EQU     65038
+002E             88   FS7      EQU     65066
+002E             89   G7       EQU     65093
+002E             90   GS7      EQU     65117
+002E             91   A7       EQU     65141
+002E             92   AS7      EQU     65163
+002E             93   B7       EQU     65184
+002E             94   C8       EQU     65204
+002E             95   CS8      EQU     65222
+002E             96   D8       EQU     65240
+002E             97   DS8      EQU     65256
+002E             98   ;noteLengths
+002E             99   grace    EQU 1
+002E            100   sixteenth        EQU 4
+002E            101   eighth   EQU 8
+002E            102   dot_eighth       EQU 12
+002E            103   quarter  EQU 16
+002E            104   dot_quarter      EQU 24
+002E            105   half     EQU 32
+002E            106   whole    EQU 64
+002E            107   ;Tempos
+002E            108   Fast     EQU 15
+002E            109   Medium   EQU 24
+002E            110   Slow     EQU 30
+002E            111             
+002E            112   
+                113   playNote mac	
+                114   	mov timer0Reload, #low(%0)
+                115   	mov timer0reload+1, #high(%0)
+                116   	mov noteLen, #(%1)
+                117   	setb ET0
+                118   	lcall wait
+                119   	clr ET0
+                120   	lcall wait1
+                121   endmac
+002E            122    
+                123   poly mac
+                124   	mov timer0Reload, #low(%0)
+                125   	mov timer0reload+1, #high(%0)
+                126   	mov timer1Reload, #low(%1)
+                127   	mov timer1reload+1, #high(%1)
+                128   	mov noteLen, #(%2)
+                129   	setb ET0
+                130   	setb ET1
+                131   	lcall wait
+                132   	clr ET0
+                133   	clr ET1
+                134   	lcall wait1
+                135   endmac
+002E            136   ;the first operand must be strictly greater than the second
+                137   mod_down mac
+                138   	mov startNote, #low(%0)
+                139   	mov startNote+1, #high(%0)
+                140   	mov endNote, #low(%1)
+                141   	mov endNote+1, #high(%1)
+                142   	setb legato
+                143   	mov r3, #1
+                144   	lcall mod_down_loop
+                145   endmac
+002E            146   mod_down_loop:
+002E 75383E     147            mov timer0Reload, #low(startNote)
+0031 753900     147            mov timer0reload+1, #high(startNote)
+0034 753701     147            mov noteLen, #(grace)
+0037 D2A9       147            setb ET0
+0039 120057     147            lcall wait
+003C C2A9       147            clr ET0
+003E 12005E     147            lcall wait1
+0041 C3         148            clr c
+0042 E53E       149            mov a, startNote
+0044 9401       150            subb a, #1
+0046 F53E       151            mov startNote, a
+0048 E53F       152            mov a, startNote+1
+004A 9400       153            subb a, #0
+004C F53F       154            mov startNote+1, a
+004E B541DD     155            cjne a, endNote+1, mod_down_loop
+0051 E53E       156            mov a, startNote
+0053 B540D8     157            cjne a, endNote, mod_down_loop
+0056 22         158            ret
+0057            159   wait:
+0057 120065     160            lcall graceNote
+005A D537FA     161            djnz noteLen, wait
+005D 22         162            ret     
+005E            163            
+005E            164   wait1:
+005E 202703     165            jb legato, legato_lable
+0061 120065     166            lcall graceNote
+0064            167            legato_lable:
+0064 22         168            ret
+0065            169            
+0065            170   graceNote:
+0065            171   ;33.33MHz, 1 clk per cycle: 0.03us
+0065 EB         172            mov a, R3
+0066 F8         173            mov R0, a
+0067 7946       174   L3: mov R1, #70
+0069 7AFA       175   L2: mov R2, #250
+006B 302806     176            jnb buzzer, skip_wait
+006E DAFE       177   L1: djnz R2, L1 ;3*250*0.03us=22.5us
+0070 D9F7       178       djnz R1, L2 ;74*22.5us=1.665ms
+0072 D8F3       179       djnz R0, L3 ;1.665ms*30=50ms
+0074            180       skip_wait:
+0074 22         181       ret
+0075            182       
+0075            183   Music:
+0075 20E80A     184            jb SWA.0, play_sexy_sax
+0078 20E90C     185            jb SWA.1, play_chopsticks
+007B 120D61     186            lcall pirates
+007E            187            music_1:
+007E 2028F4     188            jb buzzer, Music
+0081 22         189            ret     
+0082            190   play_sexy_sax:
+0082 120935     191   lcall sexy_sax
+0085 80F7       192   jmp music_1
+0087            193   play_chopsticks:
+0087 120091     194   lcall chopsticks
+008A 80F2       195   jmp music_1
+008C            196   play_pirates:
+008C 120D61     197   lcall pirates
+008F 80ED       198   jmp music_1
+0091            199   
+0091            200   chopsticks:
+0091 C227       201            clr legato
+0093 7B18       202            mov R3, #Medium
+0095 75381D     203            mov timer0Reload, #low(F6)
+0098 7539FC     203            mov timer0reload+1, #high(F6)
+009B 753A8A     203            mov timer1Reload, #low(G6)
+009E 753BFC     203            mov timer1reload+1, #high(G6)
+00A1 753704     203            mov noteLen, #(sixteenth)
+00A4 D2A9       203            setb ET0
+00A6 D2AB       203            setb ET1
+00A8 120057     203            lcall wait
+00AB C2A9       203            clr ET0
+00AD C2AB       203            clr ET1
+00AF 12005E     203            lcall wait1
+00B2 75381D     204            mov timer0Reload, #low(F6)
+00B5 7539FC     204            mov timer0reload+1, #high(F6)
+00B8 753A8A     204            mov timer1Reload, #low(G6)
+00BB 753BFC     204            mov timer1reload+1, #high(G6)
+00BE 753704     204            mov noteLen, #(sixteenth)
+00C1 D2A9       204            setb ET0
+00C3 D2AB       204            setb ET1
+00C5 120057     204            lcall wait
+00C8 C2A9       204            clr ET0
+00CA C2AB       204            clr ET1
+00CC 12005E     204            lcall wait1
+00CF 75381D     205            mov timer0Reload, #low(F6)
+00D2 7539FC     205            mov timer0reload+1, #high(F6)
+00D5 753A8A     205            mov timer1Reload, #low(G6)
+00D8 753BFC     205            mov timer1reload+1, #high(G6)
+00DB 753704     205            mov noteLen, #(sixteenth)
+00DE D2A9       205            setb ET0
+00E0 D2AB       205            setb ET1
+00E2 120057     205            lcall wait
+00E5 C2A9       205            clr ET0
+00E7 C2AB       205            clr ET1
+00E9 12005E     205            lcall wait1
+00EC 75381D     206            mov timer0Reload, #low(F6)
+00EF 7539FC     206            mov timer0reload+1, #high(F6)
+00F2 753A8A     206            mov timer1Reload, #low(G6)
+00F5 753BFC     206            mov timer1reload+1, #high(G6)
+00F8 753704     206            mov noteLen, #(sixteenth)
+00FB D2A9       206            setb ET0
+00FD D2AB       206            setb ET1
+00FF 120057     206            lcall wait
+0102 C2A9       206            clr ET0
+0104 C2AB       206            clr ET1
+0106 12005E     206            lcall wait1
+0109 75381D     207            mov timer0Reload, #low(F6)
+010C 7539FC     207            mov timer0reload+1, #high(F6)
+010F 753A8A     207            mov timer1Reload, #low(G6)
+0112 753BFC     207            mov timer1reload+1, #high(G6)
+0115 753704     207            mov noteLen, #(sixteenth)
+0118 D2A9       207            setb ET0
+011A D2AB       207            setb ET1
+011C 120057     207            lcall wait
+011F C2A9       207            clr ET0
+0121 C2AB       207            clr ET1
+0123 12005E     207            lcall wait1
+0126 75381D     208            mov timer0Reload, #low(F6)
+0129 7539FC     208            mov timer0reload+1, #high(F6)
+012C 753A8A     208            mov timer1Reload, #low(G6)
+012F 753BFC     208            mov timer1reload+1, #high(G6)
+0132 753704     208            mov noteLen, #(sixteenth)
+0135 D2A9       208            setb ET0
+0137 D2AB       208            setb ET1
+0139 120057     208            lcall wait
+013C C2A9       208            clr ET0
+013E C2AB       208            clr ET1
+0140 12005E     208            lcall wait1
+0143            209   
+0143            210            
+0143 7538E2     211            mov timer0Reload, #low(E6)
+0146 7539FB     211            mov timer0reload+1, #high(E6)
+0149 753A8A     211            mov timer1Reload, #low(G6)
+014C 753BFC     211            mov timer1reload+1, #high(G6)
+014F 753704     211            mov noteLen, #(sixteenth)
+0152 D2A9       211            setb ET0
+0154 D2AB       211            setb ET1
+0156 120057     211            lcall wait
+0159 C2A9       211            clr ET0
+015B C2AB       211            clr ET1
+015D 12005E     211            lcall wait1
+0160 7538E2     212            mov timer0Reload, #low(E6)
+0163 7539FB     212            mov timer0reload+1, #high(E6)
+0166 753A8A     212            mov timer1Reload, #low(G6)
+0169 753BFC     212            mov timer1reload+1, #high(G6)
+016C 753704     212            mov noteLen, #(sixteenth)
+016F D2A9       212            setb ET0
+0171 D2AB       212            setb ET1
+0173 120057     212            lcall wait
+0176 C2A9       212            clr ET0
+0178 C2AB       212            clr ET1
+017A 12005E     212            lcall wait1
+017D 7538E2     213            mov timer0Reload, #low(E6)
+0180 7539FB     213            mov timer0reload+1, #high(E6)
+0183 753A8A     213            mov timer1Reload, #low(G6)
+0186 753BFC     213            mov timer1reload+1, #high(G6)
+0189 753704     213            mov noteLen, #(sixteenth)
+018C D2A9       213            setb ET0
+018E D2AB       213            setb ET1
+0190 120057     213            lcall wait
+0193 C2A9       213            clr ET0
+0195 C2AB       213            clr ET1
+0197 12005E     213            lcall wait1
+019A 7538E2     214            mov timer0Reload, #low(E6)
+019D 7539FB     214            mov timer0reload+1, #high(E6)
+01A0 753A8A     214            mov timer1Reload, #low(G6)
+01A3 753BFC     214            mov timer1reload+1, #high(G6)
+01A6 753704     214            mov noteLen, #(sixteenth)
+01A9 D2A9       214            setb ET0
+01AB D2AB       214            setb ET1
+01AD 120057     214            lcall wait
+01B0 C2A9       214            clr ET0
+01B2 C2AB       214            clr ET1
+01B4 12005E     214            lcall wait1
+01B7 7538E2     215            mov timer0Reload, #low(E6)
+01BA 7539FB     215            mov timer0reload+1, #high(E6)
+01BD 753A8A     215            mov timer1Reload, #low(G6)
+01C0 753BFC     215            mov timer1reload+1, #high(G6)
+01C3 753704     215            mov noteLen, #(sixteenth)
+01C6 D2A9       215            setb ET0
+01C8 D2AB       215            setb ET1
+01CA 120057     215            lcall wait
+01CD C2A9       215            clr ET0
+01CF C2AB       215            clr ET1
+01D1 12005E     215            lcall wait1
+01D4 7538E2     216            mov timer0Reload, #low(E6)
+01D7 7539FB     216            mov timer0reload+1, #high(E6)
+01DA 753A8A     216            mov timer1Reload, #low(G6)
+01DD 753BFC     216            mov timer1reload+1, #high(G6)
+01E0 753704     216            mov noteLen, #(sixteenth)
+01E3 D2A9       216            setb ET0
+01E5 D2AB       216            setb ET1
+01E7 120057     216            lcall wait
+01EA C2A9       216            clr ET0
+01EC C2AB       216            clr ET1
+01EE 12005E     216            lcall wait1
+01F1            217   
+01F1            218            
+01F1 7538D0     219            mov timer0Reload, #low(C6)
+01F4 7539FA     219            mov timer0reload+1, #high(C6)
+01F7 753A40     219            mov timer1Reload, #low(B6)
+01FA 753BFD     219            mov timer1reload+1, #high(B6)
+01FD 753704     219            mov noteLen, #(sixteenth)
+0200 D2A9       219            setb ET0
+0202 D2AB       219            setb ET1
+0204 120057     219            lcall wait
+0207 C2A9       219            clr ET0
+0209 C2AB       219            clr ET1
+020B 12005E     219            lcall wait1
+020E 7538D0     220            mov timer0Reload, #low(C6)
+0211 7539FA     220            mov timer0reload+1, #high(C6)
+0214 753A40     220            mov timer1Reload, #low(B6)
+0217 753BFD     220            mov timer1reload+1, #high(B6)
+021A 753704     220            mov noteLen, #(sixteenth)
+021D D2A9       220            setb ET0
+021F D2AB       220            setb ET1
+0221 120057     220            lcall wait
+0224 C2A9       220            clr ET0
+0226 C2AB       220            clr ET1
+0228 12005E     220            lcall wait1
+022B 7538D0     221            mov timer0Reload, #low(C6)
+022E 7539FA     221            mov timer0reload+1, #high(C6)
+0231 753A40     221            mov timer1Reload, #low(B6)
+0234 753BFD     221            mov timer1reload+1, #high(B6)
+0237 753704     221            mov noteLen, #(sixteenth)
+023A D2A9       221            setb ET0
+023C D2AB       221            setb ET1
+023E 120057     221            lcall wait
+0241 C2A9       221            clr ET0
+0243 C2AB       221            clr ET1
+0245 12005E     221            lcall wait1
+0248 7538D0     222            mov timer0Reload, #low(C6)
+024B 7539FA     222            mov timer0reload+1, #high(C6)
+024E 753A40     222            mov timer1Reload, #low(B6)
+0251 753BFD     222            mov timer1reload+1, #high(B6)
+0254 753704     222            mov noteLen, #(sixteenth)
+0257 D2A9       222            setb ET0
+0259 D2AB       222            setb ET1
+025B 120057     222            lcall wait
+025E C2A9       222            clr ET0
+0260 C2AB       222            clr ET1
+0262 12005E     222            lcall wait1
+0265            223            
+0265 7538E2     224            mov timer0Reload, #low(E6)
+0268 7539FB     224            mov timer0reload+1, #high(E6)
+026B 753AEA     224            mov timer1Reload, #low(A6)
+026E 753BFC     224            mov timer1reload+1, #high(A6)
+0271 753704     224            mov noteLen, #(sixteenth)
+0274 D2A9       224            setb ET0
+0276 D2AB       224            setb ET1
+0278 120057     224            lcall wait
+027B C2A9       224            clr ET0
+027D C2AB       224            clr ET1
+027F 12005E     224            lcall wait1
+0282 753861     225            mov timer0Reload, #low(D6)
+0285 7539FB     225            mov timer0reload+1, #high(D6)
+0288 753A40     225            mov timer1Reload, #low(B6)
+028B 753BFD     225            mov timer1reload+1, #high(B6)
+028E 753704     225            mov noteLen, #(sixteenth)
+0291 D2A9       225            setb ET0
+0293 D2AB       225            setb ET1
+0295 120057     225            lcall wait
+0298 C2A9       225            clr ET0
+029A C2AB       225            clr ET1
+029C 12005E     225            lcall wait1
+029F 7538D0     226            mov timer0Reload, #low(C6)
+02A2 7539FA     226            mov timer0reload+1, #high(C6)
+02A5 753A68     226            mov timer1Reload, #low(C7)
+02A8 753BFD     226            mov timer1reload+1, #high(C7)
+02AB 753708     226            mov noteLen, #(eighth)
+02AE D2A9       226            setb ET0
+02B0 D2AB       226            setb ET1
+02B2 120057     226            lcall wait
+02B5 C2A9       226            clr ET0
+02B7 C2AB       226            clr ET1
+02B9 12005E     226            lcall wait1
+02BC            227            
+02BC 7538D0     228            mov timer0Reload, #low(C6)
+02BF 7539FA     228            mov timer0reload+1, #high(C6)
+02C2 753A68     228            mov timer1Reload, #low(C7)
+02C5 753BFD     228            mov timer1reload+1, #high(C7)
+02C8 753704     228            mov noteLen, #(sixteenth)
+02CB D2A9       228            setb ET0
+02CD D2AB       228            setb ET1
+02CF 120057     228            lcall wait
+02D2 C2A9       228            clr ET0
+02D4 C2AB       228            clr ET1
+02D6 12005E     228            lcall wait1
+02D9 7538D0     229            mov timer0Reload, #low(C6)
+02DC 7539FA     229            mov timer0reload+1, #high(C6)
+02DF 753A68     229            mov timer1Reload, #low(C7)
+02E2 753BFD     229            mov timer1reload+1, #high(C7)
+02E5 753704     229            mov noteLen, #(sixteenth)
+02E8 D2A9       229            setb ET0
+02EA D2AB       229            setb ET1
+02EC 120057     229            lcall wait
+02EF C2A9       229            clr ET0
+02F1 C2AB       229            clr ET1
+02F3 12005E     229            lcall wait1
+02F6 753861     230            mov timer0Reload, #low(D6)
+02F9 7539FB     230            mov timer0reload+1, #high(D6)
+02FC 753A40     230            mov timer1Reload, #low(B6)
+02FF 753BFD     230            mov timer1reload+1, #high(B6)
+0302 753704     230            mov noteLen, #(sixteenth)
+0305 D2A9       230            setb ET0
+0307 D2AB       230            setb ET1
+0309 120057     230            lcall wait
+030C C2A9       230            clr ET0
+030E C2AB       230            clr ET1
+0310 12005E     230            lcall wait1
+0313 7538E2     231            mov timer0Reload, #low(E6)
+0316 7539FB     231            mov timer0reload+1, #high(E6)
+0319 753AEA     231            mov timer1Reload, #low(A6)
+031C 753BFC     231            mov timer1reload+1, #high(A6)
+031F 753704     231            mov noteLen, #(sixteenth)
+0322 D2A9       231            setb ET0
+0324 D2AB       231            setb ET1
+0326 120057     231            lcall wait
+0329 C2A9       231            clr ET0
+032B C2AB       231            clr ET1
+032D 12005E     231            lcall wait1
+0330            232            
+0330 75381D     233            mov timer0Reload, #low(F6)
+0333 7539FC     233            mov timer0reload+1, #high(F6)
+0336 753A8A     233            mov timer1Reload, #low(G6)
+0339 753BFC     233            mov timer1reload+1, #high(G6)
+033C 753704     233            mov noteLen, #(sixteenth)
+033F D2A9       233            setb ET0
+0341 D2AB       233            setb ET1
+0343 120057     233            lcall wait
+0346 C2A9       233            clr ET0
+0348 C2AB       233            clr ET1
+034A 12005E     233            lcall wait1
+034D 75381D     234            mov timer0Reload, #low(F6)
+0350 7539FC     234            mov timer0reload+1, #high(F6)
+0353 753A8A     234            mov timer1Reload, #low(G6)
+0356 753BFC     234            mov timer1reload+1, #high(G6)
+0359 753704     234            mov noteLen, #(sixteenth)
+035C D2A9       234            setb ET0
+035E D2AB       234            setb ET1
+0360 120057     234            lcall wait
+0363 C2A9       234            clr ET0
+0365 C2AB       234            clr ET1
+0367 12005E     234            lcall wait1
+036A 75381D     235            mov timer0Reload, #low(F6)
+036D 7539FC     235            mov timer0reload+1, #high(F6)
+0370 753A8A     235            mov timer1Reload, #low(G6)
+0373 753BFC     235            mov timer1reload+1, #high(G6)
+0376 753704     235            mov noteLen, #(sixteenth)
+0379 D2A9       235            setb ET0
+037B D2AB       235            setb ET1
+037D 120057     235            lcall wait
+0380 C2A9       235            clr ET0
+0382 C2AB       235            clr ET1
+0384 12005E     235            lcall wait1
+0387 75381D     236            mov timer0Reload, #low(F6)
+038A 7539FC     236            mov timer0reload+1, #high(F6)
+038D 753A8A     236            mov timer1Reload, #low(G6)
+0390 753BFC     236            mov timer1reload+1, #high(G6)
+0393 753704     236            mov noteLen, #(sixteenth)
+0396 D2A9       236            setb ET0
+0398 D2AB       236            setb ET1
+039A 120057     236            lcall wait
+039D C2A9       236            clr ET0
+039F C2AB       236            clr ET1
+03A1 12005E     236            lcall wait1
+03A4 75381D     237            mov timer0Reload, #low(F6)
+03A7 7539FC     237            mov timer0reload+1, #high(F6)
+03AA 753A8A     237            mov timer1Reload, #low(G6)
+03AD 753BFC     237            mov timer1reload+1, #high(G6)
+03B0 753704     237            mov noteLen, #(sixteenth)
+03B3 D2A9       237            setb ET0
+03B5 D2AB       237            setb ET1
+03B7 120057     237            lcall wait
+03BA C2A9       237            clr ET0
+03BC C2AB       237            clr ET1
+03BE 12005E     237            lcall wait1
+03C1 75381D     238            mov timer0Reload, #low(F6)
+03C4 7539FC     238            mov timer0reload+1, #high(F6)
+03C7 753A8A     238            mov timer1Reload, #low(G6)
+03CA 753BFC     238            mov timer1reload+1, #high(G6)
+03CD 753704     238            mov noteLen, #(sixteenth)
+03D0 D2A9       238            setb ET0
+03D2 D2AB       238            setb ET1
+03D4 120057     238            lcall wait
+03D7 C2A9       238            clr ET0
+03D9 C2AB       238            clr ET1
+03DB 12005E     238            lcall wait1
+03DE            239            
+03DE 7538E2     240            mov timer0Reload, #low(E6)
+03E1 7539FB     240            mov timer0reload+1, #high(E6)
+03E4 753A8A     240            mov timer1Reload, #low(G6)
+03E7 753BFC     240            mov timer1reload+1, #high(G6)
+03EA 753704     240            mov noteLen, #(sixteenth)
+03ED D2A9       240            setb ET0
+03EF D2AB       240            setb ET1
+03F1 120057     240            lcall wait
+03F4 C2A9       240            clr ET0
+03F6 C2AB       240            clr ET1
+03F8 12005E     240            lcall wait1
+03FB 7538E2     241            mov timer0Reload, #low(E6)
+03FE 7539FB     241            mov timer0reload+1, #high(E6)
+0401 753A8A     241            mov timer1Reload, #low(G6)
+0404 753BFC     241            mov timer1reload+1, #high(G6)
+0407 753704     241            mov noteLen, #(sixteenth)
+040A D2A9       241            setb ET0
+040C D2AB       241            setb ET1
+040E 120057     241            lcall wait
+0411 C2A9       241            clr ET0
+0413 C2AB       241            clr ET1
+0415 12005E     241            lcall wait1
+0418 7538E2     242            mov timer0Reload, #low(E6)
+041B 7539FB     242            mov timer0reload+1, #high(E6)
+041E 753A8A     242            mov timer1Reload, #low(G6)
+0421 753BFC     242            mov timer1reload+1, #high(G6)
+0424 753704     242            mov noteLen, #(sixteenth)
+0427 D2A9       242            setb ET0
+0429 D2AB       242            setb ET1
+042B 120057     242            lcall wait
+042E C2A9       242            clr ET0
+0430 C2AB       242            clr ET1
+0432 12005E     242            lcall wait1
+0435 7538E2     243            mov timer0Reload, #low(E6)
+0438 7539FB     243            mov timer0reload+1, #high(E6)
+043B 753A8A     243            mov timer1Reload, #low(G6)
+043E 753BFC     243            mov timer1reload+1, #high(G6)
+0441 753704     243            mov noteLen, #(sixteenth)
+0444 D2A9       243            setb ET0
+0446 D2AB       243            setb ET1
+0448 120057     243            lcall wait
+044B C2A9       243            clr ET0
+044D C2AB       243            clr ET1
+044F 12005E     243            lcall wait1
+0452 7538E2     244            mov timer0Reload, #low(E6)
+0455 7539FB     244            mov timer0reload+1, #high(E6)
+0458 753A8A     244            mov timer1Reload, #low(G6)
+045B 753BFC     244            mov timer1reload+1, #high(G6)
+045E 753704     244            mov noteLen, #(sixteenth)
+0461 D2A9       244            setb ET0
+0463 D2AB       244            setb ET1
+0465 120057     244            lcall wait
+0468 C2A9       244            clr ET0
+046A C2AB       244            clr ET1
+046C 12005E     244            lcall wait1
+046F 7538E2     245            mov timer0Reload, #low(E6)
+0472 7539FB     245            mov timer0reload+1, #high(E6)
+0475 753A8A     245            mov timer1Reload, #low(G6)
+0478 753BFC     245            mov timer1reload+1, #high(G6)
+047B 753704     245            mov noteLen, #(sixteenth)
+047E D2A9       245            setb ET0
+0480 D2AB       245            setb ET1
+0482 120057     245            lcall wait
+0485 C2A9       245            clr ET0
+0487 C2AB       245            clr ET1
+0489 12005E     245            lcall wait1
+048C            246   
+048C 7538D0     247            mov timer0Reload, #low(C6)
+048F 7539FA     247            mov timer0reload+1, #high(C6)
+0492 753A40     247            mov timer1Reload, #low(B6)
+0495 753BFD     247            mov timer1reload+1, #high(B6)
+0498 753704     247            mov noteLen, #(sixteenth)
+049B D2A9       247            setb ET0
+049D D2AB       247            setb ET1
+049F 120057     247            lcall wait
+04A2 C2A9       247            clr ET0
+04A4 C2AB       247            clr ET1
+04A6 12005E     247            lcall wait1
+04A9 7538D0     248            mov timer0Reload, #low(C6)
+04AC 7539FA     248            mov timer0reload+1, #high(C6)
+04AF 753A40     248            mov timer1Reload, #low(B6)
+04B2 753BFD     248            mov timer1reload+1, #high(B6)
+04B5 753704     248            mov noteLen, #(sixteenth)
+04B8 D2A9       248            setb ET0
+04BA D2AB       248            setb ET1
+04BC 120057     248            lcall wait
+04BF C2A9       248            clr ET0
+04C1 C2AB       248            clr ET1
+04C3 12005E     248            lcall wait1
+04C6 7538D0     249            mov timer0Reload, #low(C6)
+04C9 7539FA     249            mov timer0reload+1, #high(C6)
+04CC 753A40     249            mov timer1Reload, #low(B6)
+04CF 753BFD     249            mov timer1reload+1, #high(B6)
+04D2 753704     249            mov noteLen, #(sixteenth)
+04D5 D2A9       249            setb ET0
+04D7 D2AB       249            setb ET1
+04D9 120057     249            lcall wait
+04DC C2A9       249            clr ET0
+04DE C2AB       249            clr ET1
+04E0 12005E     249            lcall wait1
+04E3 7538D0     250            mov timer0Reload, #low(C6)
+04E6 7539FA     250            mov timer0reload+1, #high(C6)
+04E9 753A40     250            mov timer1Reload, #low(B6)
+04EC 753BFD     250            mov timer1reload+1, #high(B6)
+04EF 753704     250            mov noteLen, #(sixteenth)
+04F2 D2A9       250            setb ET0
+04F4 D2AB       250            setb ET1
+04F6 120057     250            lcall wait
+04F9 C2A9       250            clr ET0
+04FB C2AB       250            clr ET1
+04FD 12005E     250            lcall wait1
+0500            251            
+0500            252            
+0500 7538E2     253            mov timer0Reload, #low(E6)
+0503 7539FB     253            mov timer0reload+1, #high(E6)
+0506 753AEA     253            mov timer1Reload, #low(A6)
+0509 753BFC     253            mov timer1reload+1, #high(A6)
+050C 753704     253            mov noteLen, #(sixteenth)
+050F D2A9       253            setb ET0
+0511 D2AB       253            setb ET1
+0513 120057     253            lcall wait
+0516 C2A9       253            clr ET0
+0518 C2AB       253            clr ET1
+051A 12005E     253            lcall wait1
+051D 753861     254            mov timer0Reload, #low(D6)
+0520 7539FB     254            mov timer0reload+1, #high(D6)
+0523 753A40     254            mov timer1Reload, #low(B6)
+0526 753BFD     254            mov timer1reload+1, #high(B6)
+0529 753704     254            mov noteLen, #(sixteenth)
+052C D2A9       254            setb ET0
+052E D2AB       254            setb ET1
+0530 120057     254            lcall wait
+0533 C2A9       254            clr ET0
+0535 C2AB       254            clr ET1
+0537 12005E     254            lcall wait1
+053A 7538D0     255            mov timer0Reload, #low(C6)
+053D 7539FA     255            mov timer0reload+1, #high(C6)
+0540 753A68     255            mov timer1Reload, #low(C7)
+0543 753BFD     255            mov timer1reload+1, #high(C7)
+0546 753704     255            mov noteLen, #(sixteenth)
+0549 D2A9       255            setb ET0
+054B D2AB       255            setb ET1
+054D 120057     255            lcall wait
+0550 C2A9       255            clr ET0
+0552 C2AB       255            clr ET1
+0554 12005E     255            lcall wait1
+0557 7538DC     256            mov timer0Reload, #low(rest)
+055A 7539FF     256            mov timer0reload+1, #high(rest)
+055D 753704     256            mov noteLen, #(sixteenth)
+0560 D2A9       256            setb ET0
+0562 120057     256            lcall wait
+0565 C2A9       256            clr ET0
+0567 12005E     256            lcall wait1
+056A 75381D     257            mov timer0Reload, #low(F6)
+056D 7539FC     257            mov timer0reload+1, #high(F6)
+0570 753A8A     257            mov timer1Reload, #low(G6)
+0573 753BFC     257            mov timer1reload+1, #high(G6)
+0576 753704     257            mov noteLen, #(sixteenth)
+0579 D2A9       257            setb ET0
+057B D2AB       257            setb ET1
+057D 120057     257            lcall wait
+0580 C2A9       257            clr ET0
+0582 C2AB       257            clr ET1
+0584 12005E     257            lcall wait1
+0587 7538DC     258            mov timer0Reload, #low(rest)
+058A 7539FF     258            mov timer0reload+1, #high(rest)
+058D 753704     258            mov noteLen, #(sixteenth)
+0590 D2A9       258            setb ET0
+0592 120057     258            lcall wait
+0595 C2A9       258            clr ET0
+0597 12005E     258            lcall wait1
+059A 7538D0     259            mov timer0Reload, #low(C6)
+059D 7539FA     259            mov timer0reload+1, #high(C6)
+05A0 753A68     259            mov timer1Reload, #low(C7)
+05A3 753BFD     259            mov timer1reload+1, #high(C7)
+05A6 753704     259            mov noteLen, #(sixteenth)
+05A9 D2A9       259            setb ET0
+05AB D2AB       259            setb ET1
+05AD 120057     259            lcall wait
+05B0 C2A9       259            clr ET0
+05B2 C2AB       259            clr ET1
+05B4 12005E     259            lcall wait1
+05B7 7538DC     260            mov timer0Reload, #low(rest)
+05BA 7539FF     260            mov timer0reload+1, #high(rest)
+05BD 753708     260            mov noteLen, #(eighth)
+05C0 D2A9       260            setb ET0
+05C2 120057     260            lcall wait
+05C5 C2A9       260            clr ET0
+05C7 12005E     260            lcall wait1
+05CA            261            
+05CA            262            
+05CA 7538F1     263            mov timer0Reload, #low(E7)
+05CD 7539FD     263            mov timer0reload+1, #high(E7)
+05D0 753704     263            mov noteLen, #(sixteenth)
+05D3 D2A9       263            setb ET0
+05D5 120057     263            lcall wait
+05D8 C2A9       263            clr ET0
+05DA 12005E     263            lcall wait1
+05DD 7538B0     264            mov timer0Reload, #low(D7)
+05E0 7539FD     264            mov timer0reload+1, #high(D7)
+05E3 753704     264            mov noteLen, #(sixteenth)
+05E6 D2A9       264            setb ET0
+05E8 120057     264            lcall wait
+05EB C2A9       264            clr ET0
+05ED 12005E     264            lcall wait1
+05F0 7538DC     265            mov timer0Reload, #low(rest)
+05F3 7539FF     265            mov timer0reload+1, #high(rest)
+05F6 753704     265            mov noteLen, #(sixteenth)
+05F9 D2A9       265            setb ET0
+05FB 120057     265            lcall wait
+05FE C2A9       265            clr ET0
+0600 12005E     265            lcall wait1     
+0603 753868     266            mov timer0Reload, #low(C7)
+0606 7539FD     266            mov timer0reload+1, #high(C7)
+0609 753704     266            mov noteLen, #(sixteenth)
+060C D2A9       266            setb ET0
+060E 120057     266            lcall wait
+0611 C2A9       266            clr ET0
+0613 12005E     266            lcall wait1
+0616 753840     267            mov timer0Reload, #low(B6)
+0619 7539FD     267            mov timer0reload+1, #high(B6)
+061C 753704     267            mov noteLen, #(sixteenth)
+061F D2A9       267            setb ET0
+0621 120057     267            lcall wait
+0624 C2A9       267            clr ET0
+0626 12005E     267            lcall wait1
+0629 7538DC     268            mov timer0Reload, #low(rest)
+062C 7539FF     268            mov timer0reload+1, #high(rest)
+062F 753704     268            mov noteLen, #(sixteenth)
+0632 D2A9       268            setb ET0
+0634 120057     268            lcall wait
+0637 C2A9       268            clr ET0
+0639 12005E     268            lcall wait1
+063C 7538EA     269            mov timer0Reload, #low(A6)
+063F 7539FC     269            mov timer0reload+1, #high(A6)
+0642 753704     269            mov noteLen, #(sixteenth)
+0645 D2A9       269            setb ET0
+0647 120057     269            lcall wait
+064A C2A9       269            clr ET0
+064C 12005E     269            lcall wait1
+064F 7538DC     270            mov timer0Reload, #low(rest)
+0652 7539FF     270            mov timer0reload+1, #high(rest)
+0655 753704     270            mov noteLen, #(sixteenth)
+0658 D2A9       270            setb ET0
+065A 120057     270            lcall wait
+065D C2A9       270            clr ET0
+065F 12005E     270            lcall wait1
+0662            271            
+0662 75388A     272            mov timer0Reload, #low(G6)
+0665 7539FC     272            mov timer0reload+1, #high(G6)
+0668 753704     272            mov noteLen, #(sixteenth)
+066B D2A9       272            setb ET0
+066D 120057     272            lcall wait
+0670 C2A9       272            clr ET0
+0672 12005E     272            lcall wait1
+0675 75388A     273            mov timer0Reload, #low(G6)
+0678 7539FC     273            mov timer0reload+1, #high(G6)
+067B 753704     273            mov noteLen, #(sixteenth)
+067E D2A9       273            setb ET0
+0680 120057     273            lcall wait
+0683 C2A9       273            clr ET0
+0685 12005E     273            lcall wait1
+0688 75388A     274            mov timer0Reload, #low(G6)
+068B 7539FC     274            mov timer0reload+1, #high(G6)
+068E 753704     274            mov noteLen, #(sixteenth)
+0691 D2A9       274            setb ET0
+0693 120057     274            lcall wait
+0696 C2A9       274            clr ET0
+0698 12005E     274            lcall wait1
+069B 75388A     275            mov timer0Reload, #low(G6)
+069E 7539FC     275            mov timer0reload+1, #high(G6)
+06A1 753704     275            mov noteLen, #(sixteenth)
+06A4 D2A9       275            setb ET0
+06A6 120057     275            lcall wait
+06A9 C2A9       275            clr ET0
+06AB 12005E     275            lcall wait1
+06AE 7538EA     276            mov timer0Reload, #low(A6)
+06B1 7539FC     276            mov timer0reload+1, #high(A6)
+06B4 753704     276            mov noteLen, #(sixteenth)
+06B7 D2A9       276            setb ET0
+06B9 120057     276            lcall wait
+06BC C2A9       276            clr ET0
+06BE 12005E     276            lcall wait1
+06C1 75388A     277            mov timer0Reload, #low(G6)
+06C4 7539FC     277            mov timer0reload+1, #high(G6)
+06C7 753704     277            mov noteLen, #(sixteenth)
+06CA D2A9       277            setb ET0
+06CC 120057     277            lcall wait
+06CF C2A9       277            clr ET0
+06D1 12005E     277            lcall wait1
+06D4            278            
+06D4            279            
+06D4 75381D     280            mov timer0Reload, #low(F6)
+06D7 7539FC     280            mov timer0reload+1, #high(F6)
+06DA 753704     280            mov noteLen, #(sixteenth)
+06DD D2A9       280            setb ET0
+06DF 120057     280            lcall wait
+06E2 C2A9       280            clr ET0
+06E4 12005E     280            lcall wait1
+06E7 75381D     281            mov timer0Reload, #low(F6)
+06EA 7539FC     281            mov timer0reload+1, #high(F6)
+06ED 753704     281            mov noteLen, #(sixteenth)
+06F0 D2A9       281            setb ET0
+06F2 120057     281            lcall wait
+06F5 C2A9       281            clr ET0
+06F7 12005E     281            lcall wait1
+06FA 75381D     282            mov timer0Reload, #low(F6)
+06FD 7539FC     282            mov timer0reload+1, #high(F6)
+0700 753704     282            mov noteLen, #(sixteenth)
+0703 D2A9       282            setb ET0
+0705 120057     282            lcall wait
+0708 C2A9       282            clr ET0
+070A 12005E     282            lcall wait1
+070D 75381D     283            mov timer0Reload, #low(F6)
+0710 7539FC     283            mov timer0reload+1, #high(F6)
+0713 753704     283            mov noteLen, #(sixteenth)
+0716 D2A9       283            setb ET0
+0718 120057     283            lcall wait
+071B C2A9       283            clr ET0
+071D 12005E     283            lcall wait1
+0720 75388A     284            mov timer0Reload, #low(G6)
+0723 7539FC     284            mov timer0reload+1, #high(G6)
+0726 753704     284            mov noteLen, #(sixteenth)
+0729 D2A9       284            setb ET0
+072B 120057     284            lcall wait
+072E C2A9       284            clr ET0
+0730 12005E     284            lcall wait1
+0733 75381D     285            mov timer0Reload, #low(F6)
+0736 7539FC     285            mov timer0reload+1, #high(F6)
+0739 753704     285            mov noteLen, #(sixteenth)
+073C D2A9       285            setb ET0
+073E 120057     285            lcall wait
+0741 C2A9       285            clr ET0
+0743 12005E     285            lcall wait1
+0746 7538E2     286            mov timer0Reload, #low(E6)
+0749 7539FB     286            mov timer0reload+1, #high(E6)
+074C 753704     286            mov noteLen, #(sixteenth)
+074F D2A9       286            setb ET0
+0751 120057     286            lcall wait
+0754 C2A9       286            clr ET0
+0756 12005E     286            lcall wait1
+0759 7538DC     287            mov timer0Reload, #low(rest)
+075C 7539FF     287            mov timer0reload+1, #high(rest)
+075F 753704     287            mov noteLen, #(sixteenth)
+0762 D2A9       287            setb ET0
+0764 120057     287            lcall wait
+0767 C2A9       287            clr ET0
+0769 12005E     287            lcall wait1
+076C 7538F1     288            mov timer0Reload, #low(E7)
+076F 7539FD     288            mov timer0reload+1, #high(E7)
+0772 753704     288            mov noteLen, #(sixteenth)
+0775 D2A9       288            setb ET0
+0777 120057     288            lcall wait
+077A C2A9       288            clr ET0
+077C 12005E     288            lcall wait1
+077F            289   
+077F 7538B0     290            mov timer0Reload, #low(D7)
+0782 7539FD     290            mov timer0reload+1, #high(D7)
+0785 753704     290            mov noteLen, #(sixteenth)
+0788 D2A9       290            setb ET0
+078A 120057     290            lcall wait
+078D C2A9       290            clr ET0
+078F 12005E     290            lcall wait1
+0792 7538DC     291            mov timer0Reload, #low(rest)
+0795 7539FF     291            mov timer0reload+1, #high(rest)
+0798 753704     291            mov noteLen, #(sixteenth)
+079B D2A9       291            setb ET0
+079D 120057     291            lcall wait
+07A0 C2A9       291            clr ET0
+07A2 12005E     291            lcall wait1     
+07A5 753868     292            mov timer0Reload, #low(C7)
+07A8 7539FD     292            mov timer0reload+1, #high(C7)
+07AB 753704     292            mov noteLen, #(sixteenth)
+07AE D2A9       292            setb ET0
+07B0 120057     292            lcall wait
+07B3 C2A9       292            clr ET0
+07B5 12005E     292            lcall wait1
+07B8            293   
+07B8 753840     294            mov timer0Reload, #low(B6)
+07BB 7539FD     294            mov timer0reload+1, #high(B6)
+07BE 753704     294            mov noteLen, #(sixteenth)
+07C1 D2A9       294            setb ET0
+07C3 120057     294            lcall wait
+07C6 C2A9       294            clr ET0
+07C8 12005E     294            lcall wait1
+07CB 7538DC     295            mov timer0Reload, #low(rest)
+07CE 7539FF     295            mov timer0reload+1, #high(rest)
+07D1 753704     295            mov noteLen, #(sixteenth)
+07D4 D2A9       295            setb ET0
+07D6 120057     295            lcall wait
+07D9 C2A9       295            clr ET0
+07DB 12005E     295            lcall wait1
+07DE 7538EA     296            mov timer0Reload, #low(A6)
+07E1 7539FC     296            mov timer0reload+1, #high(A6)
+07E4 753704     296            mov noteLen, #(sixteenth)
+07E7 D2A9       296            setb ET0
+07E9 120057     296            lcall wait
+07EC C2A9       296            clr ET0
+07EE 12005E     296            lcall wait1
+07F1 7538DC     297            mov timer0Reload, #low(rest)
+07F4 7539FF     297            mov timer0reload+1, #high(rest)
+07F7 753704     297            mov noteLen, #(sixteenth)
+07FA D2A9       297            setb ET0
+07FC 120057     297            lcall wait
+07FF C2A9       297            clr ET0
+0801 12005E     297            lcall wait1
+0804            298            
+0804 75388A     299            mov timer0Reload, #low(G6)
+0807 7539FC     299            mov timer0reload+1, #high(G6)
+080A 753704     299            mov noteLen, #(sixteenth)
+080D D2A9       299            setb ET0
+080F 120057     299            lcall wait
+0812 C2A9       299            clr ET0
+0814 12005E     299            lcall wait1
+0817 75388A     300            mov timer0Reload, #low(G6)
+081A 7539FC     300            mov timer0reload+1, #high(G6)
+081D 753704     300            mov noteLen, #(sixteenth)
+0820 D2A9       300            setb ET0
+0822 120057     300            lcall wait
+0825 C2A9       300            clr ET0
+0827 12005E     300            lcall wait1
+082A 75388A     301            mov timer0Reload, #low(G6)
+082D 7539FC     301            mov timer0reload+1, #high(G6)
+0830 753704     301            mov noteLen, #(sixteenth)
+0833 D2A9       301            setb ET0
+0835 120057     301            lcall wait
+0838 C2A9       301            clr ET0
+083A 12005E     301            lcall wait1     
+083D 75388A     302            mov timer0Reload, #low(G6)
+0840 7539FC     302            mov timer0reload+1, #high(G6)
+0843 753704     302            mov noteLen, #(sixteenth)
+0846 D2A9       302            setb ET0
+0848 120057     302            lcall wait
+084B C2A9       302            clr ET0
+084D 12005E     302            lcall wait1     
+0850 7538EA     303            mov timer0Reload, #low(A6)
+0853 7539FC     303            mov timer0reload+1, #high(A6)
+0856 753704     303            mov noteLen, #(sixteenth)
+0859 D2A9       303            setb ET0
+085B 120057     303            lcall wait
+085E C2A9       303            clr ET0
+0860 12005E     303            lcall wait1
+0863 75388A     304            mov timer0Reload, #low(G6)
+0866 7539FC     304            mov timer0reload+1, #high(G6)
+0869 753704     304            mov noteLen, #(sixteenth)
+086C D2A9       304            setb ET0
+086E 120057     304            lcall wait
+0871 C2A9       304            clr ET0
+0873 12005E     304            lcall wait1
+0876            305            
+0876            306            
+0876 753840     307            mov timer0Reload, #low(B6)
+0879 7539FD     307            mov timer0reload+1, #high(B6)
+087C 753704     307            mov noteLen, #(sixteenth)
+087F D2A9       307            setb ET0
+0881 120057     307            lcall wait
+0884 C2A9       307            clr ET0
+0886 12005E     307            lcall wait1
+0889 753840     308            mov timer0Reload, #low(B6)
+088C 7539FD     308            mov timer0reload+1, #high(B6)
+088F 753704     308            mov noteLen, #(sixteenth)
+0892 D2A9       308            setb ET0
+0894 120057     308            lcall wait
+0897 C2A9       308            clr ET0
+0899 12005E     308            lcall wait1
+089C 753840     309            mov timer0Reload, #low(B6)
+089F 7539FD     309            mov timer0reload+1, #high(B6)
+08A2 753704     309            mov noteLen, #(sixteenth)
+08A5 D2A9       309            setb ET0
+08A7 120057     309            lcall wait
+08AA C2A9       309            clr ET0
+08AC 12005E     309            lcall wait1
+08AF 753840     310            mov timer0Reload, #low(B6)
+08B2 7539FD     310            mov timer0reload+1, #high(B6)
+08B5 753704     310            mov noteLen, #(sixteenth)
+08B8 D2A9       310            setb ET0
+08BA 120057     310            lcall wait
+08BD C2A9       310            clr ET0
+08BF 12005E     310            lcall wait1
+08C2 753840     311            mov timer0Reload, #low(B6)
+08C5 7539FD     311            mov timer0reload+1, #high(B6)
+08C8 753704     311            mov noteLen, #(sixteenth)
+08CB D2A9       311            setb ET0
+08CD 120057     311            lcall wait
+08D0 C2A9       311            clr ET0
+08D2 12005E     311            lcall wait1
+08D5 753840     312            mov timer0Reload, #low(B6)
+08D8 7539FD     312            mov timer0reload+1, #high(B6)
+08DB 753704     312            mov noteLen, #(sixteenth)
+08DE D2A9       312            setb ET0
+08E0 120057     312            lcall wait
+08E3 C2A9       312            clr ET0
+08E5 12005E     312            lcall wait1
+08E8 7538EA     313            mov timer0Reload, #low(A6)
+08EB 7539FC     313            mov timer0reload+1, #high(A6)
+08EE 753704     313            mov noteLen, #(sixteenth)
+08F1 D2A9       313            setb ET0
+08F3 120057     313            lcall wait
+08F6 C2A9       313            clr ET0
+08F8 12005E     313            lcall wait1
+08FB 753840     314            mov timer0Reload, #low(B6)
+08FE 7539FD     314            mov timer0reload+1, #high(B6)
+0901 753704     314            mov noteLen, #(sixteenth)
+0904 D2A9       314            setb ET0
+0906 120057     314            lcall wait
+0909 C2A9       314            clr ET0
+090B 12005E     314            lcall wait1
+090E            315            
+090E 753868     316            mov timer0Reload, #low(C7)
+0911 7539FD     316            mov timer0reload+1, #high(C7)
+0914 753704     316            mov noteLen, #(sixteenth)
+0917 D2A9       316            setb ET0
+0919 120057     316            lcall wait
+091C C2A9       316            clr ET0
+091E 12005E     316            lcall wait1
+0921 7538DC     317            mov timer0Reload, #low(rest)
+0924 7539FF     317            mov timer0reload+1, #high(rest)
+0927 753708     317            mov noteLen, #(eighth)
+092A D2A9       317            setb ET0
+092C 120057     317            lcall wait
+092F C2A9       317            clr ET0
+0931 12005E     317            lcall wait1
+0934 22         318            ret     
+0935            319   sexy_sax:
+0935 D227       320   setb legato
+0937 7B18       321   mov r3, #medium
+0939 753861     322            mov timer0Reload, #low(D6)
+093C 7539FB     322            mov timer0reload+1, #high(D6)
+093F 753701     322            mov noteLen, #(grace)
+0942 D2A9       322            setb ET0
+0944 120057     322            lcall wait
+0947 C2A9       322            clr ET0
+0949 12005E     322            lcall wait1
+094C 7538E2     323            mov timer0Reload, #low(E6)
+094F 7539FB     323            mov timer0reload+1, #high(E6)
+0952 753A86     323            mov timer1Reload, #low(D4)
+0955 753BED     323            mov timer1reload+1, #high(D4)
+0958 753708     323            mov noteLen, #(eighth)
+095B D2A9       323            setb ET0
+095D D2AB       323            setb ET1
+095F 120057     323            lcall wait
+0962 C2A9       323            clr ET0
+0964 C2AB       323            clr ET1
+0966 12005E     323            lcall wait1
+0969 753861     324            mov timer0Reload, #low(D6)
+096C 7539FB     324            mov timer0reload+1, #high(D6)
+096F 753A86     324            mov timer1Reload, #low(D4)
+0972 753BED     324            mov timer1reload+1, #high(D4)
+0975 753704     324            mov noteLen, #(sixteenth)
+0978 D2A9       324            setb ET0
+097A D2AB       324            setb ET1
+097C 120057     324            lcall wait
+097F C2A9       324            clr ET0
+0981 C2AB       324            clr ET1
+0983 12005E     324            lcall wait1
+0986 7538D5     325            mov timer0Reload, #low(A5)
+0989 7539F9     325            mov timer0reload+1, #high(A5)
+098C 753A86     325            mov timer1Reload, #low(D4)
+098F 753BED     325            mov timer1reload+1, #high(D4)
+0992 75370C     325            mov noteLen, #(dot_eighth)
+0995 D2A9       325            setb ET0
+0997 D2AB       325            setb ET1
+0999 120057     325            lcall wait
+099C C2A9       325            clr ET0
+099E C2AB       325            clr ET1
+09A0 12005E     325            lcall wait1
+09A3 75383B     326            mov timer0Reload, #low(F5)
+09A6 7539F8     326            mov timer0reload+1, #high(F5)
+09A9 753A86     326            mov timer1Reload, #low(D4)
+09AC 753BED     326            mov timer1reload+1, #high(D4)
+09AF 753708     326            mov noteLen, #(eighth)
+09B2 D2A9       326            setb ET0
+09B4 D2AB       326            setb ET1
+09B6 120057     326            lcall wait
+09B9 C2A9       326            clr ET0
+09BB C2AB       326            clr ET1
+09BD 12005E     326            lcall wait1
+09C0            327   ;        playNote(rest, sixteenth)
+09C0 753861     328            mov timer0Reload, #low(D6)
+09C3 7539FB     328            mov timer0reload+1, #high(D6)
+09C6 753A28     328            mov timer1Reload, #low(G4)
+09C9 753BF2     328            mov timer1reload+1, #high(G4)
+09CC 753701     328            mov noteLen, #(grace)
+09CF D2A9       328            setb ET0
+09D1 D2AB       328            setb ET1
+09D3 120057     328            lcall wait
+09D6 C2A9       328            clr ET0
+09D8 C2AB       328            clr ET1
+09DA 12005E     328            lcall wait1
+09DD 7538E2     329            mov timer0Reload, #low(E6)
+09E0 7539FB     329            mov timer0reload+1, #high(E6)
+09E3 753A28     329            mov timer1Reload, #low(G4)
+09E6 753BF2     329            mov timer1reload+1, #high(G4)
+09E9 753708     329            mov noteLen, #(eighth)
+09EC D2A9       329            setb ET0
+09EE D2AB       329            setb ET1
+09F0 120057     329            lcall wait
+09F3 C2A9       329            clr ET0
+09F5 C2AB       329            clr ET1
+09F7 12005E     329            lcall wait1
+09FA 753861     330            mov timer0Reload, #low(D6)
+09FD 7539FB     330            mov timer0reload+1, #high(D6)
+0A00 753A28     330            mov timer1Reload, #low(G4)
+0A03 753BF2     330            mov timer1reload+1, #high(G4)
+0A06 753704     330            mov noteLen, #(sixteenth)
+0A09 D2A9       330            setb ET0
+0A0B D2AB       330            setb ET1
+0A0D 120057     330            lcall wait
+0A10 C2A9       330            clr ET0
+0A12 C2AB       330            clr ET1
+0A14 12005E     330            lcall wait1
+0A17 7538D5     331            mov timer0Reload, #low(A5)
+0A1A 7539F9     331            mov timer0reload+1, #high(A5)
+0A1D 753A28     331            mov timer1Reload, #low(G4)
+0A20 753BF2     331            mov timer1reload+1, #high(G4)
+0A23 75370C     331            mov noteLen, #(dot_eighth)
+0A26 D2A9       331            setb ET0
+0A28 D2AB       331            setb ET1
+0A2A 120057     331            lcall wait
+0A2D C2A9       331            clr ET0
+0A2F C2AB       331            clr ET1
+0A31 12005E     331            lcall wait1
+0A34 75383B     332            mov timer0Reload, #low(F5)
+0A37 7539F8     332            mov timer0reload+1, #high(F5)
+0A3A 753A28     332            mov timer1Reload, #low(G4)
+0A3D 753BF2     332            mov timer1reload+1, #high(G4)
+0A40 753708     332            mov noteLen, #(eighth)
+0A43 D2A9       332            setb ET0
+0A45 D2AB       332            setb ET1
+0A47 120057     332            lcall wait
+0A4A C2A9       332            clr ET0
+0A4C C2AB       332            clr ET1
+0A4E 12005E     332            lcall wait1
+0A51            333   ;        playNote(rest, sixteenth)
+0A51 75382E     334            mov timer0Reload, #low(AS5)
+0A54 7539FA     334            mov timer0reload+1, #high(AS5)
+0A57 753A5C     334            mov timer1Reload, #low(AS4)
+0A5A 753BF4     334            mov timer1reload+1, #high(AS4)
+0A5D 753701     334            mov noteLen, #(grace)
+0A60 D2A9       334            setb ET0
+0A62 D2AB       334            setb ET1
+0A64 120057     334            lcall wait
+0A67 C2A9       334            clr ET0
+0A69 C2AB       334            clr ET1
+0A6B 12005E     334            lcall wait1
+0A6E 7538D0     335            mov timer0Reload, #low(C6)
+0A71 7539FA     335            mov timer0reload+1, #high(C6)
+0A74 753A5C     335            mov timer1Reload, #low(AS4)
+0A77 753BF4     335            mov timer1reload+1, #high(AS4)
+0A7A 753708     335            mov noteLen, #(eighth)
+0A7D D2A9       335            setb ET0
+0A7F D2AB       335            setb ET1
+0A81 120057     335            lcall wait
+0A84 C2A9       335            clr ET0
+0A86 C2AB       335            clr ET1
+0A88 12005E     335            lcall wait1
+0A8B 75382E     336            mov timer0Reload, #low(AS5)
+0A8E 7539FA     336            mov timer0reload+1, #high(AS5)
+0A91 753A5C     336            mov timer1Reload, #low(AS4)
+0A94 753BF4     336            mov timer1reload+1, #high(AS4)
+0A97 753704     336            mov noteLen, #(sixteenth)
+0A9A D2A9       336            setb ET0
+0A9C D2AB       336            setb ET1
+0A9E 120057     336            lcall wait
+0AA1 C2A9       336            clr ET0
+0AA3 C2AB       336            clr ET1
+0AA5 12005E     336            lcall wait1
+0AA8 75383B     337            mov timer0Reload, #low(F5)
+0AAB 7539F8     337            mov timer0reload+1, #high(F5)
+0AAE 753A5C     337            mov timer1Reload, #low(AS4)
+0AB1 753BF4     337            mov timer1reload+1, #high(AS4)
+0AB4 75370C     337            mov noteLen, #(dot_eighth)
+0AB7 D2A9       337            setb ET0
+0AB9 D2AB       337            setb ET1
+0ABB 120057     337            lcall wait
+0ABE C2A9       337            clr ET0
+0AC0 C2AB       337            clr ET1
+0AC2 12005E     337            lcall wait1
+0AC5 7538C3     338            mov timer0Reload, #low(D5)
+0AC8 7539F6     338            mov timer0reload+1, #high(D5)
+0ACB 753A5C     338            mov timer1Reload, #low(AS4)
+0ACE 753BF4     338            mov timer1reload+1, #high(AS4)
+0AD1 753708     338            mov noteLen, #(eighth)
+0AD4 D2A9       338            setb ET0
+0AD6 D2AB       338            setb ET1
+0AD8 120057     338            lcall wait
+0ADB C2A9       338            clr ET0
+0ADD C2AB       338            clr ET1
+0ADF 12005E     338            lcall wait1
+0AE2            339   ;        playNote(rest, sixteenth)
+0AE2 75382E     340            mov timer0Reload, #low(AS5)
+0AE5 7539FA     340            mov timer0reload+1, #high(AS5)
+0AE8 753A5C     340            mov timer1Reload, #low(AS4)
+0AEB 753BF4     340            mov timer1reload+1, #high(AS4)
+0AEE 753701     340            mov noteLen, #(grace)
+0AF1 D2A9       340            setb ET0
+0AF3 D2AB       340            setb ET1
+0AF5 120057     340            lcall wait
+0AF8 C2A9       340            clr ET0
+0AFA C2AB       340            clr ET1
+0AFC 12005E     340            lcall wait1
+0AFF 7538D0     341            mov timer0Reload, #low(C6)
+0B02 7539FA     341            mov timer0reload+1, #high(C6)
+0B05 753A5C     341            mov timer1Reload, #low(AS4)
+0B08 753BF4     341            mov timer1reload+1, #high(AS4)
+0B0B 753708     341            mov noteLen, #(eighth)
+0B0E D2A9       341            setb ET0
+0B10 D2AB       341            setb ET1
+0B12 120057     341            lcall wait
+0B15 C2A9       341            clr ET0
+0B17 C2AB       341            clr ET1
+0B19 12005E     341            lcall wait1
+0B1C 75382E     342            mov timer0Reload, #low(AS5)
+0B1F 7539FA     342            mov timer0reload+1, #high(AS5)
+0B22 753A5C     342            mov timer1Reload, #low(AS4)
+0B25 753BF4     342            mov timer1reload+1, #high(AS4)
+0B28 753704     342            mov noteLen, #(sixteenth)
+0B2B D2A9       342            setb ET0
+0B2D D2AB       342            setb ET1
+0B2F 120057     342            lcall wait
+0B32 C2A9       342            clr ET0
+0B34 C2AB       342            clr ET1
+0B36 12005E     342            lcall wait1
+0B39 75383B     343            mov timer0Reload, #low(F5)
+0B3C 7539F8     343            mov timer0reload+1, #high(F5)
+0B3F 753A5C     343            mov timer1Reload, #low(AS4)
+0B42 753BF4     343            mov timer1reload+1, #high(AS4)
+0B45 75370C     343            mov noteLen, #(dot_eighth)
+0B48 D2A9       343            setb ET0
+0B4A D2AB       343            setb ET1
+0B4C 120057     343            lcall wait
+0B4F C2A9       343            clr ET0
+0B51 C2AB       343            clr ET1
+0B53 12005E     343            lcall wait1
+0B56 7538C3     344            mov timer0Reload, #low(D5)
+0B59 7539F6     344            mov timer0reload+1, #high(D5)
+0B5C 753A5C     344            mov timer1Reload, #low(AS4)
+0B5F 753BF4     344            mov timer1reload+1, #high(AS4)
+0B62 753708     344            mov noteLen, #(eighth)
+0B65 D2A9       344            setb ET0
+0B67 D2AB       344            setb ET1
+0B69 120057     344            lcall wait
+0B6C C2A9       344            clr ET0
+0B6E C2AB       344            clr ET1
+0B70 12005E     344            lcall wait1
+0B73            345   ;        playNote(rest, sixteenth)
+0B73            346            
+0B73 7538AB     347            mov timer0Reload, #low(A4)
+0B76 7539F3     347            mov timer0reload+1, #high(A4)
+0B79 753AD5     347            mov timer1Reload, #low(A5)
+0B7C 753BF9     347            mov timer1reload+1, #high(A5)
+0B7F 753701     347            mov noteLen, #(grace)
+0B82 D2A9       347            setb ET0
+0B84 D2AB       347            setb ET1
+0B86 120057     347            lcall wait
+0B89 C2A9       347            clr ET0
+0B8B C2AB       347            clr ET1
+0B8D 12005E     347            lcall wait1
+0B90 7538AB     348            mov timer0Reload, #low(A4)
+0B93 7539F3     348            mov timer0reload+1, #high(A4)
+0B96 753A2E     348            mov timer1Reload, #low(AS5)
+0B99 753BFA     348            mov timer1reload+1, #high(AS5)
+0B9C 753708     348            mov noteLen, #(eighth)
+0B9F D2A9       348            setb ET0
+0BA1 D2AB       348            setb ET1
+0BA3 120057     348            lcall wait
+0BA6 C2A9       348            clr ET0
+0BA8 C2AB       348            clr ET1
+0BAA 12005E     348            lcall wait1
+0BAD 7538AB     349            mov timer0Reload, #low(A4)
+0BB0 7539F3     349            mov timer0reload+1, #high(A4)
+0BB3 753AD5     349            mov timer1Reload, #low(A5)
+0BB6 753BF9     349            mov timer1reload+1, #high(A5)
+0BB9 753704     349            mov noteLen, #(sixteenth)
+0BBC D2A9       349            setb ET0
+0BBE D2AB       349            setb ET1
+0BC0 120057     349            lcall wait
+0BC3 C2A9       349            clr ET0
+0BC5 C2AB       349            clr ET1
+0BC7 12005E     349            lcall wait1
+0BCA 7538AB     350            mov timer0Reload, #low(A4)
+0BCD 7539F3     350            mov timer0reload+1, #high(A4)
+0BD0 753A3B     350            mov timer1Reload, #low(F5)
+0BD3 753BF8     350            mov timer1reload+1, #high(F5)
+0BD6 75370C     350            mov noteLen, #(dot_eighth)
+0BD9 D2A9       350            setb ET0
+0BDB D2AB       350            setb ET1
+0BDD 120057     350            lcall wait
+0BE0 C2A9       350            clr ET0
+0BE2 C2AB       350            clr ET1
+0BE4 12005E     350            lcall wait1
+0BE7 7538AB     351            mov timer0Reload, #low(A4)
+0BEA 7539F3     351            mov timer0reload+1, #high(A4)
+0BED 753AC3     351            mov timer1Reload, #low(D5)
+0BF0 753BF6     351            mov timer1reload+1, #high(D5)
+0BF3 753708     351            mov noteLen, #(eighth)
+0BF6 D2A9       351            setb ET0
+0BF8 D2AB       351            setb ET1
+0BFA 120057     351            lcall wait
+0BFD C2A9       351            clr ET0
+0BFF C2AB       351            clr ET1
+0C01 12005E     351            lcall wait1
+0C04 7538AB     352            mov timer0Reload, #low(A4)
+0C07 7539F3     352            mov timer0reload+1, #high(A4)
+0C0A 753A5C     352            mov timer1Reload, #low(AS4)
+0C0D 753BF4     352            mov timer1reload+1, #high(AS4)
+0C10 753718     352            mov noteLen, #(dot_quarter)
+0C13 D2A9       352            setb ET0
+0C15 D2AB       352            setb ET1
+0C17 120057     352            lcall wait
+0C1A C2A9       352            clr ET0
+0C1C C2AB       352            clr ET1
+0C1E 12005E     352            lcall wait1
+0C21 7538AB     353            mov timer0Reload, #low(A4)
+0C24 7539F3     353            mov timer0reload+1, #high(A4)
+0C27 753ADC     353            mov timer1Reload, #low(rest)
+0C2A 753BFF     353            mov timer1reload+1, #high(rest)
+0C2D 753708     353            mov noteLen, #(eighth)
+0C30 D2A9       353            setb ET0
+0C32 D2AB       353            setb ET1
+0C34 120057     353            lcall wait
+0C37 C2A9       353            clr ET0
+0C39 C2AB       353            clr ET1
+0C3B 12005E     353            lcall wait1
+0C3E 7538AB     354            mov timer0Reload, #low(A4)
+0C41 7539F3     354            mov timer0reload+1, #high(A4)
+0C44 753AAB     354            mov timer1Reload, #low(A4)
+0C47 753BF3     354            mov timer1reload+1, #high(A4)
+0C4A 753701     354            mov noteLen, #(grace)
+0C4D D2A9       354            setb ET0
+0C4F D2AB       354            setb ET1
+0C51 120057     354            lcall wait
+0C54 C2A9       354            clr ET0
+0C56 C2AB       354            clr ET1
+0C58 12005E     354            lcall wait1
+0C5B 7538AB     355            mov timer0Reload, #low(A4)
+0C5E 7539F3     355            mov timer0reload+1, #high(A4)
+0C61 753A5C     355            mov timer1Reload, #low(AS4)
+0C64 753BF4     355            mov timer1reload+1, #high(AS4)
+0C67 753701     355            mov noteLen, #(grace)
+0C6A D2A9       355            setb ET0
+0C6C D2AB       355            setb ET1
+0C6E 120057     355            lcall wait
+0C71 C2A9       355            clr ET0
+0C73 C2AB       355            clr ET1
+0C75 12005E     355            lcall wait1
+0C78 7538AB     356            mov timer0Reload, #low(A4)
+0C7B 7539F3     356            mov timer0reload+1, #high(A4)
+0C7E 753AAB     356            mov timer1Reload, #low(A4)
+0C81 753BF3     356            mov timer1reload+1, #high(A4)
+0C84 753708     356            mov noteLen, #(eighth)
+0C87 D2A9       356            setb ET0
+0C89 D2AB       356            setb ET1
+0C8B 120057     356            lcall wait
+0C8E C2A9       356            clr ET0
+0C90 C2AB       356            clr ET1
+0C92 12005E     356            lcall wait1
+0C95 7538AB     357            mov timer0Reload, #low(A4)
+0C98 7539F3     357            mov timer0reload+1, #high(A4)
+0C9B 753A5C     357            mov timer1Reload, #low(AS4)
+0C9E 753BF4     357            mov timer1reload+1, #high(AS4)
+0CA1 753708     357            mov noteLen, #(eighth)
+0CA4 D2A9       357            setb ET0
+0CA6 D2AB       357            setb ET1
+0CA8 120057     357            lcall wait
+0CAB C2A9       357            clr ET0
+0CAD C2AB       357            clr ET1
+0CAF 12005E     357            lcall wait1
+0CB2 7538AB     358            mov timer0Reload, #low(A4)
+0CB5 7539F3     358            mov timer0reload+1, #high(A4)
+0CB8 753AA1     358            mov timer1Reload, #low(C5)
+0CBB 753BF5     358            mov timer1reload+1, #high(C5)
+0CBE 753708     358            mov noteLen, #(eighth)
+0CC1 D2A9       358            setb ET0
+0CC3 D2AB       358            setb ET1
+0CC5 120057     358            lcall wait
+0CC8 C2A9       358            clr ET0
+0CCA C2AB       358            clr ET1
+0CCC 12005E     358            lcall wait1
+0CCF 7538AB     359            mov timer0Reload, #low(A4)
+0CD2 7539F3     359            mov timer0reload+1, #high(A4)
+0CD5 753AC3     359            mov timer1Reload, #low(D5)
+0CD8 753BF6     359            mov timer1reload+1, #high(D5)
+0CDB 753708     359            mov noteLen, #(eighth)
+0CDE D2A9       359            setb ET0
+0CE0 D2AB       359            setb ET1
+0CE2 120057     359            lcall wait
+0CE5 C2A9       359            clr ET0
+0CE7 C2AB       359            clr ET1
+0CE9 12005E     359            lcall wait1
+0CEC 7538AB     360            mov timer0Reload, #low(A4)
+0CEF 7539F3     360            mov timer0reload+1, #high(A4)
+0CF2 753AC5     360            mov timer1Reload, #low(E5)
+0CF5 753BF7     360            mov timer1reload+1, #high(E5)
+0CF8 753708     360            mov noteLen, #(eighth)
+0CFB D2A9       360            setb ET0
+0CFD D2AB       360            setb ET1
+0CFF 120057     360            lcall wait
+0D02 C2A9       360            clr ET0
+0D04 C2AB       360            clr ET1
+0D06 12005E     360            lcall wait1
+0D09 7538AB     361            mov timer0Reload, #low(A4)
+0D0C 7539F3     361            mov timer0reload+1, #high(A4)
+0D0F 753A3B     361            mov timer1Reload, #low(F5)
+0D12 753BF8     361            mov timer1reload+1, #high(F5)
+0D15 753708     361            mov noteLen, #(eighth)
+0D18 D2A9       361            setb ET0
+0D1A D2AB       361            setb ET1
+0D1C 120057     361            lcall wait
+0D1F C2A9       361            clr ET0
+0D21 C2AB       361            clr ET1
+0D23 12005E     361            lcall wait1
+0D26 7538AB     362            mov timer0Reload, #low(A4)
+0D29 7539F3     362            mov timer0reload+1, #high(A4)
+0D2C 753A14     362            mov timer1Reload, #low(G5)
+0D2F 753BF9     362            mov timer1reload+1, #high(G5)
+0D32 753708     362            mov noteLen, #(eighth)
+0D35 D2A9       362            setb ET0
+0D37 D2AB       362            setb ET1
+0D39 120057     362            lcall wait
+0D3C C2A9       362            clr ET0
+0D3E C2AB       362            clr ET1
+0D40 12005E     362            lcall wait1
+0D43 7538AB     363            mov timer0Reload, #low(A4)
+0D46 7539F3     363            mov timer0reload+1, #high(A4)
+0D49 753AD5     363            mov timer1Reload, #low(A5)
+0D4C 753BF9     363            mov timer1reload+1, #high(A5)
+0D4F 753708     363            mov noteLen, #(eighth)
+0D52 D2A9       363            setb ET0
+0D54 D2AB       363            setb ET1
+0D56 120057     363            lcall wait
+0D59 C2A9       363            clr ET0
+0D5B C2AB       363            clr ET1
+0D5D 12005E     363            lcall wait1     
+0D60            364   
+0D60 22         365   ret
+0D61            366   
+0D61            367   Pirates:
+0D61 C227       368   clr legato
+0D63 7B0F       369   mov r3, #fast
+0D65 753856     370            mov timer0Reload, #low(A3)
+0D68 7539E7     370            mov timer0reload+1, #high(A3)
+0D6B 753704     370            mov noteLen, #(sixteenth)
+0D6E D2A9       370            setb ET0
+0D70 120057     370            lcall wait
+0D73 C2A9       370            clr ET0
+0D75 12005E     370            lcall wait1
+0D78 7538AB     371            mov timer0Reload, #low(A4)
+0D7B 7539F3     371            mov timer0reload+1, #high(A4)
+0D7E 753704     371            mov noteLen, #(sixteenth)
+0D81 D2A9       371            setb ET0
+0D83 120057     371            lcall wait
+0D86 C2A9       371            clr ET0
+0D88 12005E     371            lcall wait1
+0D8B 7538A1     372            mov timer0Reload, #low(C5)
+0D8E 7539F5     372            mov timer0reload+1, #high(C5)
+0D91 753704     372            mov noteLen, #(sixteenth)
+0D94 D2A9       372            setb ET0
+0D96 120057     372            lcall wait
+0D99 C2A9       372            clr ET0
+0D9B 12005E     372            lcall wait1
+0D9E 753886     373            mov timer0Reload, #low(D4)
+0DA1 7539ED     373            mov timer0reload+1, #high(D4)
+0DA4 753AC3     373            mov timer1Reload, #low(D5)
+0DA7 753BF6     373            mov timer1reload+1, #high(D5)
+0DAA 753708     373            mov noteLen, #(eighth)
+0DAD D2A9       373            setb ET0
+0DAF D2AB       373            setb ET1
+0DB1 120057     373            lcall wait
+0DB4 C2A9       373            clr ET0
+0DB6 C2AB       373            clr ET1
+0DB8 12005E     373            lcall wait1
+0DBB 7538C3     374            mov timer0Reload, #low(D5)
+0DBE 7539F6     374            mov timer0reload+1, #high(D5)
+0DC1 753708     374            mov noteLen, #(eighth)
+0DC4 D2A9       374            setb ET0
+0DC6 120057     374            lcall wait
+0DC9 C2A9       374            clr ET0
+0DCB 12005E     374            lcall wait1
+0DCE 753886     375            mov timer0Reload, #low(D4)
+0DD1 7539ED     375            mov timer0reload+1, #high(D4)
+0DD4 753708     375            mov noteLen, #(eighth)
+0DD7 D2A9       375            setb ET0
+0DD9 120057     375            lcall wait
+0DDC C2A9       375            clr ET0
+0DDE 12005E     375            lcall wait1
+0DE1 7538C3     376            mov timer0Reload, #low(D5)
+0DE4 7539F6     376            mov timer0reload+1, #high(D5)
+0DE7 753704     376            mov noteLen, #(sixteenth)
+0DEA D2A9       376            setb ET0
+0DEC 120057     376            lcall wait
+0DEF C2A9       376            clr ET0
+0DF1 12005E     376            lcall wait1
+0DF4 7538C5     377            mov timer0Reload, #low(E5)
+0DF7 7539F7     377            mov timer0reload+1, #high(E5)
+0DFA 753704     377            mov noteLen, #(sixteenth)
+0DFD D2A9       377            setb ET0
+0DFF 120057     377            lcall wait
+0E02 C2A9       377            clr ET0
+0E04 12005E     377            lcall wait1
+0E07 75383B     378            mov timer0Reload, #low(F5)
+0E0A 7539F8     378            mov timer0reload+1, #high(F5)
+0E0D 753AB9     378            mov timer1Reload, #low(AS3)
+0E10 753BE8     378            mov timer1reload+1, #high(AS3)
+0E13 753708     378            mov noteLen, #(eighth)
+0E16 D2A9       378            setb ET0
+0E18 D2AB       378            setb ET1
+0E1A 120057     378            lcall wait
+0E1D C2A9       378            clr ET0
+0E1F C2AB       378            clr ET1
+0E21 12005E     378            lcall wait1
+0E24 75383B     379            mov timer0Reload, #low(F5)
+0E27 7539F8     379            mov timer0reload+1, #high(F5)
+0E2A 753708     379            mov noteLen, #(eighth)
+0E2D D2A9       379            setb ET0
+0E2F 120057     379            lcall wait
+0E32 C2A9       379            clr ET0
+0E34 12005E     379            lcall wait1
+0E37 7538B9     380            mov timer0Reload, #low(AS3)
+0E3A 7539E8     380            mov timer0reload+1, #high(AS3)
+0E3D 753708     380            mov noteLen, #(eighth)
+0E40 D2A9       380            setb ET0
+0E42 120057     380            lcall wait
+0E45 C2A9       380            clr ET0
+0E47 12005E     380            lcall wait1
+0E4A 75383B     381            mov timer0Reload, #low(F5)
+0E4D 7539F8     381            mov timer0reload+1, #high(F5)
+0E50 753704     381            mov noteLen, #(sixteenth)
+0E53 D2A9       381            setb ET0
+0E55 120057     381            lcall wait
+0E58 C2A9       381            clr ET0
+0E5A 12005E     381            lcall wait1
+0E5D 753814     382            mov timer0Reload, #low(G5)
+0E60 7539F9     382            mov timer0reload+1, #high(G5)
+0E63 753704     382            mov noteLen, #(sixteenth)
+0E66 D2A9       382            setb ET0
+0E68 120057     382            lcall wait
+0E6B C2A9       382            clr ET0
+0E6D 12005E     382            lcall wait1
+0E70 7538C5     383            mov timer0Reload, #low(E5)
+0E73 7539F7     383            mov timer0reload+1, #high(E5)
+0E76 753A56     383            mov timer1Reload, #low(A3)
+0E79 753BE7     383            mov timer1reload+1, #high(A3)
+0E7C 753708     383            mov noteLen, #(eighth)
+0E7F D2A9       383            setb ET0
+0E81 D2AB       383            setb ET1
+0E83 120057     383            lcall wait
+0E86 C2A9       383            clr ET0
+0E88 C2AB       383            clr ET1
+0E8A 12005E     383            lcall wait1
+0E8D 7538C5     384            mov timer0Reload, #low(E5)
+0E90 7539F7     384            mov timer0reload+1, #high(E5)
+0E93 753708     384            mov noteLen, #(eighth)
+0E96 D2A9       384            setb ET0
+0E98 120057     384            lcall wait
+0E9B C2A9       384            clr ET0
+0E9D 12005E     384            lcall wait1
+0EA0 753856     385            mov timer0Reload, #low(A3)
+0EA3 7539E7     385            mov timer0reload+1, #high(A3)
+0EA6 753708     385            mov noteLen, #(eighth)
+0EA9 D2A9       385            setb ET0
+0EAB 120057     385            lcall wait
+0EAE C2A9       385            clr ET0
+0EB0 12005E     385            lcall wait1
+0EB3 7538C3     386            mov timer0Reload, #low(D5)
+0EB6 7539F6     386            mov timer0reload+1, #high(D5)
+0EB9 753704     386            mov noteLen, #(sixteenth)
+0EBC D2A9       386            setb ET0
+0EBE 120057     386            lcall wait
+0EC1 C2A9       386            clr ET0
+0EC3 12005E     386            lcall wait1
+0EC6 7538A1     387            mov timer0Reload, #low(C5)
+0EC9 7539F5     387            mov timer0reload+1, #high(C5)
+0ECC 753704     387            mov noteLen, #(sixteenth)
+0ECF D2A9       387            setb ET0
+0ED1 120057     387            lcall wait
+0ED4 C2A9       387            clr ET0
+0ED6 12005E     387            lcall wait1
+0ED9 7538A1     388            mov timer0Reload, #low(C5)
+0EDC 7539F5     388            mov timer0reload+1, #high(C5)
+0EDF 753A86     388            mov timer1Reload, #low(D4)
+0EE2 753BED     388            mov timer1reload+1, #high(D4)
+0EE5 753704     388            mov noteLen, #(sixteenth)
+0EE8 D2A9       388            setb ET0
+0EEA D2AB       388            setb ET1
+0EEC 120057     388            lcall wait
+0EEF C2A9       388            clr ET0
+0EF1 C2AB       388            clr ET1
+0EF3 12005E     388            lcall wait1
+0EF6 7538C3     389            mov timer0Reload, #low(D5)
+0EF9 7539F6     389            mov timer0reload+1, #high(D5)
+0EFC 753710     389            mov noteLen, #(quarter)
+0EFF D2A9       389            setb ET0
+0F01 120057     389            lcall wait
+0F04 C2A9       389            clr ET0
+0F06 12005E     389            lcall wait1
+0F09 753886     390            mov timer0Reload, #low(D4)
+0F0C 7539ED     390            mov timer0reload+1, #high(D4)
+0F0F 753704     390            mov noteLen, #(sixteenth)
+0F12 D2A9       390            setb ET0
+0F14 120057     390            lcall wait
+0F17 C2A9       390            clr ET0
+0F19 12005E     390            lcall wait1
+0F1C 7538AB     391            mov timer0Reload, #low(A4)
+0F1F 7539F3     391            mov timer0reload+1, #high(A4)
+0F22 753704     391            mov noteLen, #(sixteenth)
+0F25 D2A9       391            setb ET0
+0F27 120057     391            lcall wait
+0F2A C2A9       391            clr ET0
+0F2C 12005E     391            lcall wait1
+0F2F 7538A1     392            mov timer0Reload, #low(C5)
+0F32 7539F5     392            mov timer0reload+1, #high(C5)
+0F35 753708     392            mov noteLen, #(eighth)
+0F38 D2A9       392            setb ET0
+0F3A 120057     392            lcall wait
+0F3D C2A9       392            clr ET0
+0F3F 12005E     392            lcall wait1
+0F42 7538B9     393            mov timer0Reload, #low(AS3)
+0F45 7539E8     393            mov timer0reload+1, #high(AS3)
+0F48 753AC3     393            mov timer1Reload, #low(D5)
+0F4B 753BF6     393            mov timer1reload+1, #high(D5)
+0F4E 753708     393            mov noteLen, #(eighth)
+0F51 D2A9       393            setb ET0
+0F53 D2AB       393            setb ET1
+0F55 120057     393            lcall wait
+0F58 C2A9       393            clr ET0
+0F5A C2AB       393            clr ET1
+0F5C 12005E     393            lcall wait1
+0F5F 7538C3     394            mov timer0Reload, #low(D5)
+0F62 7539F6     394            mov timer0reload+1, #high(D5)
+0F65 753708     394            mov noteLen, #(eighth)
+0F68 D2A9       394            setb ET0
+0F6A 120057     394            lcall wait
+0F6D C2A9       394            clr ET0
+0F6F 12005E     394            lcall wait1
+0F72 7538B9     395            mov timer0Reload, #low(AS3)
+0F75 7539E8     395            mov timer0reload+1, #high(AS3)
+0F78 753708     395            mov noteLen, #(eighth)
+0F7B D2A9       395            setb ET0
+0F7D 120057     395            lcall wait
+0F80 C2A9       395            clr ET0
+0F82 12005E     395            lcall wait1
+0F85 7538C3     396            mov timer0Reload, #low(D5)
+0F88 7539F6     396            mov timer0reload+1, #high(D5)
+0F8B 753704     396            mov noteLen, #(sixteenth)
+0F8E D2A9       396            setb ET0
+0F90 120057     396            lcall wait
+0F93 C2A9       396            clr ET0
+0F95 12005E     396            lcall wait1
+0F98 7538C5     397            mov timer0Reload, #low(E5)
+0F9B 7539F7     397            mov timer0reload+1, #high(E5)
+0F9E 753704     397            mov noteLen, #(sixteenth)
+0FA1 D2A9       397            setb ET0
+0FA3 120057     397            lcall wait
+0FA6 C2A9       397            clr ET0
+0FA8 12005E     397            lcall wait1
+0FAB 75383B     398            mov timer0Reload, #low(F5)
+0FAE 7539F8     398            mov timer0reload+1, #high(F5)
+0FB1 753AED     398            mov timer1Reload, #low(F3)
+0FB4 753BE0     398            mov timer1reload+1, #high(F3)
+0FB7 753708     398            mov noteLen, #(eighth)
+0FBA D2A9       398            setb ET0
+0FBC D2AB       398            setb ET1
+0FBE 120057     398            lcall wait
+0FC1 C2A9       398            clr ET0
+0FC3 C2AB       398            clr ET1
+0FC5 12005E     398            lcall wait1
+0FC8 75383B     399            mov timer0Reload, #low(F5)
+0FCB 7539F8     399            mov timer0reload+1, #high(F5)
+0FCE 753708     399            mov noteLen, #(eighth)
+0FD1 D2A9       399            setb ET0
+0FD3 120057     399            lcall wait
+0FD6 C2A9       399            clr ET0
+0FD8 12005E     399            lcall wait1
+0FDB 7538ED     400            mov timer0Reload, #low(F3)
+0FDE 7539E0     400            mov timer0reload+1, #high(F3)
+0FE1 753708     400            mov noteLen, #(eighth)
+0FE4 D2A9       400            setb ET0
+0FE6 120057     400            lcall wait
+0FE9 C2A9       400            clr ET0
+0FEB 12005E     400            lcall wait1
+0FEE 75383B     401            mov timer0Reload, #low(F5)
+0FF1 7539F8     401            mov timer0reload+1, #high(F5)
+0FF4 753704     401            mov noteLen, #(sixteenth)
+0FF7 D2A9       401            setb ET0
+0FF9 120057     401            lcall wait
+0FFC C2A9       401            clr ET0
+0FFE 12005E     401            lcall wait1
+1001 753814     402            mov timer0Reload, #low(G5)
+1004 7539F9     402            mov timer0reload+1, #high(G5)
+1007 753704     402            mov noteLen, #(sixteenth)
+100A D2A9       402            setb ET0
+100C 120057     402            lcall wait
+100F C2A9       402            clr ET0
+1011 12005E     402            lcall wait1
+1014 7538C5     403            mov timer0Reload, #low(E5)
+1017 7539F7     403            mov timer0reload+1, #high(E5)
+101A 753A43     403            mov timer1Reload, #low(C4)
+101D 753BEB     403            mov timer1reload+1, #high(C4)
+1020 753708     403            mov noteLen, #(eighth)
+1023 D2A9       403            setb ET0
+1025 D2AB       403            setb ET1
+1027 120057     403            lcall wait
+102A C2A9       403            clr ET0
+102C C2AB       403            clr ET1
+102E 12005E     403            lcall wait1
+1031 7538C5     404            mov timer0Reload, #low(E5)
+1034 7539F7     404            mov timer0reload+1, #high(E5)
+1037 753708     404            mov noteLen, #(eighth)
+103A D2A9       404            setb ET0
+103C 120057     404            lcall wait
+103F C2A9       404            clr ET0
+1041 12005E     404            lcall wait1
+1044 753843     405            mov timer0Reload, #low(C4)
+1047 7539EB     405            mov timer0reload+1, #high(C4)
+104A 753708     405            mov noteLen, #(eighth)
+104D D2A9       405            setb ET0
+104F 120057     405            lcall wait
+1052 C2A9       405            clr ET0
+1054 12005E     405            lcall wait1
+1057 7538C3     406            mov timer0Reload, #low(D5)
+105A 7539F6     406            mov timer0reload+1, #high(D5)
+105D 753704     406            mov noteLen, #(sixteenth)
+1060 D2A9       406            setb ET0
+1062 120057     406            lcall wait
+1065 C2A9       406            clr ET0
+1067 12005E     406            lcall wait1
+106A 7538A1     407            mov timer0Reload, #low(C5)
+106D 7539F5     407            mov timer0reload+1, #high(C5)
+1070 753704     407            mov noteLen, #(sixteenth)
+1073 D2A9       407            setb ET0
+1075 120057     407            lcall wait
+1078 C2A9       407            clr ET0
+107A 12005E     407            lcall wait1
+107D 7538C3     408            mov timer0Reload, #low(D5)
+1080 7539F6     408            mov timer0reload+1, #high(D5)
+1083 753A86     408            mov timer1Reload, #low(D4)
+1086 753BED     408            mov timer1reload+1, #high(D4)
+1089 75370C     408            mov noteLen, #(dot_eighth)
+108C D2A9       408            setb ET0
+108E D2AB       408            setb ET1
+1090 120057     408            lcall wait
+1093 C2A9       408            clr ET0
+1095 C2AB       408            clr ET1
+1097 12005E     408            lcall wait1
+109A 75380C     409            mov timer0Reload, #low(D3)
+109D 7539DB     409            mov timer0reload+1, #high(D3)
+10A0 753704     409            mov noteLen, #(sixteenth)
+10A3 D2A9       409            setb ET0
+10A5 120057     409            lcall wait
+10A8 C2A9       409            clr ET0
+10AA 12005E     409            lcall wait1
+10AD 75380C     410            mov timer0Reload, #low(D3)
+10B0 7539DB     410            mov timer0reload+1, #high(D3)
+10B3 753704     410            mov noteLen, #(sixteenth)
+10B6 D2A9       410            setb ET0
+10B8 120057     410            lcall wait
+10BB C2A9       410            clr ET0
+10BD 12005E     410            lcall wait1
+10C0 7538AB     411            mov timer0Reload, #low(A4)
+10C3 7539F3     411            mov timer0reload+1, #high(A4)
+10C6 753704     411            mov noteLen, #(sixteenth)
+10C9 D2A9       411            setb ET0
+10CB 120057     411            lcall wait
+10CE C2A9       411            clr ET0
+10D0 12005E     411            lcall wait1
+10D3 7538A1     412            mov timer0Reload, #low(C5)
+10D6 7539F5     412            mov timer0reload+1, #high(C5)
+10D9 753704     412            mov noteLen, #(sixteenth)
+10DC D2A9       412            setb ET0
+10DE 120057     412            lcall wait
+10E1 C2A9       412            clr ET0
+10E3 12005E     412            lcall wait1
+10E6 753886     413            mov timer0Reload, #low(D4)
+10E9 7539ED     413            mov timer0reload+1, #high(D4)
+10EC 753AC3     413            mov timer1Reload, #low(D5)
+10EF 753BF6     413            mov timer1reload+1, #high(D5)
+10F2 753708     413            mov noteLen, #(eighth)
+10F5 D2A9       413            setb ET0
+10F7 D2AB       413            setb ET1
+10F9 120057     413            lcall wait
+10FC C2A9       413            clr ET0
+10FE C2AB       413            clr ET1
+1100 12005E     413            lcall wait1
+1103 7538C3     414            mov timer0Reload, #low(D5)
+1106 7539F6     414            mov timer0reload+1, #high(D5)
+1109 753708     414            mov noteLen, #(eighth)
+110C D2A9       414            setb ET0
+110E 120057     414            lcall wait
+1111 C2A9       414            clr ET0
+1113 12005E     414            lcall wait1
+1116 753886     415            mov timer0Reload, #low(D4)
+1119 7539ED     415            mov timer0reload+1, #high(D4)
+111C 753708     415            mov noteLen, #(eighth)
+111F D2A9       415            setb ET0
+1121 120057     415            lcall wait
+1124 C2A9       415            clr ET0
+1126 12005E     415            lcall wait1
+1129 7538C3     416            mov timer0Reload, #low(D5)
+112C 7539F6     416            mov timer0reload+1, #high(D5)
+112F 753704     416            mov noteLen, #(sixteenth)
+1132 D2A9       416            setb ET0
+1134 120057     416            lcall wait
+1137 C2A9       416            clr ET0
+1139 12005E     416            lcall wait1
+113C 7538C5     417            mov timer0Reload, #low(E5)
+113F 7539F7     417            mov timer0reload+1, #high(E5)
+1142 753704     417            mov noteLen, #(sixteenth)
+1145 D2A9       417            setb ET0
+1147 120057     417            lcall wait
+114A C2A9       417            clr ET0
+114C 12005E     417            lcall wait1
+114F 753814     418            mov timer0Reload, #low(G5)
+1152 7539F9     418            mov timer0reload+1, #high(G5)
+1155 753AB9     418            mov timer1Reload, #low(AS3)
+1158 753BE8     418            mov timer1reload+1, #high(AS3)
+115B 753708     418            mov noteLen, #(eighth)
+115E D2A9       418            setb ET0
+1160 D2AB       418            setb ET1
+1162 120057     418            lcall wait
+1165 C2A9       418            clr ET0
+1167 C2AB       418            clr ET1
+1169 12005E     418            lcall wait1
+116C 753814     419            mov timer0Reload, #low(G5)
+116F 7539F9     419            mov timer0reload+1, #high(G5)
+1172 753708     419            mov noteLen, #(eighth)
+1175 D2A9       419            setb ET0
+1177 120057     419            lcall wait
+117A C2A9       419            clr ET0
+117C 12005E     419            lcall wait1
+117F 7538B9     420            mov timer0Reload, #low(AS3)
+1182 7539E8     420            mov timer0reload+1, #high(AS3)
+1185 753708     420            mov noteLen, #(eighth)
+1188 D2A9       420            setb ET0
+118A 120057     420            lcall wait
+118D C2A9       420            clr ET0
+118F 12005E     420            lcall wait1
+1192 753814     421            mov timer0Reload, #low(G5)
+1195 7539F9     421            mov timer0reload+1, #high(G5)
+1198 753704     421            mov noteLen, #(sixteenth)
+119B D2A9       421            setb ET0
+119D 120057     421            lcall wait
+11A0 C2A9       421            clr ET0
+11A2 12005E     421            lcall wait1
+11A5 7538D5     422            mov timer0Reload, #low(A5)
+11A8 7539F9     422            mov timer0reload+1, #high(A5)
+11AB 753704     422            mov noteLen, #(sixteenth)
+11AE D2A9       422            setb ET0
+11B0 120057     422            lcall wait
+11B3 C2A9       422            clr ET0
+11B5 12005E     422            lcall wait1
+11B8 75382E     423            mov timer0Reload, #low(AS5)
+11BB 7539FA     423            mov timer0reload+1, #high(AS5)
+11BE 753A51     423            mov timer1Reload, #low(G3)
+11C1 753BE4     423            mov timer1reload+1, #high(G3)
+11C4 753708     423            mov noteLen, #(eighth)
+11C7 D2A9       423            setb ET0
+11C9 D2AB       423            setb ET1
+11CB 120057     423            lcall wait
+11CE C2A9       423            clr ET0
+11D0 C2AB       423            clr ET1
+11D2 12005E     423            lcall wait1
+11D5 75382E     424            mov timer0Reload, #low(AS5)
+11D8 7539FA     424            mov timer0reload+1, #high(AS5)
+11DB 753708     424            mov noteLen, #(eighth)
+11DE D2A9       424            setb ET0
+11E0 120057     424            lcall wait
+11E3 C2A9       424            clr ET0
+11E5 12005E     424            lcall wait1
+11E8 753851     425            mov timer0Reload, #low(G3)
+11EB 7539E4     425            mov timer0reload+1, #high(G3)
+11EE 753708     425            mov noteLen, #(eighth)
+11F1 D2A9       425            setb ET0
+11F3 120057     425            lcall wait
+11F6 C2A9       425            clr ET0
+11F8 12005E     425            lcall wait1
+11FB 7538D5     426            mov timer0Reload, #low(A5)
+11FE 7539F9     426            mov timer0reload+1, #high(A5)
+1201 753704     426            mov noteLen, #(sixteenth)
+1204 D2A9       426            setb ET0
+1206 120057     426            lcall wait
+1209 C2A9       426            clr ET0
+120B 12005E     426            lcall wait1
+120E 753814     427            mov timer0Reload, #low(G5)
+1211 7539F9     427            mov timer0reload+1, #high(G5)
+1214 753704     427            mov noteLen, #(sixteenth)
+1217 D2A9       427            setb ET0
+1219 120057     427            lcall wait
+121C C2A9       427            clr ET0
+121E 12005E     427            lcall wait1
+1221 7538D5     428            mov timer0Reload, #low(A5)
+1224 7539F9     428            mov timer0reload+1, #high(A5)
+1227 753A86     428            mov timer1Reload, #low(D4)
+122A 753BED     428            mov timer1reload+1, #high(D4)
+122D 753704     428            mov noteLen, #(sixteenth)
+1230 D2A9       428            setb ET0
+1232 D2AB       428            setb ET1
+1234 120057     428            lcall wait
+1237 C2A9       428            clr ET0
+1239 C2AB       428            clr ET1
+123B 12005E     428            lcall wait1
+123E 7538C3     429            mov timer0Reload, #low(D5)
+1241 7539F6     429            mov timer0reload+1, #high(D5)
+1244 753708     429            mov noteLen, #(eighth)
+1247 D2A9       429            setb ET0
+1249 120057     429            lcall wait
+124C C2A9       429            clr ET0
+124E 12005E     429            lcall wait1
+1251 753886     430            mov timer0Reload, #low(D4)
+1254 7539ED     430            mov timer0reload+1, #high(D4)
+1257 753708     430            mov noteLen, #(eighth)
+125A D2A9       430            setb ET0
+125C 120057     430            lcall wait
+125F C2A9       430            clr ET0
+1261 12005E     430            lcall wait1
+1264 7538C3     431            mov timer0Reload, #low(D5)
+1267 7539F6     431            mov timer0reload+1, #high(D5)
+126A 753704     431            mov noteLen, #(sixteenth)
+126D D2A9       431            setb ET0
+126F 120057     431            lcall wait
+1272 C2A9       431            clr ET0
+1274 12005E     431            lcall wait1
+1277 7538C5     432            mov timer0Reload, #low(E5)
+127A 7539F7     432            mov timer0reload+1, #high(E5)
+127D 753704     432            mov noteLen, #(sixteenth)
+1280 D2A9       432            setb ET0
+1282 120057     432            lcall wait
+1285 C2A9       432            clr ET0
+1287 12005E     432            lcall wait1
+128A 75383B     433            mov timer0Reload, #low(F5)
+128D 7539F8     433            mov timer0reload+1, #high(F5)
+1290 753AB9     433            mov timer1Reload, #low(AS3)
+1293 753BE8     433            mov timer1reload+1, #high(AS3)
+1296 753708     433            mov noteLen, #(eighth)
+1299 D2A9       433            setb ET0
+129B D2AB       433            setb ET1
+129D 120057     433            lcall wait
+12A0 C2A9       433            clr ET0
+12A2 C2AB       433            clr ET1
+12A4 12005E     433            lcall wait1
+12A7 75383B     434            mov timer0Reload, #low(F5)
+12AA 7539F8     434            mov timer0reload+1, #high(F5)
+12AD 753708     434            mov noteLen, #(eighth)
+12B0 D2A9       434            setb ET0
+12B2 120057     434            lcall wait
+12B5 C2A9       434            clr ET0
+12B7 12005E     434            lcall wait1
+12BA 7538B9     435            mov timer0Reload, #low(AS3)
+12BD 7539E8     435            mov timer0reload+1, #high(AS3)
+12C0 753708     435            mov noteLen, #(eighth)
+12C3 D2A9       435            setb ET0
+12C5 120057     435            lcall wait
+12C8 C2A9       435            clr ET0
+12CA 12005E     435            lcall wait1
+12CD 753814     436            mov timer0Reload, #low(G5)
+12D0 7539F9     436            mov timer0reload+1, #high(G5)
+12D3 753708     436            mov noteLen, #(eighth)
+12D6 D2A9       436            setb ET0
+12D8 120057     436            lcall wait
+12DB C2A9       436            clr ET0
+12DD 12005E     436            lcall wait1
+12E0 7538D5     437            mov timer0Reload, #low(A5)
+12E3 7539F9     437            mov timer0reload+1, #high(A5)
+12E6 753A86     437            mov timer1Reload, #low(D4)
+12E9 753BED     437            mov timer1reload+1, #high(D4)
+12EC 753704     437            mov noteLen, #(sixteenth)
+12EF D2A9       437            setb ET0
+12F1 D2AB       437            setb ET1
+12F3 120057     437            lcall wait
+12F6 C2A9       437            clr ET0
+12F8 C2AB       437            clr ET1
+12FA 12005E     437            lcall wait1
+12FD 7538C3     438            mov timer0Reload, #low(D5)
+1300 7539F6     438            mov timer0reload+1, #high(D5)
+1303 753708     438            mov noteLen, #(eighth)
+1306 D2A9       438            setb ET0
+1308 120057     438            lcall wait
+130B C2A9       438            clr ET0
+130D 12005E     438            lcall wait1
+1310 753856     439            mov timer0Reload, #low(A3)
+1313 7539E7     439            mov timer0reload+1, #high(A3)
+1316 753708     439            mov noteLen, #(eighth)
+1319 D2A9       439            setb ET0
+131B 120057     439            lcall wait
+131E C2A9       439            clr ET0
+1320 12005E     439            lcall wait1
+1323 7538C3     440            mov timer0Reload, #low(D5)
+1326 7539F6     440            mov timer0reload+1, #high(D5)
+1329 753704     440            mov noteLen, #(sixteenth)
+132C D2A9       440            setb ET0
+132E 120057     440            lcall wait
+1331 C2A9       440            clr ET0
+1333 12005E     440            lcall wait1
+1336 75383B     441            mov timer0Reload, #low(F5)
+1339 7539F8     441            mov timer0reload+1, #high(F5)
+133C 753704     441            mov noteLen, #(sixteenth)
+133F D2A9       441            setb ET0
+1341 120057     441            lcall wait
+1344 C2A9       441            clr ET0
+1346 12005E     441            lcall wait1
+1349 7538C5     442            mov timer0Reload, #low(E5)
+134C 7539F7     442            mov timer0reload+1, #high(E5)
+134F 753A56     442            mov timer1Reload, #low(A3)
+1352 753BE7     442            mov timer1reload+1, #high(A3)
+1355 753708     442            mov noteLen, #(eighth)
+1358 D2A9       442            setb ET0
+135A D2AB       442            setb ET1
+135C 120057     442            lcall wait
+135F C2A9       442            clr ET0
+1361 C2AB       442            clr ET1
+1363 12005E     442            lcall wait1
+1366 7538C5     443            mov timer0Reload, #low(E5)
+1369 7539F7     443            mov timer0reload+1, #high(E5)
+136C 753708     443            mov noteLen, #(eighth)
+136F D2A9       443            setb ET0
+1371 120057     443            lcall wait
+1374 C2A9       443            clr ET0
+1376 12005E     443            lcall wait1
+1379 753856     444            mov timer0Reload, #low(A3)
+137C 7539E7     444            mov timer0reload+1, #high(A3)
+137F 753708     444            mov noteLen, #(eighth)
+1382 D2A9       444            setb ET0
+1384 120057     444            lcall wait
+1387 C2A9       444            clr ET0
+1389 12005E     444            lcall wait1
+138C 75383B     445            mov timer0Reload, #low(F5)
+138F 7539F8     445            mov timer0reload+1, #high(F5)
+1392 753704     445            mov noteLen, #(sixteenth)
+1395 D2A9       445            setb ET0
+1397 120057     445            lcall wait
+139A C2A9       445            clr ET0
+139C 12005E     445            lcall wait1
+139F 7538C3     446            mov timer0Reload, #low(D5)
+13A2 7539F6     446            mov timer0reload+1, #high(D5)
+13A5 753704     446            mov noteLen, #(sixteenth)
+13A8 D2A9       446            setb ET0
+13AA 120057     446            lcall wait
+13AD C2A9       446            clr ET0
+13AF 12005E     446            lcall wait1     
+13B2 7538C5     447            mov timer0Reload, #low(E5)
+13B5 7539F7     447            mov timer0reload+1, #high(E5)
+13B8 753A56     447            mov timer1Reload, #low(A3)
+13BB 753BE7     447            mov timer1reload+1, #high(A3)
+13BE 753708     447            mov noteLen, #(eighth)
+13C1 D2A9       447            setb ET0
+13C3 D2AB       447            setb ET1
+13C5 120057     447            lcall wait
+13C8 C2A9       447            clr ET0
+13CA C2AB       447            clr ET1
+13CC 12005E     447            lcall wait1
+13CF 753856     448            mov timer0Reload, #low(A3)
+13D2 7539E7     448            mov timer0reload+1, #high(A3)
+13D5 753704     448            mov noteLen, #(sixteenth)
+13D8 D2A9       448            setb ET0
+13DA 120057     448            lcall wait
+13DD C2A9       448            clr ET0
+13DF 12005E     448            lcall wait1
+13E2            449   
+13E2 22         450   ret
+13E3            451            
+13E3             49            ;intermediate jumping points because my program is so long
+13E3             50   init_intermediate:
+13E3 02156B      51   ljmp init
+13E6             52   Timer0_ISR_intermediate:
+13E6 0214A9      53   ljmp timer0_isr
+13E9             54   Timer1_ISR_intermediate:
+13E9 0214BA      55   ljmp timer1_isr
+13EC             56   Timer2_ISR_intermediate:
+13EC 0213FC      57   ljmp timer2_isr
+13EF             58   
+13EF             59   
+13EF             60   
+13EF             61   
+13EF             62   
+13EF             63   myLUT:
+13EF C0F9A4B0    64       DB 0C0H, 0F9H, 0A4H, 0B0H, 099H
+     99
+13F4 9282F880    65       DB 092H, 082H, 0F8H, 080H, 090H
+     90
+13F9 FF          66       DB 0FFH ; All segments off
+13FA             67   AM_PM:
+13FA 0C08        68            DB 0CH, 08H
+13FC             69   
+13FC             70   
+13FC             71   
+13FC             72   Timer2_ISR:
+13FC             73       
+13FC             74       ; Save used register into the stack
+13FC C0D0        75       push psw
+13FE C0E0        76       push acc
+1400 C083        77       push dph
+1402 C082        78       push dpl
+1404 C2CF        79       clr TF2
+1406             80       ; Increment the counter and check if a second has passed
+1406             81       ; Allows the buzzer to beep twice a second while working off the same clock
+1406             82       ; Still keeps accurate time (tested against windows clock)
+1406 0536        83       inc count10ms
+1408 E536        84       mov a, count10ms
+140A B46451      85       cjne A, #100, ISR_Timer2_L0
+140D 753600      86       mov count10ms, #0H
+1410             87            
+1410 E530        88       mov a, sec
+1412 2401        89       add a, #1
+1414 D4          90       da a
+1415 F530        91       mov sec, a
+1417 B46026      92       cjne A, #60H, Compare_time_with_alarm
+141A 753000      93       mov sec, #0
+141D             94   
+141D E531        95       mov a, min
+141F 2401        96       add a, #1
+1421 D4          97       da a
+1422 F531        98       mov min, a
+1424 B46019      99       cjne A, #60H, Compare_time_with_alarm
+1427 753100     100       mov min, #0
+142A            101   
+142A E532       102       mov a, hour
+142C 2401       103       add a, #1
+142E D4         104       da a
+142F F532       105       mov hour, a
+1431 B41206     106       cjne A, #12H, skip_am_pm
+1434 E53D       107            mov a, AM
+1436 6401       108            xrl a, #1
+1438 F53D       109            mov AM, a
+143A            110       skip_am_pm:
+143A B41303     111       cjne A, #13H, Compare_time_with_alarm
+143D 753201     112       mov hour, #1
+1440            113       
+1440            114       
+1440            115   Compare_time_with_alarm:
+1440 E53C       116            mov a, Alrm_AM
+1442 5401       117            anl a, #1
+1444 F53C       118            mov alrm_AM, a
+1446 E53D       119            mov a, AM
+1448 5401       120            anl a, #1
+144A B53C11     121            cjne a, alrm_AM, Not_time_to_wake_up
+144D E532       122            mov a, hour
+144F B5350C     123            cjne a, alrm_hour, Not_time_to_wake_up
+1452 E531       124            mov a, min
+1454 B53407     125            cjne a, alrm_min, Not_time_to_wake_up
+1457 E530       126            mov a, sec
+1459 B53302     127            cjne a, alrm_sec, Not_time_to_wake_up
+145C D228       128            setb buzzer
+145E            129            Not_time_to_wake_up: ;the current time and the alarm time dont match
+145E            130            ;Lastly check if the buzzer needs to be turned on
+145E            131     
+145E            132   ISR_Timer2_L0:
+145E 20293F     133            jb set_alrm, ISR_Timer2_L2
+1461            134            ; Update the display.  This happens every 10 ms
+1461 9013FA     135            mov dptr, #AM_PM
+1464 E53D       136            mov a, AM
+1466 5401       137            anl a, #1
+1468 93         138            movc a, @a+dptr
+1469 F591       139            mov HEX0, a
+146B            140   
+146B 9013EF     141            mov dptr, #myLUT
+146E            142   
+146E E530       143            mov a, sec
+1470 540F       144            anl a, #0fH
+1472 93         145            movc a, @a+dptr
+1473 F593       146            mov HEX2, a
+1475 E530       147            mov a, sec
+1477 C4         148            swap a
+1478 540F       149            anl a, #0fH
+147A 93         150            movc a, @a+dptr
+147B F594       151            mov HEX3, a
+147D            152   
+147D E531       153            mov a, min
+147F 540F       154            anl a, #0fH
+1481 93         155            movc a, @a+dptr
+1482 F58E       156            mov HEX4, a
+1484 E531       157            mov a, min
+1486 C4         158            swap a
+1487 540F       159            anl a, #0fH
+1489 93         160            movc a, @a+dptr
+148A F58F       161            mov HEX5, a
+148C            162   
+148C E532       163            mov a, hour
+148E 540F       164            anl a, #0fH
+1490 93         165            movc a, @a+dptr
+1491 F596       166            mov HEX6, a
+1493 E532       167            mov a, hour
+1495 20E402     168            jb acc.4, ISR_Timer2_L1
+1498 74A0       169            mov a, #0A0H
+149A            170   ISR_Timer2_L1:
+149A C4         171            swap a
+149B 540F       172            anl a, #0fH
+149D 93         173            movc a, @a+dptr
+149E F597       174            mov HEX7, a
+14A0            175   ISR_Timer2_L2:
+14A0            176   
+14A0            177            ; Restore used registers
+14A0 D082       178            pop dpl
+14A2 D083       179            pop dph
+14A4 D0E0       180            pop acc
+14A6 D0D0       181            pop psw    
+14A8 32         182            reti
+14A9            183            
+14A9            184   Timer0_ISR:
+14A9 30280D     185            jnb buzzer, Buzzer_off_0
+14AC B280       186            cpl p0.0
+14AE 85398C     187            mov TH0, timer0Reload+1
+14B1 85388A     188       mov TL0, timer0Reload
+14B4 20F902     189       jb key.1, buzzer_off_0
+14B7 C228       190       clr buzzer
+14B9            191            buzzer_off_0:
+14B9 32         192            reti
+14BA            193   Timer1_ISR:
+14BA 30280D     194            jnb buzzer, Buzzer_off_1
+14BD B281       195            cpl p0.1
+14BF 853B8D     196            mov TH1, timer1Reload+1
+14C2 853A8B     197       mov TL1, timer1Reload
+14C5 20F902     198       jb key.1, buzzer_off_1
+14C8 C228       199       clr buzzer
+14CA            200            buzzer_off_1:
+14CA 32         201            reti    
+14CB            202            
+14CB            203   Update_display:
+14CB C0D0       204            push psw
+14CD C0E0       205       push acc
+14CF C083       206       push dph
+14D1 C082       207       push dpl
+14D3            208            ; Update the display.  This happens every 10 ms
+14D3 9013FA     209            mov dptr, #AM_PM
+14D6 E53D       210            mov a, AM
+14D8 5401       211            anl a, #1
+14DA 93         212            movc a, @a+dptr
+14DB F591       213            mov HEX0, a
+14DD            214            
+14DD 9013EF     215            mov dptr, #myLUT
+14E0            216   
+14E0 E530       217            mov a, sec
+14E2 540F       218            anl a, #0fH
+14E4 93         219            movc a, @a+dptr
+14E5 F593       220            mov HEX2, a
+14E7 E530       221            mov a, sec
+14E9 C4         222            swap a
+14EA 540F       223            anl a, #0fH
+14EC 93         224            movc a, @a+dptr
+14ED F594       225            mov HEX3, a
+14EF            226   
+14EF E531       227            mov a, min
+14F1 540F       228            anl a, #0fH
+14F3 93         229            movc a, @a+dptr
+14F4 F58E       230            mov HEX4, a
+14F6 E531       231            mov a, min
+14F8 C4         232            swap a
+14F9 540F       233            anl a, #0fH
+14FB 93         234            movc a, @a+dptr
+14FC F58F       235            mov HEX5, a
+14FE            236   
+14FE E532       237            mov a, hour
+1500 540F       238            anl a, #0fH
+1502 93         239            movc a, @a+dptr
+1503 F596       240            mov HEX6, a
+1505 E532       241            mov a, hour
+1507 20E402     242            jb acc.4, Update_display_L1
+150A 74A0       243            mov a, #0A0H
+150C            244   Update_display_L1:
+150C C4         245            swap a
+150D 540F       246            anl a, #0fH
+150F 93         247            movc a, @a+dptr
+1510 F597       248            mov HEX7, a
+1512            249            ; Restore used registers
+1512 D082       250            pop dpl
+1514 D083       251            pop dph
+1516 D0E0       252            pop acc
+1518 D0D0       253            pop psw    
+151A 22         254            ret
+151B            255            
+151B            256   Update_display_alrm:
+151B C0D0       257            push psw
+151D C0E0       258       push acc
+151F C083       259       push dph
+1521 C082       260       push dpl
+1523            261            ; Update the display.  This happens every 10 ms
+1523 9013FA     262            mov dptr, #AM_PM
+1526 E53C       263            mov a, alrm_AM
+1528 5401       264            anl a, #1       
+152A 93         265            movc a, @a+dptr
+152B F591       266            mov HEX0, a
+152D            267            
+152D 9013EF     268            mov dptr, #myLUT
+1530            269   
+1530 E533       270            mov a, alrm_sec
+1532 540F       271            anl a, #0fH
+1534 93         272            movc a, @a+dptr
+1535 F593       273            mov HEX2, a
+1537 E533       274            mov a, alrm_sec
+1539 C4         275            swap a
+153A 540F       276            anl a, #0fH
+153C 93         277            movc a, @a+dptr
+153D F594       278            mov HEX3, a
+153F            279   
+153F E534       280            mov a, alrm_min
+1541 540F       281            anl a, #0fH
+1543 93         282            movc a, @a+dptr
+1544 F58E       283            mov HEX4, a
+1546 E534       284            mov a, alrm_min
+1548 C4         285            swap a
+1549 540F       286            anl a, #0fH
+154B 93         287            movc a, @a+dptr
+154C F58F       288            mov HEX5, a
+154E            289   
+154E E535       290            mov a, alrm_hour
+1550 540F       291            anl a, #0fH
+1552 93         292            movc a, @a+dptr
+1553 F596       293            mov HEX6, a
+1555 E535       294            mov a, alrm_hour
+1557 20E402     295            jb acc.4, Update_display_alrm_L1
+155A 74A0       296            mov a, #0A0H
+155C            297   Update_display_alrm_L1:
+155C C4         298            swap a
+155D 540F       299            anl a, #0fH
+155F 93         300            movc a, @a+dptr
+1560 F597       301            mov HEX7, a
+1562            302            ; Restore used registers
+1562 D082       303            pop dpl
+1564 D083       304            pop dph
+1566 D0E0       305            pop acc
+1568 D0D0       306            pop psw    
+156A 22         307            ret
+156B            308            
+156B            309   
+156B            310   
+156B            311   init:
+156B 75817F     312            mov SP, #7FH
+156E 75E800     313            mov LEDRA,#0
+1571 759500     314            mov LEDRB,#0
+1574 759E00     315            mov LEDRC,#0
+1577 75F800     316            mov LEDG,#0
+157A 759A03     317            mov P0MOD, #00000011B ; P0.0, P0.1 are outputs.  P0.1 is used for testing Timer 2!
+157D D280       318            setb P0.0
+157F C284       319            clr p0.4
+1581 758911     320       mov TMOD,  #00010001B ; GATE=0, C/T*=0, M1=0, M0=1: 16-bit timer
+1584 C28C       321            clr TR0 ; Disable timer 0
+1586 C28D       322            clr TF0
+1588 D28C       323       setb TR0 ; Enable timer 0
+158A C2A9       324       clr ET0 ; Disable timer 0 interrupt
+158C C28E       325       clr TR1 ; Disable timer 1
+158E C28F       326            clr TF1
+1590 D28E       327       setb TR1 ; Enable timer 1
+1592 C2AB       328       clr ET1 ; Disable timer 0 interrupt
+1594            329       
+1594            330           
+1594 75C800     331       mov T2CON, #00H ; Autoreload is enabled, work as a timer
+1597 C2CA       332       clr TR2
+1599 C2CF       333       clr TF2
+159B            334       ; Set up timer 2 to interrupt every 10ms
+159B 75CB93     335       mov RCAP2H,#high(TIMER2_RELOAD)
+159E 75CA7F     336       mov RCAP2L,#low(TIMER2_RELOAD)
+15A1 D2CA       337       setb TR2
+15A3 D2AD       338       setb ET2
+15A5            339       
+15A5            340   
+15A5            341   
+15A5            342   
+15A5 753055     343            mov sec, #55H
+15A8 753159     344            mov min, #59H
+15AB 753211     345            mov hour, #11H
+15AE 753D01     346            mov AM, #1H
+15B1 753300     347            mov alrm_sec, #00H
+15B4 753400     348            mov alrm_min, #00H
+15B7 753512     349            mov alrm_hour, #12H
+15BA 753600     350            mov count10ms, #0H
+15BD 753C00     351            mov alrm_am, #0H
+15C0 C228       352            clr buzzer
+15C2 C229       353            clr set_alrm
+15C4 D2AF       354       setb EA  ; Enable all interrupts
+15C6            355   
+15C6            356   forever:
+15C6 30FA1C     357            jnb KEY.2, set_time
+15C9 30FB11     358            jnb key.3, set_alarm
+15CC 3028F7     359            jnb buzzer, forever
+15CF D2F8       360            setb ledg.0
+15D1 120075     361            lcall music
+15D4 C228       362            clr buzzer
+15D6 C2F8       363            clr ledg.0
+15D8 C2A9       364            clr ET0
+15DA 0215C6     365            ljmp forever
+15DD            366   set_alarm:
+15DD D229       367            setb set_alrm ;takes control of the display from the clock
+15DF 121668     368            lcall set_alarm_subroutine
+15E2 0215C6     369            ljmp forever
+15E5            370   set_time:
+15E5 1215EB     371            lcall set_time_subroutine
+15E8 0215C6     372            ljmp forever
+15EB            373            
+15EB            374   set_time_subroutine:
+15EB 30FAFD     375            jnb key.2, $
+15EE C2AD       376            clr ET2
+15F0            377            setHour:
+15F0 759E03     378            mov LEDRC, #3H
+15F3 30FA22     379            jnb key.2, setMin_L1
+15F6 20F9F7     380            jb key.1, setHour
+15F9 30F9FD     381            jnb key.1, $
+15FC E532       382            mov a, hour
+15FE 2401       383       add a, #1
+1600 D4         384       da a
+1601 F532       385       mov hour, a
+1603 B41206     386       cjne A, #12H, skip_set_am_pm
+1606 E53D       387       mov a, AM
+1608 6401       388            xrl a, #1
+160A F53D       389            mov AM, a
+160C            390       skip_set_am_pm:
+160C B41303     391       cjne A, #13H, skip1
+160F 753201     392       mov hour, #1
+1612            393       skip1:
+1612 1214CB     394            lcall update_display
+1615 0215F0     395            ljmp setHour
+1618            396   
+1618            397            setMin_L1:
+1618 30FAFD     398            jnb key.2 , $
+161B            399            setMin:
+161B 759E00     400            mov LEDRC, #0H
+161E 759530     401            mov LEDRB, #30H
+1621 30FA19     402            jnb key.2, setSec_L1
+1624 20F9F4     403            jb key.1, setMin
+1627 30F9FD     404            jnb key.1, $
+162A E531       405            mov a, min
+162C 2401       406       add a, #1
+162E D4         407       da a
+162F F531       408       mov min, a
+1631 B46003     409       cjne A, #60H, skip2
+1634 753100     410       mov min, #0
+1637            411       skip2:
+1637 1214CB     412       lcall update_display
+163A 02161B     413            ljmp setMin
+163D            414            
+163D            415            setSec_L1:
+163D 30FAFD     416            jnb key.2, $
+1640            417            setSec:
+1640 759503     418            mov LEDRB, #03H
+1643 30FA19     419            jnb key.2, finished
+1646 20F9F7     420            jb key.1, setSec
+1649 30F9FD     421            jnb key.1, $
+164C E530       422            mov a, sec
+164E 2401       423       add a, #1
+1650 D4         424       da a
+1651 F530       425       mov sec, a
+1653 B46003     426       cjne A, #60H, skip3
+1656 753000     427       mov sec, #0
+1659            428       skip3:
+1659 1214CB     429       lcall update_display
+165C 021640     430            ljmp setSec
+165F            431            finished:
+165F 30FAFD     432            jnb key.2, $
+1662 D2AD       433            setb ET2
+1664 759500     434            mov LEDRB, #0H
+1667 22         435            ret
+1668            436            
+1668            437   set_alarm_subroutine:
+1668 12151B     438            lcall update_display_alrm
+166B 30FBFD     439            jnb key.3, $
+166E            440            set_alrmHour:
+166E 759E03     441            mov LEDRC, #3H
+1671 30FB22     442            jnb key.3, set_alrmMin_L1
+1674 20F9F7     443            jb key.1, set_alrmHour
+1677 30F9FD     444            jnb key.1, $
+167A E535       445            mov a,alrm_hour
+167C 2401       446       add a, #1
+167E D4         447       da a
+167F F535       448       mov alrm_hour, a
+1681 B41206     449       cjne A, #12H, skip_alrm_am_pm
+1684 E53C       450       mov a, alrm_AM
+1686 6401       451            xrl a, #1
+1688 F53C       452            mov alrm_AM, a
+168A            453       skip_alrm_am_pm:
+168A B41303     454       cjne A, #13H, alrm_skip1
+168D 753501     455       mov alrm_hour, #1
+1690            456       alrm_skip1:
+1690 12151B     457            lcall update_display_alrm
+1693 02166E     458            ljmp set_alrmHour
+1696            459   
+1696            460            set_alrmMin_L1:
+1696 30FBFD     461            jnb key.3 , $
+1699            462            set_alrmMin:
+1699 759E00     463            mov LEDRC, #0H
+169C 759530     464            mov LEDRB, #30H
+169F 30FB19     465            jnb key.3, set_alrmSec_L1
+16A2 20F9F4     466            jb key.1, set_alrmMin
+16A5 30F9FD     467            jnb key.1, $
+16A8 E534       468            mov a, alrm_min
+16AA 2401       469       add a, #1
+16AC D4         470       da a
+16AD F534       471       mov alrm_min, a
+16AF B46003     472       cjne A, #60H, alrm_skip2
+16B2 753400     473       mov alrm_min, #0
+16B5            474       alrm_skip2:
+16B5 12151B     475       lcall update_display_alrm
+16B8 021699     476            ljmp set_alrmMin
+16BB            477            
+16BB            478            set_alrmSec_L1:
+16BB 30FBFD     479            jnb key.3, $
+16BE            480            set_alrmSec:
+16BE 759503     481            mov LEDRB, #03H
+16C1 30FB19     482            jnb key.3, finished_alrm
+16C4 20F9F7     483            jb key.1, set_alrmSec
+16C7 30F9FD     484            jnb key.1, $
+16CA E533       485            mov a, alrm_sec
+16CC 2401       486       add a, #1
+16CE D4         487       da a
+16CF F533       488       mov alrm_sec, a
+16D1 B46003     489       cjne A, #60H, alrm_skip3
+16D4 753300     490       mov alrm_sec, #0
+16D7            491       alrm_skip3:
+16D7 12151B     492       lcall update_display_alrm
+16DA 0216BE     493            ljmp set_alrmSec
+16DD            494            finished_alrm:
+16DD 30FBFD     495            jnb key.3, $
+16E0 759500     496            mov LEDRB, #0H
+16E3 C229       497            clr set_alrm ;gives the display back to the clock
+16E5 22         498   ret
+16E6            499   
+16E6            500   EN
