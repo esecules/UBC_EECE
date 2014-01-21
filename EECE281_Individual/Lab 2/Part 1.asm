@@ -2,11 +2,15 @@
 $MODDE2 
 DSEG at 30H
 voltage:		ds 1
+voltage1:		ds 1
 voltage_sum:	ds 2
+voltage_sum1:	ds 2
 voltage_avg:	ds 1
+voltage_avg1:	ds 1
 average_count:	ds 1
 interupt_count:	ds 1
 BCD:			ds 2
+BCD1:			ds 2
 CSEG		
 org 0000H 
  ljmp myprogram 
@@ -22,41 +26,65 @@ nibble_sel	   EQU P0.1
 
 ;16 sample averager 
 Timer2_ISR:
-push psw
-push acc
-clr TF2
-inc interupt_count 
-mov a, interupt_count
-cjne a, #2, return_from_isr
-mov interupt_count, #0
-inc average_count
-clr C
-mov a, voltage
-addc a, voltage_sum
-mov voltage_sum, a
-mov a, voltage_sum+1
-addc a, #0
-mov voltage_sum+1, a
-mov a, average_count
-cjne a, #16,return_from_isr 
-mov average_count, #4
-shift_loop:
-clr C
-mov a, voltage_sum+1
-rrc a
-mov voltage_sum+1, a
-mov a, voltage_sum
-rrc a
-mov voltage_sum, a
-djnz average_count, shift_loop
-cpl LEDRA.0
-mov voltage_avg, voltage_sum
-mov voltage_sum, #0
-;mov LEDG,voltage_avg
-return_from_isr:
-pop acc
-pop psw
-reti
+	push psw
+	push acc
+	clr TF2
+	inc interupt_count 
+	mov a, interupt_count
+	cjne a, #2, return_from_isr
+	mov interupt_count, #0
+	inc average_count
+
+	clr C
+	mov a, voltage
+	addc a, voltage_sum
+	mov voltage_sum, a
+	mov a, voltage_sum+1
+	addc a, #0
+	mov voltage_sum+1, a
+	
+	clr C
+	mov a, voltage1
+	addc a, voltage_sum1
+	mov voltage_sum1, a
+	mov a, voltage_sum1+1
+	addc a, #0
+	mov voltage_sum1+1, a
+	
+	mov a, average_count
+	cjne a, #16,return_from_isr 
+	mov average_count, #4
+	shift_loop:
+	
+	clr C
+	mov a, voltage_sum+1
+	rrc a
+	mov voltage_sum+1, a
+	mov a, voltage_sum
+	rrc a
+	mov voltage_sum, a
+	
+	clr C
+	mov a, voltage_sum1+1
+	rrc a
+	mov voltage_sum1+1, a
+	mov a, voltage_sum1
+	rrc a
+	mov voltage_sum1, a
+	
+	djnz average_count, shift_loop
+	;cpl LEDRA.0
+	mov voltage_avg, voltage_sum
+	mov voltage_sum, #0
+	
+	mov voltage_avg1, voltage_sum1
+	mov voltage_sum1, #0
+	
+	;mov LEDG,voltage_avg
+	return_from_isr:
+	pop acc
+	pop psw
+	reti
 
 ; 100 micro-second delay subroutine 
 delay100us: 
@@ -78,35 +106,253 @@ Display_HEX:
     mov A, BCD+0
     anl a, #0fh
     movc A, @A+dptr
-    mov HEX0, A
+    mov HEX1, A
 	; Display Digit 1
     mov A, BCD+0
     swap a
     anl a, #0fh
     movc A, @A+dptr
-    mov HEX1, A
+    mov HEX2, A
     ; Display Digit 2
     mov A, BCD+1
     anl a, #0fh
     movc A, @A+dptr
-    mov HEX2, A
+    mov HEX3, A
 	; Display Digit 3
     mov A, BCD+1
     swap a
     anl a, #0fh
     movc A, @A+dptr
-    mov HEX3, A
+    mov HEX4, A
     ret	
     
+ Display_AVG:
+	mov dptr, #myLUT
+	; Display Digit 0
+    mov A, voltage_avg1
+    anl a, #0fh
+    movc A, @A+dptr
+    mov HEX0, A
+	; Display Digit 1
+    mov A, voltage_avg1
+    swap a
+    anl a, #0fh
+    movc A, @A+dptr
+    mov HEX1, A
+    ; Display Digit 0
+    mov A, voltage_avg
+    anl a, #0fh
+    movc A, @A+dptr
+    mov HEX4, A
+	; Display Digit 1
+    mov A, voltage_avg
+    swap a
+    anl a, #0fh
+    movc A, @A+dptr
+    mov HEX5, A
+    ret	
+    
+Wait40us:
+	mov R0, #149
+Wait40us_L0: 
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	djnz R0, Wait40us_L0 ; 9 machine cycles-> 9*30ns*149=40us
+    ret
+
+LCD_command:
+	mov	LCD_DATA, A
+	clr	LCD_RS
+	nop
+	nop
+	setb LCD_EN ; Enable pulse should be at least 230 ns
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	clr	LCD_EN
+	ljmp Wait40us
+
+LCD_put:
+	mov	LCD_DATA, A
+	setb LCD_RS
+	nop
+	nop
+	setb LCD_EN ; Enable pulse should be at least 230 ns
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	clr	LCD_EN
+	ljmp Wait40us
+	
+disp_LCD:
+	lcall clr_lcd
+	mov a, #80h
+	lcall LCD_command
+	mov a, #'V'	
+	lcall LCD_PUT
+	mov a, #'1'
+	lcall LCD_PUT
+	mov a, #':'
+	lcall LCD_PUT
+	mov a, #' '
+	lcall LCD_PUT
+	mov a, voltage_avg
+	clr c
+	subb a, #0FFH
+	jz max_V1
+	mov a,BCD+1
+	mov b, a
+	anl a, #0f0H
+	rr a
+	rr a
+	rr a
+	rr a
+	add a, #30h	
+	lcall lcd_put
+	mov a, #2EH
+	lcall LCD_PUT
+	mov a,b
+	anl a, #0Fh
+	add a, #30h	
+	lcall lcd_put
+	mov a,BCD
+	mov b, a
+	anl a, #0f0H
+	rr a
+	rr a
+	rr a
+	rr a
+	add a, #30h	
+	lcall lcd_put
+	mov a,b
+	anl a, #0Fh
+	add a, #30h	
+	lcall lcd_put
+	mov a, #' '
+	lcall LCD_PUT
+	mov a, #'V'
+	lcall LCD_PUT
+	sjmp V2_write
+max_v1:
+	mov a, #'M'	
+	lcall LCD_PUT
+	mov a, #'A'
+	lcall LCD_PUT
+	mov a, #'X'
+	lcall LCD_PUT
+V2_write:
+	mov a, #0C0H
+	lcall LCD_command
+	mov a, #'V'	
+	lcall LCD_PUT
+	mov a, #'2'
+	lcall LCD_PUT
+	mov a, #':'
+	lcall LCD_PUT
+	mov a, #' '
+	lcall LCD_PUT
+	mov a, voltage_avg1
+	clr c
+	subb a, #0FFH
+	jz max_V2
+	mov a,BCD1+1
+	mov b, a
+	anl a, #0f0H
+	rr a
+	rr a
+	rr a
+	rr a
+	add a, #30h	
+	lcall lcd_put
+	mov a, #2EH
+	lcall LCD_PUT
+	mov a,b
+	anl a, #0Fh
+	add a, #30h	
+	lcall lcd_put
+	mov a,BCD1
+	mov b, a
+	anl a, #0f0H
+	rr a
+	rr a
+	rr a
+	rr a
+	add a, #30h	
+	lcall lcd_put
+	mov a,b
+	anl a, #0Fh
+	add a, #30h	
+	lcall lcd_put
+	mov a, #' '
+	lcall LCD_PUT
+	mov a, #'V'
+	lcall LCD_PUT
+	sjmp LCD_Done
+max_V2:
+	mov a, #'M'	
+	lcall LCD_PUT
+	mov a, #'A'
+	lcall LCD_PUT
+	mov a, #'X'
+	lcall LCD_PUT
+LCD_Done:
+	ret
+	  
+CLR_LCD:	
+	; Clear screen (Warning, very slow command!)
+	mov a, #01H
+	lcall LCD_command
+    
+    ; Delay loop needed for 'clear screen' command above (1.6ms at least!)
+    mov R3, #18
+Clr_loop:
+	lcall delay100us
+	djnz R3, Clr_loop
+	ret
 Lookup:
+	mov a, voltage_avg
+	clr c
+	rlc a
+	mov b, a
+	jc High_LUT
 	mov dptr, #Voltage_LUT
-	mov a, voltage_avg
+	sjmp Lookup_L1
+	High_LUT:
+	mov dptr, #Voltage_LUT_HIGH
+	Lookup_L1:
 	movc a, @a+dptr
-	mov BCD, a
-	mov a, voltage_avg
+	mov BCD+1, a
+	mov a, b
 	inc a
 	movc a, @a+dptr
-	mov BCD+1, a	
+	mov BCD, a	
+
+	mov a, voltage_avg1
+	clr c
+	rlc a
+	mov b, a
+	jc High_LUT_1
+	mov dptr, #Voltage_LUT
+	sjmp Lookup_L1_1
+	High_LUT_1:
+	mov dptr, #Voltage_LUT_HIGH
+	Lookup_L1_1:
+	movc a, @a+dptr
+	mov BCD1+1, a
+	mov a, b
+	inc a
+	movc a, @a+dptr
+	mov BCD1, a	
 	ret
 
 myprogram: 
@@ -128,12 +374,29 @@ myprogram:
  setb TR2
  setb ET2
  setb EA
+; Turn LCD on, and wait a bit.
+ setb LCD_ON
+ clr LCD_EN  ; Default state of enable must be zero
+ lcall Wait40us
+  
+ mov LCD_MOD, #0xff ; Use LCD_DATA as output port
+ clr LCD_RW ;  Only writing to the LCD in this code.
+	
+ mov a, #0ch ; Display on command
+ lcall LCD_command
+ mov a, #38H ; 8-bits interface, 2 lines, 5x7 characters
+ lcall LCD_command
+ lcall clr_lcd
+	
 Loop:
-lcall ADC_0
-;lcall ADC_1
-lcall lookup
-lcall display_hex
-sjmp Loop
+ lcall ADC_0
+ lcall ADC_1
+ ;lcall display_avg
+ djnz R4, Loop
+ mov R4, #20
+ lcall lookup 
+ lcall disp_LCD
+ sjmp Loop
 
 ADC_0: 
  mov P3, #0
@@ -147,36 +410,43 @@ L1:
  lcall delay100us 
  jnb P1.2, L2
  clr p3.6
+ lcall delay100us
 L2:
  setb P3.5
  lcall delay100us
  jnb P1.2, L3
  clr p3.5
+ lcall delay100us
 L3:
  setb P3.4
  lcall delay100us
  jnb P1.2, L4
  clr p3.4
+ lcall delay100us
 L4:
  setb P3.3
  lcall delay100us
  jnb P1.2, L5
  clr p3.3
+ lcall delay100us
 L5:
  setb P3.2
  lcall delay100us
  jnb P1.2, L6
  clr p3.2
+ lcall delay100us
 L6:
  setb P3.1
  lcall delay100us
  jnb P1.2, L7
  clr p3.1
+ lcall delay100us
 L7:
  setb P3.0
  lcall delay100us
  jnb P1.2, L8
  clr p3.0
+ lcall delay100us
 L8: ;conversion done
  lcall delay100us 
  mov LEDG, P3
@@ -234,7 +504,7 @@ L8_ADC_1: ;conversion done
  lcall delay100us 
  lcall delay100us 
  lcall delay100us 
- ;mov voltage_1, P3
+ mov voltage1, P3
  ret
 
  END 
