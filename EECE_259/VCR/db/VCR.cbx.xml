@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="VCR">
+		<CBX_INST_ENTRY INSTANCE_NAME="|Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0" CBX_FILE_NAME="lpm_divide_dem.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1" CBX_FILE_NAME="lpm_divide_dem.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0" CBX_FILE_NAME="lpm_divide_s7m.tdf"/>
+		<CBX_INST_ENTRY INSTANCE_NAME="|Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1" CBX_FILE_NAME="lpm_divide_s7m.tdf"/>
+	</PROJECT>
+</LOG_ROOT>

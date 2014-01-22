@@ -1,0 +1,241 @@
+|Mult4x4
+Mult[0] <= inst12.DB_MAX_OUTPUT_PORT_TYPE
+Mult[1] <= fourbitadder-mult:inst.Sum[0]
+Mult[2] <= fourbitadder-mult:inst11.Sum[0]
+Mult[3] <= fourbitadder-mult:inst18.Sum[0]
+Mult[4] <= fourbitadder-mult:inst18.Sum[1]
+Mult[5] <= fourbitadder-mult:inst18.Sum[2]
+Mult[6] <= fourbitadder-mult:inst18.Sum[3]
+Mult[7] <= fourbitadder-mult:inst18.Cout
+A[0] => inst12.IN0
+A[0] => inst2.IN0
+A[0] => inst13.IN0
+A[0] => inst19.IN0
+A[1] => inst3.IN0
+A[1] => inst4.IN1
+A[1] => inst14.IN0
+A[1] => inst20.IN0
+A[2] => inst5.IN0
+A[2] => inst6.IN1
+A[2] => inst15.IN0
+A[2] => inst21.IN0
+A[3] => inst8.IN0
+A[3] => inst7.IN1
+A[3] => inst16.IN0
+A[3] => inst22.IN0
+B[0] => inst12.IN1
+B[0] => inst4.IN0
+B[0] => inst6.IN0
+B[0] => inst7.IN0
+B[1] => inst2.IN1
+B[1] => inst3.IN1
+B[1] => inst5.IN1
+B[1] => inst8.IN1
+B[2] => inst13.IN1
+B[2] => inst14.IN1
+B[2] => inst15.IN1
+B[2] => inst16.IN1
+B[3] => inst19.IN1
+B[3] => inst20.IN1
+B[3] => inst21.IN1
+B[3] => inst22.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst
+Cout <= cout4.DB_MAX_OUTPUT_PORT_TYPE
+A[0] => inst5.IN0
+A[0] => and0.IN1
+A[0] => Sum:inst3.A
+A[1] => inst9.IN0
+A[1] => inst8.IN1
+A[1] => Sum:inst2.A
+A[2] => or1.IN0
+A[2] => and1.IN1
+A[2] => Sum:inst.A
+A[3] => inst19.IN0
+A[3] => inst18.IN1
+A[3] => Sum:inst1.A
+B[0] => inst5.IN1
+B[0] => and0.IN0
+B[0] => Sum:inst3.B
+B[1] => inst9.IN1
+B[1] => inst8.IN0
+B[1] => Sum:inst2.B
+B[2] => or1.IN1
+B[2] => and1.IN0
+B[2] => Sum:inst.B
+B[3] => inst19.IN1
+B[3] => inst18.IN0
+B[3] => Sum:inst1.B
+Cin => inst25.IN1
+Cin => inst25.IN2
+Cin => Sum:inst3.Cin
+Cin => inst6.IN0
+Cin => inst13.IN0
+Cin => inst16.IN0
+Sum[0] <= Sum:inst3.sum
+Sum[1] <= Sum:inst2.sum
+Sum[2] <= Sum:inst.sum
+Sum[3] <= Sum:inst1.sum
+
+
+|Mult4x4|fourbitadder-mult:inst|Sum:inst3
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst|Sum:inst2
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst|Sum:inst
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst|Sum:inst1
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst11
+Cout <= cout4.DB_MAX_OUTPUT_PORT_TYPE
+A[0] => inst5.IN0
+A[0] => and0.IN1
+A[0] => Sum:inst3.A
+A[1] => inst9.IN0
+A[1] => inst8.IN1
+A[1] => Sum:inst2.A
+A[2] => or1.IN0
+A[2] => and1.IN1
+A[2] => Sum:inst.A
+A[3] => inst19.IN0
+A[3] => inst18.IN1
+A[3] => Sum:inst1.A
+B[0] => inst5.IN1
+B[0] => and0.IN0
+B[0] => Sum:inst3.B
+B[1] => inst9.IN1
+B[1] => inst8.IN0
+B[1] => Sum:inst2.B
+B[2] => or1.IN1
+B[2] => and1.IN0
+B[2] => Sum:inst.B
+B[3] => inst19.IN1
+B[3] => inst18.IN0
+B[3] => Sum:inst1.B
+Cin => inst25.IN1
+Cin => inst25.IN2
+Cin => Sum:inst3.Cin
+Cin => inst6.IN0
+Cin => inst13.IN0
+Cin => inst16.IN0
+Sum[0] <= Sum:inst3.sum
+Sum[1] <= Sum:inst2.sum
+Sum[2] <= Sum:inst.sum
+Sum[3] <= Sum:inst1.sum
+
+
+|Mult4x4|fourbitadder-mult:inst11|Sum:inst3
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst11|Sum:inst2
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst11|Sum:inst
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst11|Sum:inst1
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst18
+Cout <= cout4.DB_MAX_OUTPUT_PORT_TYPE
+A[0] => inst5.IN0
+A[0] => and0.IN1
+A[0] => Sum:inst3.A
+A[1] => inst9.IN0
+A[1] => inst8.IN1
+A[1] => Sum:inst2.A
+A[2] => or1.IN0
+A[2] => and1.IN1
+A[2] => Sum:inst.A
+A[3] => inst19.IN0
+A[3] => inst18.IN1
+A[3] => Sum:inst1.A
+B[0] => inst5.IN1
+B[0] => and0.IN0
+B[0] => Sum:inst3.B
+B[1] => inst9.IN1
+B[1] => inst8.IN0
+B[1] => Sum:inst2.B
+B[2] => or1.IN1
+B[2] => and1.IN0
+B[2] => Sum:inst.B
+B[3] => inst19.IN1
+B[3] => inst18.IN0
+B[3] => Sum:inst1.B
+Cin => inst25.IN1
+Cin => inst25.IN2
+Cin => Sum:inst3.Cin
+Cin => inst6.IN0
+Cin => inst13.IN0
+Cin => inst16.IN0
+Sum[0] <= Sum:inst3.sum
+Sum[1] <= Sum:inst2.sum
+Sum[2] <= Sum:inst.sum
+Sum[3] <= Sum:inst1.sum
+
+
+|Mult4x4|fourbitadder-mult:inst18|Sum:inst3
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst18|Sum:inst2
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst18|Sum:inst
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+
+|Mult4x4|fourbitadder-mult:inst18|Sum:inst1
+sum <= inst1.DB_MAX_OUTPUT_PORT_TYPE
+A => inst.IN0
+B => inst.IN1
+Cin => inst1.IN1
+
+

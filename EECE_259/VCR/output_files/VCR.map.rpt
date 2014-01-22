@@ -1,0 +1,623 @@
+Analysis & Synthesis report for VCR
+Thu Oct 24 14:07:30 2013
+Quartus II 64-Bit Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. User-Specified and Inferred Latches
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
+ 12. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 13. Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1
+ 14. Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0
+ 15. Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1
+ 16. Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0
+ 17. Elapsed Time Per Partition
+ 18. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++---------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                    ;
++------------------------------------+--------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Thu Oct 24 14:07:30 2013      ;
+; Quartus II 64-Bit Version          ; 13.0.0 Build 156 04/24/2013 SJ Web Edition ;
+; Revision Name                      ; VCR                                        ;
+; Top-level Entity Name              ; Top_level_VCR                              ;
+; Family                             ; Cyclone II                                 ;
+; Total logic elements               ; 1,874                                      ;
+;     Total combinational functions  ; 1,874                                      ;
+;     Dedicated logic registers      ; 78                                         ;
+; Total registers                    ; 78                                         ;
+; Total pins                         ; 69                                         ;
+; Total virtual pins                 ; 0                                          ;
+; Total memory bits                  ; 0                                          ;
+; Embedded Multiplier 9-bit elements ; 0                                          ;
+; Total PLLs                         ; 0                                          ;
++------------------------------------+--------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP2C35F672C6       ;                    ;
+; Top-level entity name                                                      ; Top_level_VCR      ; VCR                ;
+; Family name                                                                ; Cyclone II         ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; Off                ; Off                ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-8         ;   0.0%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                 ;
++-------------------------------------------+-----------------+------------------------------------+---------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path          ; Used in Netlist ; File Type                          ; File Name with Absolute Path                                              ; Library ;
++-------------------------------------------+-----------------+------------------------------------+---------------------------------------------------------------------------+---------+
+; LCD_Controller/MessageRom.vhd             ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/LCD_Controller/MessageRom.vhd             ;         ;
+; LCD_Controller/LCDController.vhd          ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/LCD_Controller/LCDController.vhd          ;         ;
+; LCD_Controller/LCD_DRIVER.vhd             ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/LCD_Controller/LCD_DRIVER.vhd             ;         ;
+; LCD_Controller/LCD_Display_Controller.bdf ; yes             ; User Block Diagram/Schematic File  ; C:/Users/esecules/Documents/VCR/LCD_Controller/LCD_Display_Controller.bdf ;         ;
+; LCD_Controller/LCD_Display.bdf            ; yes             ; User Block Diagram/Schematic File  ; C:/Users/esecules/Documents/VCR/LCD_Controller/LCD_Display.bdf            ;         ;
+; Tape_Counter.vhd                          ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/Tape_Counter.vhd                          ;         ;
+; HexDisplayDriver.vhd                      ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/HexDisplayDriver.vhd                      ;         ;
+; Time_Formatter.vhd                        ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/Time_Formatter.vhd                        ;         ;
+; Frequency_Adjuster.vhd                    ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/Frequency_Adjuster.vhd                    ;         ;
+; VCR_Tape_Counter.bdf                      ; yes             ; User Block Diagram/Schematic File  ; C:/Users/esecules/Documents/VCR/VCR_Tape_Counter.bdf                      ;         ;
+; BIN_TO_BCD.vhd                            ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/BIN_TO_BCD.vhd                            ;         ;
+; VCR_controller.vhd                        ; yes             ; User VHDL File                     ; C:/Users/esecules/Documents/VCR/VCR_controller.vhd                        ;         ;
+; Top_level_VCR.bdf                         ; yes             ; User Block Diagram/Schematic File  ; C:/Users/esecules/Documents/VCR/Top_level_VCR.bdf                         ;         ;
+; lpm_divide.tdf                            ; yes             ; Megafunction                       ; c:/altera/13.0/quartus/libraries/megafunctions/lpm_divide.tdf             ;         ;
+; abs_divider.inc                           ; yes             ; Megafunction                       ; c:/altera/13.0/quartus/libraries/megafunctions/abs_divider.inc            ;         ;
+; sign_div_unsign.inc                       ; yes             ; Megafunction                       ; c:/altera/13.0/quartus/libraries/megafunctions/sign_div_unsign.inc        ;         ;
+; aglobal130.inc                            ; yes             ; Megafunction                       ; c:/altera/13.0/quartus/libraries/megafunctions/aglobal130.inc             ;         ;
+; db/lpm_divide_dem.tdf                     ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/lpm_divide_dem.tdf                     ;         ;
+; db/sign_div_unsign_nlh.tdf                ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/sign_div_unsign_nlh.tdf                ;         ;
+; db/alt_u_div_g2f.tdf                      ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/alt_u_div_g2f.tdf                      ;         ;
+; db/add_sub_lkc.tdf                        ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/add_sub_lkc.tdf                        ;         ;
+; db/add_sub_mkc.tdf                        ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/add_sub_mkc.tdf                        ;         ;
+; db/lpm_divide_s7m.tdf                     ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/lpm_divide_s7m.tdf                     ;         ;
+; db/sign_div_unsign_3nh.tdf                ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/sign_div_unsign_3nh.tdf                ;         ;
+; db/alt_u_div_85f.tdf                      ; yes             ; Auto-Generated Megafunction        ; C:/Users/esecules/Documents/VCR/db/alt_u_div_85f.tdf                      ;         ;
++-------------------------------------------+-----------------+------------------------------------+---------------------------------------------------------------------------+---------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                                                                                                                                                                            ;
++---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Resource                                    ; Usage                                                                                                                                                                    ;
++---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Estimated Total logic elements              ; 1,874                                                                                                                                                                    ;
+;                                             ;                                                                                                                                                                          ;
+; Total combinational functions               ; 1874                                                                                                                                                                     ;
+; Logic element usage by number of LUT inputs ;                                                                                                                                                                          ;
+;     -- 4 input functions                    ; 587                                                                                                                                                                      ;
+;     -- 3 input functions                    ; 559                                                                                                                                                                      ;
+;     -- <=2 input functions                  ; 728                                                                                                                                                                      ;
+;                                             ;                                                                                                                                                                          ;
+; Logic elements by mode                      ;                                                                                                                                                                          ;
+;     -- normal mode                          ; 1328                                                                                                                                                                     ;
+;     -- arithmetic mode                      ; 546                                                                                                                                                                      ;
+;                                             ;                                                                                                                                                                          ;
+; Total registers                             ; 78                                                                                                                                                                       ;
+;     -- Dedicated logic registers            ; 78                                                                                                                                                                       ;
+;     -- I/O registers                        ; 0                                                                                                                                                                        ;
+;                                             ;                                                                                                                                                                          ;
+; I/O pins                                    ; 69                                                                                                                                                                       ;
+; Embedded Multiplier 9-bit elements          ; 0                                                                                                                                                                        ;
+; Maximum fan-out node                        ; VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_17_result_int[18]~32 ;
+; Maximum fan-out                             ; 52                                                                                                                                                                       ;
+; Total fan-out                               ; 5705                                                                                                                                                                     ;
+; Average fan-out                             ; 2.82                                                                                                                                                                     ;
++---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                  ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node                   ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                        ; Library Name ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+; |Top_level_VCR                               ; 1874 (0)          ; 78 (0)       ; 0           ; 0            ; 0       ; 0         ; 69   ; 0            ; |Top_level_VCR                                                                                                                                             ;              ;
+;    |LCD_Display_Controller:inst6|            ; 151 (0)           ; 30 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|LCD_Display_Controller:inst6                                                                                                                ;              ;
+;       |LCD_Display:inst|                     ; 151 (1)           ; 30 (1)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|LCD_Display_Controller:inst6|LCD_Display:inst                                                                                               ;              ;
+;          |LCDController:inst1|               ; 37 (37)           ; 8 (8)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|LCD_Display_Controller:inst6|LCD_Display:inst|LCDController:inst1                                                                           ;              ;
+;          |LCD_DRIVER:inst|                   ; 42 (42)           ; 21 (21)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst                                                                               ;              ;
+;          |MessageRom:inst2|                  ; 71 (71)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|LCD_Display_Controller:inst6|LCD_Display:inst|MessageRom:inst2                                                                              ;              ;
+;    |VCR_CONTROLLER:inst|                     ; 28 (28)           ; 2 (2)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_CONTROLLER:inst                                                                                                                         ;              ;
+;    |VCR_Tape_Counter:inst2|                  ; 1695 (0)          ; 46 (0)       ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2                                                                                                                      ;              ;
+;       |BIN_TO_BCD:inst14|                    ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|BIN_TO_BCD:inst14                                                                                                    ;              ;
+;       |BIN_TO_BCD:inst15|                    ; 18 (18)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|BIN_TO_BCD:inst15                                                                                                    ;              ;
+;       |BIN_TO_BCD:inst16|                    ; 15 (15)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|BIN_TO_BCD:inst16                                                                                                    ;              ;
+;       |Frequency_Adjuster:inst13|            ; 63 (63)           ; 26 (26)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13                                                                                            ;              ;
+;       |HexDisplayDriver:inst4|               ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst4                                                                                               ;              ;
+;       |HexDisplayDriver:inst5|               ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst5                                                                                               ;              ;
+;       |HexDisplayDriver:inst6|               ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst6                                                                                               ;              ;
+;       |HexDisplayDriver:inst7|               ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst7                                                                                               ;              ;
+;       |HexDisplayDriver:inst8|               ; 8 (8)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst8                                                                                               ;              ;
+;       |HexDisplayDriver:inst9|               ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|HexDisplayDriver:inst9                                                                                               ;              ;
+;       |TIME_FORMATTER:inst2|                 ; 1468 (37)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2                                                                                                 ;              ;
+;          |lpm_divide:Div0|                   ; 256 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0                                                                                 ;              ;
+;             |lpm_divide_dem:auto_generated|  ; 256 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0|lpm_divide_dem:auto_generated                                                   ;              ;
+;                |sign_div_unsign_nlh:divider| ; 256 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0|lpm_divide_dem:auto_generated|sign_div_unsign_nlh:divider                       ;              ;
+;                   |alt_u_div_g2f:divider|    ; 256 (256)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0|lpm_divide_dem:auto_generated|sign_div_unsign_nlh:divider|alt_u_div_g2f:divider ;              ;
+;          |lpm_divide:Div1|                   ; 229 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1                                                                                 ;              ;
+;             |lpm_divide_dem:auto_generated|  ; 229 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1|lpm_divide_dem:auto_generated                                                   ;              ;
+;                |sign_div_unsign_nlh:divider| ; 229 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1|lpm_divide_dem:auto_generated|sign_div_unsign_nlh:divider                       ;              ;
+;                   |alt_u_div_g2f:divider|    ; 229 (229)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1|lpm_divide_dem:auto_generated|sign_div_unsign_nlh:divider|alt_u_div_g2f:divider ;              ;
+;          |lpm_divide:Mod0|                   ; 520 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0                                                                                 ;              ;
+;             |lpm_divide_s7m:auto_generated|  ; 520 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0|lpm_divide_s7m:auto_generated                                                   ;              ;
+;                |sign_div_unsign_3nh:divider| ; 520 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider                       ;              ;
+;                   |alt_u_div_85f:divider|    ; 520 (520)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider ;              ;
+;          |lpm_divide:Mod1|                   ; 426 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1                                                                                 ;              ;
+;             |lpm_divide_s7m:auto_generated|  ; 426 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated                                                   ;              ;
+;                |sign_div_unsign_3nh:divider| ; 426 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider                       ;              ;
+;                   |alt_u_div_85f:divider|    ; 426 (426)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider ;              ;
+;       |Tape_Counter:inst|                    ; 71 (71)           ; 20 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |Top_level_VCR|VCR_Tape_Counter:inst2|Tape_Counter:inst                                                                                                    ;              ;
++----------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++----------------------------------------------------------------------------------------------------------------+
+; User-Specified and Inferred Latches                                                                            ;
++-----------------------------------------------------------------+---------------------+------------------------+
+; Latch Name                                                      ; Latch Enable Signal ; Free of Timing Hazards ;
++-----------------------------------------------------------------+---------------------+------------------------+
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[4]  ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[6]  ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[7]  ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[8]  ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[9]  ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[11] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[12] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[13] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[15] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[16] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[17] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[18] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[19] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[20] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[21] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[22] ; GND                 ; yes                    ;
+; VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|Conversion[24] ; GND                 ; yes                    ;
+; Number of user-specified and inferred latches = 17              ;                     ;                        ;
++-----------------------------------------------------------------+---------------------+------------------------+
+Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
+
+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                                                          ;
++------------------------------------------------------------------------------------+----------------------------------------+
+; Register name                                                                      ; Reason for Removal                     ;
++------------------------------------------------------------------------------------+----------------------------------------+
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCDController:inst1|Current_state[3] ; Stuck at GND due to stuck port data_in ;
+; VCR_CONTROLLER:inst|Count_reset                                                    ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 2                                              ;                                        ;
++------------------------------------------------------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 78    ;
+; Number of registers using Synchronous Clear  ; 49    ;
+; Number of registers using Synchronous Load   ; 19    ;
+; Number of registers using Asynchronous Clear ; 19    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 46    ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++----------------------------------------------------------------------------------------+
+; Inverted Register Statistics                                                           ;
++------------------------------------------------------------------------------+---------+
+; Inverted Register                                                            ; Fan out ;
++------------------------------------------------------------------------------+---------+
+; VCR_CONTROLLER:inst|Current_State[1]                                         ; 11      ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[16] ; 3       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[3]  ; 2       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[6]  ; 2       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[11] ; 2       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[13] ; 2       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[14] ; 2       ;
+; LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[15] ; 2       ;
+; Total number of inverted registers = 8                                       ;         ;
++------------------------------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                                               ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------+
+; 3:1                ; 5 bits    ; 10 LEs        ; 5 LEs                ; 5 LEs                  ; Yes        ; |Top_level_VCR|LCD_Display_Controller:inst6|LCD_Display:inst|LCDController:inst1|Char_Count[2] ;
+; 5:1                ; 20 bits   ; 60 LEs        ; 40 LEs               ; 20 LEs                 ; Yes        ; |Top_level_VCR|VCR_Tape_Counter:inst2|Tape_Counter:inst|tempTime[13]                           ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; No         ; |Top_level_VCR|VCR_CONTROLLER:inst|Message                                                     ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1 ;
++------------------------+----------------+--------------------------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                                               ;
++------------------------+----------------+--------------------------------------------------------------------+
+; LPM_WIDTHN             ; 20             ; Untyped                                                            ;
+; LPM_WIDTHD             ; 6              ; Untyped                                                            ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_PIPELINE           ; 0              ; Untyped                                                            ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                                            ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                                            ;
+; CBXI_PARAMETER         ; lpm_divide_dem ; Untyped                                                            ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                                            ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                                            ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                                         ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                                       ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                                       ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                                     ;
++------------------------+----------------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0 ;
++------------------------+----------------+--------------------------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                                               ;
++------------------------+----------------+--------------------------------------------------------------------+
+; LPM_WIDTHN             ; 20             ; Untyped                                                            ;
+; LPM_WIDTHD             ; 6              ; Untyped                                                            ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_PIPELINE           ; 0              ; Untyped                                                            ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                                            ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                                            ;
+; CBXI_PARAMETER         ; lpm_divide_dem ; Untyped                                                            ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                                            ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                                            ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                                         ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                                       ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                                       ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                                     ;
++------------------------+----------------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1 ;
++------------------------+----------------+--------------------------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                                               ;
++------------------------+----------------+--------------------------------------------------------------------+
+; LPM_WIDTHN             ; 20             ; Untyped                                                            ;
+; LPM_WIDTHD             ; 20             ; Untyped                                                            ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_PIPELINE           ; 0              ; Untyped                                                            ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                                            ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                                            ;
+; CBXI_PARAMETER         ; lpm_divide_s7m ; Untyped                                                            ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                                            ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                                            ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                                         ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                                       ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                                       ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                                     ;
++------------------------+----------------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod0 ;
++------------------------+----------------+--------------------------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                                               ;
++------------------------+----------------+--------------------------------------------------------------------+
+; LPM_WIDTHN             ; 20             ; Untyped                                                            ;
+; LPM_WIDTHD             ; 20             ; Untyped                                                            ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                                            ;
+; LPM_PIPELINE           ; 0              ; Untyped                                                            ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                                            ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                                            ;
+; CBXI_PARAMETER         ; lpm_divide_s7m ; Untyped                                                            ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                                            ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                                            ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                                         ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                                       ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                                       ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                                     ;
++------------------------+----------------+--------------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:06     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+    Info: Processing started: Thu Oct 24 14:07:21 2013
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off VCR -c VCR
+Info (11104): Parallel Compilation has detected 8 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 4 of the 4 physical processors detected instead.
+Info (12021): Found 2 design units, including 1 entities, in source file lcd_controller/messagerom.vhd
+    Info (12022): Found design unit 1: MessageRom-bhvr
+    Info (12023): Found entity 1: MessageRom
+Info (12021): Found 2 design units, including 1 entities, in source file lcd_controller/lcdcontroller.vhd
+    Info (12022): Found design unit 1: LCDController-MealyModel
+    Info (12023): Found entity 1: LCDController
+Info (12021): Found 2 design units, including 1 entities, in source file lcd_controller/lcd_driver.vhd
+    Info (12022): Found design unit 1: LCD_DRIVER-behaviour
+    Info (12023): Found entity 1: LCD_DRIVER
+Info (12021): Found 1 design units, including 1 entities, in source file lcd_controller/lcd_display_controller.bdf
+    Info (12023): Found entity 1: LCD_Display_Controller
+Info (12021): Found 1 design units, including 1 entities, in source file lcd_controller/lcd_display.bdf
+    Info (12023): Found entity 1: LCD_Display
+Info (12021): Found 2 design units, including 1 entities, in source file tape_counter.vhd
+    Info (12022): Found design unit 1: Tape_Counter-BEHAVIORAL
+    Info (12023): Found entity 1: Tape_Counter
+Info (12021): Found 2 design units, including 1 entities, in source file hexdisplaydriver.vhd
+    Info (12022): Found design unit 1: HexDisplayDriver-Behavioural
+    Info (12023): Found entity 1: HexDisplayDriver
+Info (12021): Found 2 design units, including 1 entities, in source file time_formatter.vhd
+    Info (12022): Found design unit 1: TIME_FORMATTER-BEHAVIORAL
+    Info (12023): Found entity 1: TIME_FORMATTER
+Info (12021): Found 2 design units, including 1 entities, in source file frequency_adjuster.vhd
+    Info (12022): Found design unit 1: Frequency_Adjuster-BEHAVIORAL
+    Info (12023): Found entity 1: Frequency_Adjuster
+Info (12021): Found 1 design units, including 1 entities, in source file vcr_tape_counter.bdf
+    Info (12023): Found entity 1: VCR_Tape_Counter
+Info (12021): Found 2 design units, including 1 entities, in source file bin_to_bcd.vhd
+    Info (12022): Found design unit 1: BIN_TO_BCD-BEHAVIORAL
+    Info (12023): Found entity 1: BIN_TO_BCD
+Info (12021): Found 2 design units, including 1 entities, in source file vcr_controller.vhd
+    Info (12022): Found design unit 1: VCR_CONTROLLER-Mealy
+    Info (12023): Found entity 1: VCR_CONTROLLER
+Info (12021): Found 1 design units, including 1 entities, in source file top_level_vcr.bdf
+    Info (12023): Found entity 1: Top_level_VCR
+Info (12127): Elaborating entity "Top_level_VCR" for the top level hierarchy
+Info (12128): Elaborating entity "LCD_Display_Controller" for hierarchy "LCD_Display_Controller:inst6"
+Info (12128): Elaborating entity "LCD_Display" for hierarchy "LCD_Display_Controller:inst6|LCD_Display:inst"
+Info (12128): Elaborating entity "LCD_DRIVER" for hierarchy "LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst"
+Info (12128): Elaborating entity "LCDController" for hierarchy "LCD_Display_Controller:inst6|LCD_Display:inst|LCDController:inst1"
+Info (12128): Elaborating entity "MessageRom" for hierarchy "LCD_Display_Controller:inst6|LCD_Display:inst|MessageRom:inst2"
+Info (12128): Elaborating entity "VCR_CONTROLLER" for hierarchy "VCR_CONTROLLER:inst"
+Warning (10492): VHDL Process Statement warning at VCR_controller.vhd(67): signal "protected" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at VCR_controller.vhd(112): signal "protected" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Info (12128): Elaborating entity "VCR_Tape_Counter" for hierarchy "VCR_Tape_Counter:inst2"
+Info (12128): Elaborating entity "HexDisplayDriver" for hierarchy "VCR_Tape_Counter:inst2|HexDisplayDriver:inst9"
+Info (12128): Elaborating entity "BIN_TO_BCD" for hierarchy "VCR_Tape_Counter:inst2|BIN_TO_BCD:inst16"
+Info (12128): Elaborating entity "TIME_FORMATTER" for hierarchy "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2"
+Warning (10492): VHDL Process Statement warning at Time_Formatter.vhd(23): signal "seconds" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Warning (10492): VHDL Process Statement warning at Time_Formatter.vhd(25): signal "minutes" is read inside the Process Statement but isn't in the Process Statement's sensitivity list
+Info (12128): Elaborating entity "Tape_Counter" for hierarchy "VCR_Tape_Counter:inst2|Tape_Counter:inst"
+Info (12128): Elaborating entity "Frequency_Adjuster" for hierarchy "VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13"
+Warning (10631): VHDL Process Statement warning at Frequency_Adjuster.vhd(19): inferring latch(es) for signal or variable "Conversion", which holds its previous value in one or more paths through the process
+Info (10041): Inferred latch for "Conversion[0]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[1]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[2]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[3]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[4]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[5]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[6]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[7]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[8]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[9]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[10]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[11]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[12]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[13]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[14]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[15]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[16]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[17]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[18]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[19]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[20]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[21]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[22]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[23]" at Frequency_Adjuster.vhd(22)
+Info (10041): Inferred latch for "Conversion[24]" at Frequency_Adjuster.vhd(22)
+Info (278001): Inferred 4 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|Div1"
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|Div0"
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|Mod1"
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|Mod0"
+Info (12130): Elaborated megafunction instantiation "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1"
+Info (12133): Instantiated megafunction "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div1" with the following parameter:
+    Info (12134): Parameter "LPM_WIDTHN" = "20"
+    Info (12134): Parameter "LPM_WIDTHD" = "6"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_dem.tdf
+    Info (12023): Found entity 1: lpm_divide_dem
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_nlh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_nlh
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_g2f.tdf
+    Info (12023): Found entity 1: alt_u_div_g2f
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_lkc.tdf
+    Info (12023): Found entity 1: add_sub_lkc
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_mkc.tdf
+    Info (12023): Found entity 1: add_sub_mkc
+Info (12130): Elaborated megafunction instantiation "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0"
+Info (12133): Instantiated megafunction "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Div0" with the following parameter:
+    Info (12134): Parameter "LPM_WIDTHN" = "20"
+    Info (12134): Parameter "LPM_WIDTHD" = "6"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12130): Elaborated megafunction instantiation "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1"
+Info (12133): Instantiated megafunction "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1" with the following parameter:
+    Info (12134): Parameter "LPM_WIDTHN" = "20"
+    Info (12134): Parameter "LPM_WIDTHD" = "20"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_s7m.tdf
+    Info (12023): Found entity 1: lpm_divide_s7m
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_3nh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_3nh
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_85f.tdf
+    Info (12023): Found entity 1: alt_u_div_85f
+Info (13000): Registers with preset signals will power-up high
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "LCD_ON" is stuck at VCC
+    Warning (13410): Pin "LCD_BLON" is stuck at VCC
+Critical Warning (18061): Ignored Power-Up Level option on the following registers
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[3] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[6] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[11] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[13] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[14] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[15] will power up to High
+    Critical Warning (18010): Register LCD_Display_Controller:inst6|LCD_Display:inst|LCD_DRIVER:inst|timeLCDClk[16] will power up to High
+Info (17016): Found the following redundant logic cells in design
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_10_result_int[1]~20"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_10_result_int[0]~22"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_11_result_int[0]~24"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_12_result_int[0]~24"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_13_result_int[0]~26"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_14_result_int[0]~28"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_15_result_int[0]~30"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_16_result_int[0]~32"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_17_result_int[0]~34"
+    Info (17048): Logic cell "VCR_Tape_Counter:inst2|TIME_FORMATTER:inst2|lpm_divide:Mod1|lpm_divide_s7m:auto_generated|sign_div_unsign_3nh:divider|alt_u_div_85f:divider|add_sub_18_result_int[0]~36"
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 1943 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 14 input pins
+    Info (21059): Implemented 55 output pins
+    Info (21061): Implemented 1874 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 16 warnings
+    Info: Peak virtual memory: 523 megabytes
+    Info: Processing ended: Thu Oct 24 14:07:30 2013
+    Info: Elapsed time: 00:00:09
+    Info: Total CPU time (on all processors): 00:00:08
+
+

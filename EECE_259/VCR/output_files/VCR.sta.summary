@@ -1,0 +1,93 @@
+------------------------------------------------------------
+TimeQuest Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow Model Setup 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -7.134
+TNS   : -94.981
+
+Type  : Slow Model Setup 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : -4.557
+TNS   : -81.539
+
+Type  : Slow Model Setup 'CLK'
+Slack : -2.928
+TNS   : -77.538
+
+Type  : Slow Model Hold 'CLK'
+Slack : -2.555
+TNS   : -5.096
+
+Type  : Slow Model Hold 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow Model Hold 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow Model Recovery 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -1.552
+TNS   : -23.321
+
+Type  : Slow Model Removal 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : 1.630
+TNS   : 0.000
+
+Type  : Slow Model Minimum Pulse Width 'CLK'
+Slack : -1.380
+TNS   : -30.380
+
+Type  : Slow Model Minimum Pulse Width 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -0.500
+TNS   : -29.000
+
+Type  : Slow Model Minimum Pulse Width 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : -0.500
+TNS   : -20.000
+
+Type  : Fast Model Setup 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -2.605
+TNS   : -29.977
+
+Type  : Fast Model Setup 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : -1.548
+TNS   : -25.913
+
+Type  : Fast Model Setup 'CLK'
+Slack : -0.827
+TNS   : -21.113
+
+Type  : Fast Model Hold 'CLK'
+Slack : -1.595
+TNS   : -3.180
+
+Type  : Fast Model Hold 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : 0.215
+TNS   : 0.000
+
+Type  : Fast Model Hold 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : 0.215
+TNS   : 0.000
+
+Type  : Fast Model Recovery 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -0.287
+TNS   : -3.572
+
+Type  : Fast Model Removal 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : 0.834
+TNS   : 0.000
+
+Type  : Fast Model Minimum Pulse Width 'CLK'
+Slack : -1.380
+TNS   : -30.380
+
+Type  : Fast Model Minimum Pulse Width 'LCD_Display_Controller:inst6|LCD_Display:inst|inst13'
+Slack : -0.500
+TNS   : -29.000
+
+Type  : Fast Model Minimum Pulse Width 'VCR_Tape_Counter:inst2|Frequency_Adjuster:inst13|ClkTemp'
+Slack : -0.500
+TNS   : -20.000
+
+------------------------------------------------------------

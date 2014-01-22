@@ -1,0 +1,258 @@
+Simulator report for ArithmaticUnit
+Thu Oct 10 13:37:19 2013
+Quartus II 64-Bit Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Simulator Summary
+  3. Simulator Settings
+  4. Simulation Waveforms
+  5. Coverage Summary
+  6. Complete 1/0-Value Coverage
+  7. Missing 1-Value Coverage
+  8. Missing 0-Value Coverage
+  9. Simulator INI Usage
+ 10. Simulator Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------+
+; Simulator Summary                          ;
++-----------------------------+--------------+
+; Type                        ; Value        ;
++-----------------------------+--------------+
+; Simulation Start Time       ; 0 ps         ;
+; Simulation End Time         ; 100.0 ns     ;
+; Simulation Netlist Size     ; 98 nodes     ;
+; Simulation Coverage         ;     100.00 % ;
+; Total Number of Transitions ; 624          ;
+; Simulation Breakpoints      ; 0            ;
+; Family                      ; Cyclone II   ;
++-----------------------------+--------------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Simulator Settings                                                                                                                                                ;
++--------------------------------------------------------------------------------------------+------------------------------------------------------+---------------+
+; Option                                                                                     ; Setting                                              ; Default Value ;
++--------------------------------------------------------------------------------------------+------------------------------------------------------+---------------+
+; Simulation mode                                                                            ; Functional                                           ; Timing        ;
+; Start time                                                                                 ; 0 ns                                                 ; 0 ns          ;
+; Simulation results format                                                                  ; VWF                                                  ;               ;
+; Vector input source                                                                        ; C:/Users/esecules/Documents/Assignment 1/Mult4x4.vwf ;               ;
+; Add pins automatically to simulation output waveforms                                      ; On                                                   ; On            ;
+; Check outputs                                                                              ; Off                                                  ; Off           ;
+; Report simulation coverage                                                                 ; On                                                   ; On            ;
+; Display complete 1/0 value coverage report                                                 ; On                                                   ; On            ;
+; Display missing 1-value coverage report                                                    ; On                                                   ; On            ;
+; Display missing 0-value coverage report                                                    ; On                                                   ; On            ;
+; Detect setup and hold time violations                                                      ; Off                                                  ; Off           ;
+; Detect glitches                                                                            ; Off                                                  ; Off           ;
+; Disable timing delays in Timing Simulation                                                 ; Off                                                  ; Off           ;
+; Generate Signal Activity File                                                              ; Off                                                  ; Off           ;
+; Generate VCD File for PowerPlay Power Analyzer                                             ; Off                                                  ; Off           ;
+; Group bus channels in simulation results                                                   ; Off                                                  ; Off           ;
+; Preserve fewer signal transitions to reduce memory requirements                            ; On                                                   ; On            ;
+; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE                                           ; INPUT_EDGE    ;
+; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off                                                  ; Off           ;
+; Overwrite Waveform Inputs With Simulation Outputs                                          ; Off                                                  ;               ;
+; Perform Glitch Filtering in Timing Simulation                                              ; Auto                                                 ; Auto          ;
++--------------------------------------------------------------------------------------------+------------------------------------------------------+---------------+
+
+
++----------------------+
+; Simulation Waveforms ;
++----------------------+
+Waveform report data cannot be output to ASCII.
+Please use Quartus II 64-Bit to view the waveform report data.
+
+
++--------------------------------------------------------------------+
+; Coverage Summary                                                   ;
++-----------------------------------------------------+--------------+
+; Type                                                ; Value        ;
++-----------------------------------------------------+--------------+
+; Total coverage as a percentage                      ;     100.00 % ;
+; Total nodes checked                                 ; 98           ;
+; Total output ports checked                          ; 98           ;
+; Total output ports with complete 1/0-value coverage ; 98           ;
+; Total output ports with no 1/0-value coverage       ; 0            ;
+; Total output ports with no 1-value coverage         ; 0            ;
+; Total output ports with no 0-value coverage         ; 0            ;
++-----------------------------------------------------+--------------+
+
+
+The following table displays output ports that toggle between 1 and 0 during simulation.
++--------------------------------------------------------------------------------------------------------------------------+
+; Complete 1/0-Value Coverage                                                                                              ;
++---------------------------------------------------+---------------------------------------------------+------------------+
+; Node Name                                         ; Output Port Name                                  ; Output Port Type ;
++---------------------------------------------------+---------------------------------------------------+------------------+
+; |Mult4x4|Mult[7]                                  ; |Mult4x4|Mult[7]                                  ; pin_out          ;
+; |Mult4x4|Mult[6]                                  ; |Mult4x4|Mult[6]                                  ; pin_out          ;
+; |Mult4x4|Mult[5]                                  ; |Mult4x4|Mult[5]                                  ; pin_out          ;
+; |Mult4x4|Mult[4]                                  ; |Mult4x4|Mult[4]                                  ; pin_out          ;
+; |Mult4x4|Mult[3]                                  ; |Mult4x4|Mult[3]                                  ; pin_out          ;
+; |Mult4x4|Mult[2]                                  ; |Mult4x4|Mult[2]                                  ; pin_out          ;
+; |Mult4x4|Mult[1]                                  ; |Mult4x4|Mult[1]                                  ; pin_out          ;
+; |Mult4x4|Mult[0]                                  ; |Mult4x4|Mult[0]                                  ; pin_out          ;
+; |Mult4x4|inst12                                   ; |Mult4x4|inst12                                   ; out0             ;
+; |Mult4x4|A[3]                                     ; |Mult4x4|A[3]                                     ; out              ;
+; |Mult4x4|A[2]                                     ; |Mult4x4|A[2]                                     ; out              ;
+; |Mult4x4|A[1]                                     ; |Mult4x4|A[1]                                     ; out              ;
+; |Mult4x4|A[0]                                     ; |Mult4x4|A[0]                                     ; out              ;
+; |Mult4x4|B[3]                                     ; |Mult4x4|B[3]                                     ; out              ;
+; |Mult4x4|B[2]                                     ; |Mult4x4|B[2]                                     ; out              ;
+; |Mult4x4|B[1]                                     ; |Mult4x4|B[1]                                     ; out              ;
+; |Mult4x4|B[0]                                     ; |Mult4x4|B[0]                                     ; out              ;
+; |Mult4x4|inst2                                    ; |Mult4x4|inst2                                    ; out0             ;
+; |Mult4x4|inst3                                    ; |Mult4x4|inst3                                    ; out0             ;
+; |Mult4x4|inst5                                    ; |Mult4x4|inst5                                    ; out0             ;
+; |Mult4x4|inst8                                    ; |Mult4x4|inst8                                    ; out0             ;
+; |Mult4x4|inst4                                    ; |Mult4x4|inst4                                    ; out0             ;
+; |Mult4x4|inst6                                    ; |Mult4x4|inst6                                    ; out0             ;
+; |Mult4x4|inst7                                    ; |Mult4x4|inst7                                    ; out0             ;
+; |Mult4x4|inst13                                   ; |Mult4x4|inst13                                   ; out0             ;
+; |Mult4x4|inst14                                   ; |Mult4x4|inst14                                   ; out0             ;
+; |Mult4x4|inst15                                   ; |Mult4x4|inst15                                   ; out0             ;
+; |Mult4x4|inst16                                   ; |Mult4x4|inst16                                   ; out0             ;
+; |Mult4x4|inst19                                   ; |Mult4x4|inst19                                   ; out0             ;
+; |Mult4x4|inst20                                   ; |Mult4x4|inst20                                   ; out0             ;
+; |Mult4x4|inst21                                   ; |Mult4x4|inst21                                   ; out0             ;
+; |Mult4x4|inst22                                   ; |Mult4x4|inst22                                   ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|cout4           ; |Mult4x4|fourbitadder-mult:inst18|cout4           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst9           ; |Mult4x4|fourbitadder-mult:inst18|inst9           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|or1             ; |Mult4x4|fourbitadder-mult:inst18|or1             ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst19          ; |Mult4x4|fourbitadder-mult:inst18|inst19          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst21          ; |Mult4x4|fourbitadder-mult:inst18|inst21          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst8           ; |Mult4x4|fourbitadder-mult:inst18|inst8           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst22          ; |Mult4x4|fourbitadder-mult:inst18|inst22          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|and0            ; |Mult4x4|fourbitadder-mult:inst18|and0            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst20          ; |Mult4x4|fourbitadder-mult:inst18|inst20          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|and1            ; |Mult4x4|fourbitadder-mult:inst18|and1            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst18          ; |Mult4x4|fourbitadder-mult:inst18|inst18          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst11          ; |Mult4x4|fourbitadder-mult:inst18|inst11          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst12          ; |Mult4x4|fourbitadder-mult:inst18|inst12          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst14          ; |Mult4x4|fourbitadder-mult:inst18|inst14          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst10          ; |Mult4x4|fourbitadder-mult:inst18|inst10          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|inst15          ; |Mult4x4|fourbitadder-mult:inst18|inst15          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst1|inst1 ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst1|inst1 ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst1|inst  ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst1|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst|inst1  ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst|inst1  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst|inst   ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst|inst   ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst2|inst1 ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst2|inst1 ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst2|inst  ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst2|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst18|Sum:inst3|inst  ; |Mult4x4|fourbitadder-mult:inst18|Sum:inst3|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|cout4           ; |Mult4x4|fourbitadder-mult:inst11|cout4           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst9           ; |Mult4x4|fourbitadder-mult:inst11|inst9           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|or1             ; |Mult4x4|fourbitadder-mult:inst11|or1             ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst19          ; |Mult4x4|fourbitadder-mult:inst11|inst19          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst21          ; |Mult4x4|fourbitadder-mult:inst11|inst21          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst8           ; |Mult4x4|fourbitadder-mult:inst11|inst8           ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst22          ; |Mult4x4|fourbitadder-mult:inst11|inst22          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|and0            ; |Mult4x4|fourbitadder-mult:inst11|and0            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst20          ; |Mult4x4|fourbitadder-mult:inst11|inst20          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|and1            ; |Mult4x4|fourbitadder-mult:inst11|and1            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst18          ; |Mult4x4|fourbitadder-mult:inst11|inst18          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst11          ; |Mult4x4|fourbitadder-mult:inst11|inst11          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst12          ; |Mult4x4|fourbitadder-mult:inst11|inst12          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst14          ; |Mult4x4|fourbitadder-mult:inst11|inst14          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst10          ; |Mult4x4|fourbitadder-mult:inst11|inst10          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|inst15          ; |Mult4x4|fourbitadder-mult:inst11|inst15          ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst1|inst1 ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst1|inst1 ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst1|inst  ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst1|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst|inst1  ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst|inst1  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst|inst   ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst|inst   ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst2|inst1 ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst2|inst1 ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst2|inst  ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst2|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst11|Sum:inst3|inst  ; |Mult4x4|fourbitadder-mult:inst11|Sum:inst3|inst  ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|cout4             ; |Mult4x4|fourbitadder-mult:inst|cout4             ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst9             ; |Mult4x4|fourbitadder-mult:inst|inst9             ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|or1               ; |Mult4x4|fourbitadder-mult:inst|or1               ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst21            ; |Mult4x4|fourbitadder-mult:inst|inst21            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst8             ; |Mult4x4|fourbitadder-mult:inst|inst8             ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst22            ; |Mult4x4|fourbitadder-mult:inst|inst22            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|and0              ; |Mult4x4|fourbitadder-mult:inst|and0              ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst20            ; |Mult4x4|fourbitadder-mult:inst|inst20            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|and1              ; |Mult4x4|fourbitadder-mult:inst|and1              ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst11            ; |Mult4x4|fourbitadder-mult:inst|inst11            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst12            ; |Mult4x4|fourbitadder-mult:inst|inst12            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst14            ; |Mult4x4|fourbitadder-mult:inst|inst14            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst10            ; |Mult4x4|fourbitadder-mult:inst|inst10            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|inst15            ; |Mult4x4|fourbitadder-mult:inst|inst15            ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst1|inst1   ; |Mult4x4|fourbitadder-mult:inst|Sum:inst1|inst1   ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst|inst1    ; |Mult4x4|fourbitadder-mult:inst|Sum:inst|inst1    ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst|inst     ; |Mult4x4|fourbitadder-mult:inst|Sum:inst|inst     ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst2|inst1   ; |Mult4x4|fourbitadder-mult:inst|Sum:inst2|inst1   ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst2|inst    ; |Mult4x4|fourbitadder-mult:inst|Sum:inst2|inst    ; out0             ;
+; |Mult4x4|fourbitadder-mult:inst|Sum:inst3|inst    ; |Mult4x4|fourbitadder-mult:inst|Sum:inst3|inst    ; out0             ;
++---------------------------------------------------+---------------------------------------------------+------------------+
+
+
+The following table displays output ports that do not toggle to 1 during simulation.
++-------------------------------------------------+
+; Missing 1-Value Coverage                        ;
++-----------+------------------+------------------+
+; Node Name ; Output Port Name ; Output Port Type ;
++-----------+------------------+------------------+
+
+
+The following table displays output ports that do not toggle to 0 during simulation.
++-------------------------------------------------+
+; Missing 0-Value Coverage                        ;
++-----------+------------------+------------------+
+; Node Name ; Output Port Name ; Output Port Type ;
++-----------+------------------+------------------+
+
+
++---------------------+
+; Simulator INI Usage ;
++--------+------------+
+; Option ; Usage      ;
++--------+------------+
+
+
++--------------------+
+; Simulator Messages ;
++--------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Simulator
+    Info: Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+    Info: Processing started: Thu Oct 10 13:37:18 2013
+Info: Command: quartus_sim --simulation_results_format=VWF ArithmaticUnit -c ArithmaticUnit
+Info (324025): Using vector source file "C:/Users/esecules/Documents/Assignment 1/Mult4x4.vwf"
+Info (310003): Option to preserve fewer signal transitions to reduce memory requirements is enabled
+    Info (310004): Simulation has been partitioned into sub-simulations according to the maximum transition count determined by the engine. Transitions from memory will be flushed out to disk at the end of each sub-simulation to reduce memory requirements.
+Info (310002): Simulation partitioned into 1 sub-simulations
+Info (328053): Simulation coverage is     100.00 %
+Info (328052): Number of transitions in simulation is 624
+Info (324045): Vector file ArithmaticUnit.sim.vwf is saved in VWF text format. You can compress it into CVWF format in order to reduce file size. For more details please refer to the Quartus II Help.
+Info: Quartus II 64-Bit Simulator was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 319 megabytes
+    Info: Processing ended: Thu Oct 10 13:37:19 2013
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:00
+
+

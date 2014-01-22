@@ -1,0 +1,83 @@
+EDA Netlist Writer report for ArithmaticUnit
+Thu Oct 10 13:36:41 2013
+Quartus II 64-Bit Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. EDA Netlist Writer Summary
+  3. EDA Netlist Writer Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++---------------------------------------------------------------+
+; EDA Netlist Writer Summary                                    ;
++---------------------------+-----------------------------------+
+; EDA Netlist Writer Status ; Failed - Thu Oct 10 13:36:41 2013 ;
+; Revision Name             ; ArithmaticUnit                    ;
+; Top-level Entity Name     ; TwoDigitBCDSymbolOnly             ;
+; Family                    ; Cyclone II                        ;
++---------------------------+-----------------------------------+
+
+
++-----------------------------+
+; EDA Netlist Writer Messages ;
++-----------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit EDA Netlist Writer
+    Info: Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+    Info: Processing started: Thu Oct 10 13:36:41 2013
+Info: Command: quartus_eda --gen_testbench --check_outputs=on --tool=modelsim_oem --format=verilog ArithmaticUnit -c ArithmaticUnit --vector_source="C:/Users/esecules/Documents/Assignment 1/Mult4x4.vwf" --testbench_file=./simulation/qsim/ArithmaticUnit.vt
+Warning (201007): Can't find port "Mult" in design
+Warning (201007): Can't find port "Mult[7]" in design
+Warning (201007): Can't find port "Mult[6]" in design
+Warning (201007): Can't find port "Mult[5]" in design
+Warning (201007): Can't find port "Mult[4]" in design
+Warning (201007): Can't find port "Mult[3]" in design
+Warning (201007): Can't find port "Mult[2]" in design
+Warning (201007): Can't find port "Mult[1]" in design
+Warning (201007): Can't find port "Mult[0]" in design
+Error (201009): Bus port "A" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Error (201009): Bus port "B" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Error (201009): Bus port "A" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Error (201009): Bus port "B" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Error (201009): Bus port "B" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Error (201009): Bus port "A" specified in vector source file has width of 4, which does not match width 8 of top level port of same name
+Warning (201005): Ignoring output pin "Mult" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[7]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[6]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[5]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[4]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[3]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[2]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[1]" in vector source file when writing test bench files
+Warning (201005): Ignoring output pin "Mult[0]" in vector source file when writing test bench files
+Info (201000): Generated Verilog Test Bench File ./simulation/qsim/ArithmaticUnit.vt for simulation
+Error: Quartus II 64-Bit EDA Netlist Writer was unsuccessful. 6 errors, 18 warnings
+    Error: Peak virtual memory: 388 megabytes
+    Error: Processing ended: Thu Oct 10 13:36:42 2013
+    Error: Elapsed time: 00:00:01
+    Error: Total CPU time (on all processors): 00:00:00
+
+

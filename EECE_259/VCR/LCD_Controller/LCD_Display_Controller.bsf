@@ -1,0 +1,106 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.2"))
+(symbol
+	(rect 16 16 336 176)
+	(text "LCD_Display_Controller" (rect 5 0 166 16)(font "Arial" (font_size 8)))
+	(text "inst" (rect 8 141 31 156)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "Reset_L" (rect 0 0 56 16)(font "Arial" (font_size 8)))
+		(text "Reset_L" (rect 21 27 77 43)(font "Arial" (font_size 8)))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "CLK_50Mhz" (rect 0 0 83 16)(font "Arial" (font_size 8)))
+		(text "CLK_50Mhz" (rect 21 43 104 59)(font "Arial" (font_size 8)))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "WriteMessage_L" (rect 0 0 115 16)(font "Arial" (font_size 8)))
+		(text "WriteMessage_L" (rect 21 59 136 75)(font "Arial" (font_size 8)))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "MessageNumber[3..0]" (rect 0 0 151 16)(font "Arial" (font_size 8)))
+		(text "MessageNumber[3..0]" (rect 21 75 172 91)(font "Arial" (font_size 8)))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 320 32)
+		(output)
+		(text "LCD_ON_DE2" (rect 0 0 97 16)(font "Arial" (font_size 8)))
+		(text "LCD_ON_DE2" (rect 202 27 299 43)(font "Arial" (font_size 8)))
+		(line (pt 320 32)(pt 304 32))
+	)
+	(port
+		(pt 320 48)
+		(output)
+		(text "LCD_BLON_DE2" (rect 0 0 116 16)(font "Arial" (font_size 8)))
+		(text "LCD_BLON_DE2" (rect 183 43 299 59)(font "Arial" (font_size 8)))
+		(line (pt 320 48)(pt 304 48))
+	)
+	(port
+		(pt 320 64)
+		(output)
+		(text "E" (rect 0 0 10 16)(font "Arial" (font_size 8)))
+		(text "E" (rect 289 59 299 75)(font "Arial" (font_size 8)))
+		(line (pt 320 64)(pt 304 64))
+	)
+	(port
+		(pt 320 80)
+		(output)
+		(text "RW" (rect 0 0 25 16)(font "Arial" (font_size 8)))
+		(text "RW" (rect 274 75 299 91)(font "Arial" (font_size 8)))
+		(line (pt 320 80)(pt 304 80))
+	)
+	(port
+		(pt 320 96)
+		(output)
+		(text "RS" (rect 0 0 21 16)(font "Arial" (font_size 8)))
+		(text "RS" (rect 278 91 299 107)(font "Arial" (font_size 8)))
+		(line (pt 320 96)(pt 304 96))
+	)
+	(port
+		(pt 320 112)
+		(output)
+		(text "DB[7..0]" (rect 0 0 56 16)(font "Arial" (font_size 8)))
+		(text "DB[7..0]" (rect 243 107 299 123)(font "Arial" (font_size 8)))
+		(line (pt 320 112)(pt 304 112)(line_width 3))
+	)
+	(port
+		(pt 320 128)
+		(output)
+		(text "Ready_H" (rect 0 0 62 16)(font "Arial" (font_size 8)))
+		(text "Ready_H" (rect 237 123 299 139)(font "Arial" (font_size 8)))
+		(line (pt 320 128)(pt 304 128))
+	)
+	(drawing
+		(rectangle (rect 16 16 304 144))
+	)
+)

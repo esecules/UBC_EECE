@@ -1,0 +1,222 @@
+Simulator report for HexTo7SegmentDisplayDriver
+Thu Sep 26 13:01:48 2013
+Quartus II 64-Bit Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Simulator Summary
+  3. Simulator Settings
+  4. Simulation Waveforms
+  5. Coverage Summary
+  6. Complete 1/0-Value Coverage
+  7. Missing 1-Value Coverage
+  8. Missing 0-Value Coverage
+  9. Simulator INI Usage
+ 10. Simulator Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++--------------------------------------------+
+; Simulator Summary                          ;
++-----------------------------+--------------+
+; Type                        ; Value        ;
++-----------------------------+--------------+
+; Simulation Start Time       ; 0 ps         ;
+; Simulation End Time         ; 660.0 ns     ;
+; Simulation Netlist Size     ; 60 nodes     ;
+; Simulation Coverage         ;      88.33 % ;
+; Total Number of Transitions ; 381          ;
+; Simulation Breakpoints      ; 0            ;
+; Family                      ; Cyclone II   ;
++-----------------------------+--------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Simulator Settings                                                                                                                                                                                         ;
++--------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+---------------+
+; Option                                                                                     ; Setting                                                                                       ; Default Value ;
++--------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+---------------+
+; Simulation mode                                                                            ; Functional                                                                                    ; Timing        ;
+; Start time                                                                                 ; 0 ns                                                                                          ; 0 ns          ;
+; Simulation results format                                                                  ; VWF                                                                                           ;               ;
+; Vector input source                                                                        ; C:/Users/esecules/Documents/259Lab3/Hex to 7 Segment Display Driver/output_files/Waveform.vwf ;               ;
+; Add pins automatically to simulation output waveforms                                      ; On                                                                                            ; On            ;
+; Check outputs                                                                              ; Off                                                                                           ; Off           ;
+; Report simulation coverage                                                                 ; On                                                                                            ; On            ;
+; Display complete 1/0 value coverage report                                                 ; On                                                                                            ; On            ;
+; Display missing 1-value coverage report                                                    ; On                                                                                            ; On            ;
+; Display missing 0-value coverage report                                                    ; On                                                                                            ; On            ;
+; Detect setup and hold time violations                                                      ; Off                                                                                           ; Off           ;
+; Detect glitches                                                                            ; Off                                                                                           ; Off           ;
+; Disable timing delays in Timing Simulation                                                 ; Off                                                                                           ; Off           ;
+; Generate Signal Activity File                                                              ; Off                                                                                           ; Off           ;
+; Generate VCD File for PowerPlay Power Analyzer                                             ; Off                                                                                           ; Off           ;
+; Group bus channels in simulation results                                                   ; Off                                                                                           ; Off           ;
+; Preserve fewer signal transitions to reduce memory requirements                            ; On                                                                                            ; On            ;
+; Trigger vector comparison with the specified mode                                          ; INPUT_EDGE                                                                                    ; INPUT_EDGE    ;
+; Disable setup and hold time violations detection in input registers of bi-directional pins ; Off                                                                                           ; Off           ;
+; Overwrite Waveform Inputs With Simulation Outputs                                          ; Off                                                                                           ;               ;
+; Perform Glitch Filtering in Timing Simulation                                              ; Auto                                                                                          ; Auto          ;
++--------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------------------+---------------+
+
+
++----------------------+
+; Simulation Waveforms ;
++----------------------+
+Waveform report data cannot be output to ASCII.
+Please use Quartus II 64-Bit to view the waveform report data.
+
+
++--------------------------------------------------------------------+
+; Coverage Summary                                                   ;
++-----------------------------------------------------+--------------+
+; Type                                                ; Value        ;
++-----------------------------------------------------+--------------+
+; Total coverage as a percentage                      ;      88.33 % ;
+; Total nodes checked                                 ; 60           ;
+; Total output ports checked                          ; 60           ;
+; Total output ports with complete 1/0-value coverage ; 53           ;
+; Total output ports with no 1/0-value coverage       ; 0            ;
+; Total output ports with no 1-value coverage         ; 3            ;
+; Total output ports with no 0-value coverage         ; 4            ;
++-----------------------------------------------------+--------------+
+
+
+The following table displays output ports that toggle between 1 and 0 during simulation.
++--------------------------------------------------------------------------------------------------+
+; Complete 1/0-Value Coverage                                                                      ;
++---------------------------------------+---------------------------------------+------------------+
+; Node Name                             ; Output Port Name                      ; Output Port Type ;
++---------------------------------------+---------------------------------------+------------------+
+; |HexTo7SegmentDisplayDriver|Segment_a ; |HexTo7SegmentDisplayDriver|Segment_a ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst11    ; |HexTo7SegmentDisplayDriver|inst11    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst4     ; |HexTo7SegmentDisplayDriver|inst4     ; out0             ;
+; |HexTo7SegmentDisplayDriver|Input_A   ; |HexTo7SegmentDisplayDriver|Input_A   ; out              ;
+; |HexTo7SegmentDisplayDriver|Input_B   ; |HexTo7SegmentDisplayDriver|Input_B   ; out              ;
+; |HexTo7SegmentDisplayDriver|inst8     ; |HexTo7SegmentDisplayDriver|inst8     ; out0             ;
+; |HexTo7SegmentDisplayDriver|Input_C   ; |HexTo7SegmentDisplayDriver|Input_C   ; out              ;
+; |HexTo7SegmentDisplayDriver|inst5     ; |HexTo7SegmentDisplayDriver|inst5     ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst7     ; |HexTo7SegmentDisplayDriver|inst7     ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst9     ; |HexTo7SegmentDisplayDriver|inst9     ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst6     ; |HexTo7SegmentDisplayDriver|inst6     ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst10    ; |HexTo7SegmentDisplayDriver|inst10    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_c ; |HexTo7SegmentDisplayDriver|Segment_c ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst20    ; |HexTo7SegmentDisplayDriver|inst20    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst26    ; |HexTo7SegmentDisplayDriver|inst26    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst28    ; |HexTo7SegmentDisplayDriver|inst28    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst27    ; |HexTo7SegmentDisplayDriver|inst27    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst29    ; |HexTo7SegmentDisplayDriver|inst29    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst30    ; |HexTo7SegmentDisplayDriver|inst30    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_d ; |HexTo7SegmentDisplayDriver|Segment_d ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst31    ; |HexTo7SegmentDisplayDriver|inst31    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst35    ; |HexTo7SegmentDisplayDriver|inst35    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst34    ; |HexTo7SegmentDisplayDriver|inst34    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst36    ; |HexTo7SegmentDisplayDriver|inst36    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst37    ; |HexTo7SegmentDisplayDriver|inst37    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst38    ; |HexTo7SegmentDisplayDriver|inst38    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_e ; |HexTo7SegmentDisplayDriver|Segment_e ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst39    ; |HexTo7SegmentDisplayDriver|inst39    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst43    ; |HexTo7SegmentDisplayDriver|inst43    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst42    ; |HexTo7SegmentDisplayDriver|inst42    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst44    ; |HexTo7SegmentDisplayDriver|inst44    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_f ; |HexTo7SegmentDisplayDriver|Segment_f ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst52    ; |HexTo7SegmentDisplayDriver|inst52    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst15    ; |HexTo7SegmentDisplayDriver|inst15    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst48    ; |HexTo7SegmentDisplayDriver|inst48    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst46    ; |HexTo7SegmentDisplayDriver|inst46    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst49    ; |HexTo7SegmentDisplayDriver|inst49    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst61    ; |HexTo7SegmentDisplayDriver|inst61    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_g ; |HexTo7SegmentDisplayDriver|Segment_g ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst16    ; |HexTo7SegmentDisplayDriver|inst16    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst62    ; |HexTo7SegmentDisplayDriver|inst62    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst53    ; |HexTo7SegmentDisplayDriver|inst53    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst55    ; |HexTo7SegmentDisplayDriver|inst55    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst56    ; |HexTo7SegmentDisplayDriver|inst56    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst51    ; |HexTo7SegmentDisplayDriver|inst51    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst57    ; |HexTo7SegmentDisplayDriver|inst57    ; out0             ;
+; |HexTo7SegmentDisplayDriver|Segment_b ; |HexTo7SegmentDisplayDriver|Segment_b ; pin_out          ;
+; |HexTo7SegmentDisplayDriver|inst18    ; |HexTo7SegmentDisplayDriver|inst18    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst13    ; |HexTo7SegmentDisplayDriver|inst13    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst22    ; |HexTo7SegmentDisplayDriver|inst22    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst14    ; |HexTo7SegmentDisplayDriver|inst14    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst23    ; |HexTo7SegmentDisplayDriver|inst23    ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst21    ; |HexTo7SegmentDisplayDriver|inst21    ; out0             ;
++---------------------------------------+---------------------------------------+------------------+
+
+
+The following table displays output ports that do not toggle to 1 during simulation.
++--------------------------------------------------------------------------------------------+
+; Missing 1-Value Coverage                                                                   ;
++------------------------------------+------------------------------------+------------------+
+; Node Name                          ; Output Port Name                   ; Output Port Type ;
++------------------------------------+------------------------------------+------------------+
+; |HexTo7SegmentDisplayDriver|inst33 ; |HexTo7SegmentDisplayDriver|inst33 ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst41 ; |HexTo7SegmentDisplayDriver|inst41 ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst24 ; |HexTo7SegmentDisplayDriver|inst24 ; out0             ;
++------------------------------------+------------------------------------+------------------+
+
+
+The following table displays output ports that do not toggle to 0 during simulation.
++----------------------------------------------------------------------------------------------+
+; Missing 0-Value Coverage                                                                     ;
++-------------------------------------+-------------------------------------+------------------+
+; Node Name                           ; Output Port Name                    ; Output Port Type ;
++-------------------------------------+-------------------------------------+------------------+
+; |HexTo7SegmentDisplayDriver|Input_D ; |HexTo7SegmentDisplayDriver|Input_D ; out              ;
+; |HexTo7SegmentDisplayDriver|inst45  ; |HexTo7SegmentDisplayDriver|inst45  ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst50  ; |HexTo7SegmentDisplayDriver|inst50  ; out0             ;
+; |HexTo7SegmentDisplayDriver|inst64  ; |HexTo7SegmentDisplayDriver|inst64  ; out0             ;
++-------------------------------------+-------------------------------------+------------------+
+
+
++---------------------+
+; Simulator INI Usage ;
++--------+------------+
+; Option ; Usage      ;
++--------+------------+
+
+
++--------------------+
+; Simulator Messages ;
++--------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Simulator
+    Info: Version 13.0.0 Build 156 04/24/2013 SJ Web Edition
+    Info: Processing started: Thu Sep 26 13:01:47 2013
+Info: Command: quartus_sim --simulation_results_format=VWF HexTo7SegmentDisplayDriver -c HexTo7SegmentDisplayDriver
+Info (324025): Using vector source file "C:/Users/esecules/Documents/259Lab3/Hex to 7 Segment Display Driver/output_files/Waveform.vwf"
+Info (310003): Option to preserve fewer signal transitions to reduce memory requirements is enabled
+    Info (310004): Simulation has been partitioned into sub-simulations according to the maximum transition count determined by the engine. Transitions from memory will be flushed out to disk at the end of each sub-simulation to reduce memory requirements.
+Info (310002): Simulation partitioned into 1 sub-simulations
+Info (328053): Simulation coverage is      88.33 %
+Info (328052): Number of transitions in simulation is 381
+Info (324045): Vector file HexTo7SegmentDisplayDriver.sim.vwf is saved in VWF text format. You can compress it into CVWF format in order to reduce file size. For more details please refer to the Quartus II Help.
+Info: Quartus II 64-Bit Simulator was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 322 megabytes
+    Info: Processing ended: Thu Sep 26 13:01:48 2013
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:00
+
+

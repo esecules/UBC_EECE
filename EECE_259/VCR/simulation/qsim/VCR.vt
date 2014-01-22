@@ -1,0 +1,163 @@
+// Copyright (C) 1991-2013 Altera Corporation
+// Your use of Altera Corporation's design tools, logic functions 
+// and other software and tools, and its AMPP partner logic 
+// functions, and any output files from any of the foregoing 
+// (including device programming or simulation files), and any 
+// associated documentation or information are expressly subject 
+// to the terms and conditions of the Altera Program License 
+// Subscription Agreement, Altera MegaCore Function License 
+// Agreement, or other applicable license agreement, including, 
+// without limitation, that your use is for the sole purpose of 
+// programming logic devices manufactured by Altera and sold by 
+// Altera or its authorized distributors.  Please refer to the 
+// applicable agreement for further details.
+
+// *****************************************************************************
+// This file contains a Verilog test bench with test vectors .The test vectors  
+// are exported from a vector file in the Quartus Waveform Editor and apply to  
+// the top level entity of the current Quartus project .The user can use this   
+// testbench to simulate his design using a third-party simulation tool .       
+// *****************************************************************************
+// Generated on "10/24/2013 04:37:49"
+                                                                        
+// Verilog Self-Checking Test Bench (with test vectors) for design :    Top_level_VCR
+// 
+// Simulation tool : 3rd Party
+// 
+
+`timescale 1 ps/ 1 ps
+module Top_level_VCR_vlg_vec_tst();
+// constants                                           
+// general purpose registers
+reg CLK;
+reg EjectBTN;
+reg End_tape;
+reg FFBTN;
+reg PauseBTN;
+reg PlayBTN;
+reg protected;
+reg RecBTN;
+reg ResetBTN;
+reg RWDBTN;
+reg screen_reset;
+reg Start_tape;
+reg StopBTN;
+reg Tape_load;
+// wires                                               
+wire [7:0] DB;
+wire E;
+wire [6:0] H0;
+wire [6:0] H1;
+wire LCD_BLON;
+wire LCD_ON;
+wire [6:0] M0;
+wire [6:0] M1;
+wire RS;
+wire RW;
+wire [6:0] S0;
+wire [6:0] S1;
+wire [1:0] state_debug;
+
+// assign statements (if any)                          
+Top_level_VCR i1 (
+// port map - connection between master ports and signals/registers   
+	.CLK(CLK),
+	.DB(DB),
+	.E(E),
+	.EjectBTN(EjectBTN),
+	.End_tape(End_tape),
+	.FFBTN(FFBTN),
+	.H0(H0),
+	.H1(H1),
+	.LCD_BLON(LCD_BLON),
+	.LCD_ON(LCD_ON),
+	.M0(M0),
+	.M1(M1),
+	.PauseBTN(PauseBTN),
+	.PlayBTN(PlayBTN),
+	.\protected (protected),
+	.RecBTN(RecBTN),
+	.ResetBTN(ResetBTN),
+	.RS(RS),
+	.RW(RW),
+	.RWDBTN(RWDBTN),
+	.S0(S0),
+	.S1(S1),
+	.screen_reset(screen_reset),
+	.Start_tape(Start_tape),
+	.state_debug(state_debug),
+	.StopBTN(StopBTN),
+	.Tape_load(Tape_load)
+);
+initial 
+begin 
+#1000000 $finish;
+end 
+
+// FFBTN
+initial
+begin
+	FFBTN = 1'b0;
+	FFBTN = #300000 1'b1;
+	FFBTN = #90000 1'b0;
+end 
+
+// PauseBTN
+initial
+begin
+	PauseBTN = 1'b0;
+end 
+
+// PlayBTN
+initial
+begin
+	PlayBTN = 1'b0;
+	PlayBTN = #150000 1'b1;
+	PlayBTN = #20000 1'b0;
+end 
+
+// protected
+initial
+begin
+	protected = 1'b0;
+end 
+
+// RecBTN
+initial
+begin
+	RecBTN = 1'b0;
+end 
+
+// ResetBTN
+initial
+begin
+	ResetBTN = 1'b0;
+	ResetBTN = #150000 1'b1;
+end 
+
+// Start_tape
+initial
+begin
+	Start_tape = 1'b0;
+end 
+
+// StopBTN
+initial
+begin
+	StopBTN = 1'b0;
+	StopBTN = #180000 1'b1;
+	StopBTN = #110000 1'b0;
+end 
+
+// Tape_load
+initial
+begin
+	Tape_load = 1'b0;
+	Tape_load = #150000 1'b1;
+end 
+initial 
+begin 
+#1000000 $finish;
+end 
+endmodule
+
