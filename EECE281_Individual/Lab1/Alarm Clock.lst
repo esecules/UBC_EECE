@@ -2578,7 +2578,7 @@
 159E 75CA7F     336       mov RCAP2L,#low(TIMER2_RELOAD)
 15A1 D2CA       337       setb TR2
 15A3 D2AD       338       setb ET2
-15A5            339       
+15A5            339      
 15A5            340   
 15A5            341   
 15A5            342   

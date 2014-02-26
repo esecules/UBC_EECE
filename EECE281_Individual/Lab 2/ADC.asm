@@ -88,7 +88,7 @@ Timer2_ISR:
 
 ; 100 micro-second delay subroutine 
 delay100us: 
- mov R1, #10 
+ mov R1, #20 
  Label0: mov R0, #111 
  Label1: djnz R0, Label1 ; 111*30ns*3=10us 
  djnz R1, Label0 ; 10*10us=100us, approximately 
