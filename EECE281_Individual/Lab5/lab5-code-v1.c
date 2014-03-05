@@ -114,36 +114,56 @@ char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 			wait();
 			break;
 		case 7:
-			P2=lut[3];
-			P3=disp[2];
+			P2=lut[1];
+			P3=disp[3];
 			wait();
 			break;
 		case 8:
-			P2=lut[4];
-			P3=disp[2];
+			P2=lut[2];
+			P3=disp[3];
 			wait();
 			break;
 		case 9:
-			P2=lut[5];
-			P3=disp[2];
+			P2=lut[3];
+			P3=disp[3];
 			wait();
 			break;
 		case 10:
 			P2=lut[4];
-			P3=disp[1];
+			P3=disp[3];
 			wait();
 			break;
 		case 11:
 			P2=lut[5];
-			P3=disp[1];
+			P3=disp[3];
 			wait();
 			break;
 		case 12:
 			P2=lut[4];
-			P3=disp[0];
+			P3=disp[2];
 			wait();
 			break;
 		case 13:
+			P2=lut[5];
+			P3=disp[2];
+			wait();
+			break;
+		case 14:
+			P2=lut[4];
+			P3=disp[1];
+			wait();
+			break;
+		case 15:
+			P2=lut[5];
+			P3=disp[1];
+			wait();
+			break;
+		case 16:
+			P2=lut[5];
+			P3=disp[0];
+			wait();
+			break;
+		case 17:
 			P2=lut[5];
 			P3=disp[0];
 			wait();
