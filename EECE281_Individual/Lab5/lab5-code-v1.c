@@ -54,97 +54,97 @@ void wait2ms (void)
 
 void checkLED(void){
 	char lut[10] = {0B_10001000,0B_11111001,0B_01001100,0B_01101000,0B_00111001,0B_00101010,0B_00001010,0B_11111000,0B_00001000,0B_00111000};
-	char disp[3] = {0B_11000000,0B_10100000,0B_01100000};
+	char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 	int i= 0;
 	int count = 0;
-	while(1){
+	while(i < 20){
 		count++; 
 		if(count == 166){
 			i++;
-			if(i == 10)
-				i=0;
-			P1=lut[i];
+			P2=lut[i%10];
 			count=0;
 		}
-		P3=0B_11000000;
+		P3=disp[0];
 	  	wait2ms();
-	   	P3=0B_10100000;
+	   	P3=disp[1];
 	   	wait2ms();
-		P3=0B_01100000;
+		P3=disp[2];
+		wait2ms();
+		P3=disp[3];
 		wait2ms();
 	}
 }
 void circle(int step){
 	char lut[6] = {0B_11111110,0B_11111101,0B_11111011,0B_11101111,0B_11011111,0B_10111111};
-	char disp[3] = {0B_11000000,0B_10100000,0B_01100000};
+char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 	switch(step){
 		case 0:
-			P1=lut[0];
+			P2=lut[0];
 			P3=disp[0];
 			wait();
 			break;
 		case 1:
-			P1=lut[1];
+			P2=lut[1];
 			P3=disp[0];
 			wait();
 			break;
 		case 2:
-			P1=lut[2];
+			P2=lut[2];
 			P3=disp[0];
 			wait();
 			break;
 		case 3:
-			P1=lut[1];
+			P2=lut[1];
 			P3=disp[1];
 			wait();
 			break;
 		case 4:
-			P1=lut[2];
+			P2=lut[2];
 			P3=disp[1];
 			wait();
 			break;
 		case 5:
-			P1=lut[1];
+			P2=lut[1];
 			P3=disp[2];
 			wait();
 			break;
 		case 6:
-			P1=lut[2];
+			P2=lut[2];
 			P3=disp[2];
 			wait();
 			break;
 		case 7:
-			P1=lut[3];
+			P2=lut[3];
 			P3=disp[2];
 			wait();
 			break;
 		case 8:
-			P1=lut[4];
+			P2=lut[4];
 			P3=disp[2];
 			wait();
 			break;
 		case 9:
-			P1=lut[5];
+			P2=lut[5];
 			P3=disp[2];
 			wait();
 			break;
 		case 10:
-			P1=lut[4];
+			P2=lut[4];
 			P3=disp[1];
 			wait();
 			break;
 		case 11:
-			P1=lut[5];
+			P2=lut[5];
 			P3=disp[1];
 			wait();
 			break;
 		case 12:
-			P1=lut[4];
+			P2=lut[4];
 			P3=disp[0];
 			wait();
 			break;
 		case 13:
-			P1=lut[5];
+			P2=lut[5];
 			P3=disp[0];
 			wait();
 			break;
@@ -277,67 +277,70 @@ void main (void)
 	char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 	checkLED();
 	TR0=0; // Disable timer/counter 0
-	TMOD=0B_00000101; // Set timer/counter 0 as 16-bit counter
+	TMOD=0B_00010101; // Set timer/counter 0 as 16-bit counter and timer2 as a 16bit timer
 	while(1) 
 	{ 		
-	
 		if(count == 0){
 		// Reset the counter
 		TL0=0;
 		TH0=0;
+		TH1=0;
+		TL1=0;
 		// Start counting
 		TR0=1;
+		TR1=1;
 		// Wait one second
 		}
 		 count++;
 		if(count == 71){
 			// Stop counter 0, TH0-TL0 has the frequency!
 			TR0=0;
-			freq=TH0*256+TL0;
+			TR1=0;
+			freq=(TH0*256+TL0);
 			count=0;
 			printf("Rref V RMS: %.2lf Test V RMS: %.2lf\tPhase dif: %.2lf deg\r",RMS(REF),RMS(TEST),getPhaseAngle());
 		}
 		if(freq > 0 ){
 			if(freq < 1000){ //0 Hz - 999 Hz	  	
-		    	P1=lut[freq%10];
+		    	P2=lut[freq%10];
 			   	P3=disp[0];
 			   	wait2ms();
-			   	P1=lut[(freq/10)%10];
+			   	P2=lut[(freq/10)%10];
 			   	P3=disp[1];
 			   	wait2ms();
-			   	P1=lut[(freq/100)%10];
+			   	P2=lut[(freq/100)%10];
 				P3=disp[2];
 				wait2ms();
-				P1=lut[3];
+				P2=lut[3];
 				P3=disp[3];
 			}
 			else if(freq < 10000){ //1.00 kHz - 9.99 kHz
-				P1=lut[(freq/1000)%10];
-				P1&=0B_11110111;
+				P2=lut[(freq/1000)%10];
+				P2&=0B_11110111;
 			   	P3=disp[0];
 			   	wait2ms();
-			   	P1=lut[((freq/1000)/10)%10];
+			   	P2=lut[((freq/1000)/10)%10];
 			   	P3=disp[1];
 			   	wait2ms();
-			   	P1=lut[((freq/1000)/100)%10];
+			   	P2=lut[((freq/1000)/100)%10];
 				P3=disp[2];
 				wait2ms();
-				P1=lut[3];
+				P2=lut[3];
 				P3=disp[3];
 				wait2ms();
 			}
 			else if(freq < 100000){ //10.0 kHz - 99.9 kHz
-	    		P1=lut[(freq/10000)%10];
+	    		P2=lut[(freq/10000)%10];
 			   	P3=disp[0];
 			   	wait2ms();
-			   	P1=lut[((freq/10000)/10)%10];
-			   	P1&=0B_11110111;
+			   	P2=lut[((freq/10000)/10)%10];
+			   	P2&=0B_11110111;
 			   	P3=disp[1];
 			   	wait2ms();
-			   	P1=lut[((freq/10000)/100)%10];
+			   	P2=lut[((freq/10000)/100)%10];
 				P3=disp[2];
 				wait2ms();
-				P1=lut[3];
+				P2=lut[3];
 				P3=disp[3];
 				wait2ms();
 	    	}
