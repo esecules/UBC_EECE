@@ -159,7 +159,7 @@ char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 			wait();
 			break;
 		case 16:
-			P2=lut[5];
+			P2=lut[4];
 			P3=disp[0];
 			wait();
 			break;
@@ -369,7 +369,7 @@ void main (void)
 	    	count += 35;
 	    	circle(j);
 	    	j++;
-	    	if(j > 13)
+	    	if(j > 15)
 	    		j=0;
 	    }
 	}
