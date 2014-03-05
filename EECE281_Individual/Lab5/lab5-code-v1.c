@@ -44,7 +44,7 @@ unsigned int GetADC(unsigned char channel)
 	SPCON|=SPEN; // Enable SPI
 	P1_4=0; // Activate the MCP3004 ADC. 
 	SPIWrite(channel|0x18); // Send start bit, single/diff* bit, D2, D1, and D0 bits. 
-	for(adc=0; adc<10; adc++); // Wait for S/H to setup 
+	for(adc=0; adc<10; adc++){}; // Wait for S/H to setup 
 	SPIWrite(0x55); // Read bits 9 down to 4 
 	adc=((SPDAT&0x3f)*0x100); 
 	SPIWrite(0x55); // Read bits 3 down to 0 
@@ -62,7 +62,7 @@ float voltage (unsigned char channel)
 
 float RMS (unsigned char channel)
 {
-	return ( (GetADC(channel)/sqrt(2)) );
+	return ( (GetADC(channel)/1.41421356237) ); //sqrt(2) = 1.41421356237
 }
 
 // Signal   LP51B    MCP3004
@@ -78,36 +78,9 @@ float RMS (unsigned char channel)
 // CH2   -		 - pin 3 
 // CH3   -		 - pin 4
 
-void main (void) 
-{
-	unsigned char i, j;
-	
-	while(1) 
-	{ 
-		for(i=0; i<4; i++) printf( "v%d=%4.2f " , i, voltage(i) ); 
-		printf("\r"); 
-		for(j=0; j<4; j++) printf( "Vrms%d=%4.2f " , j, RMS(j) );
-		printf("\r");
-	}
-}
 
-unsigned int getPhaseDifference(unsigned char channel)
-{
-	unsigned int phaseDifference;
-	
-	TR0=0; //Stop timer 0
-	TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
-	TH0=0; TL0=0; //Reset the timer
-	while(P1_0==1){} //Wait for the reference signal to be 0
-	while(P1_0==0){} //Wait for the reference signal to be 1
-	TR0=1;
-	while(P1_1==0){}
-	TR0=0;
-	
-	phaseDifference=(TH0*0x100+TL0);
-	
-	return phaseDifference;
-}
+
+
 
 unsigned int getHalfPeriod(unsigned char channel)
 {
@@ -129,7 +102,7 @@ unsigned int getHalfPeriod(unsigned char channel)
 	
 		return halfPeriodRef;
 	}
-	if(channel==TEST)
+	else if(channel==TEST)
 	{
 		// Measure 1/2 period at P1.0 using Timer 0
 		TR0=0; //Stop timer 0
@@ -145,23 +118,38 @@ unsigned int getHalfPeriod(unsigned char channel)
 	
 		return halfPeriodTest;
 	}
+	else
+		return -1;
 }
 
 unsigned int getQuarterPeriod(unsigned char channel)
+{	
+	return getHalfPeriod(channel);
+}
+float getPhaseAngle()
 {
-	unsigned int quarterPeriod;
-	
-	// Measure 1/2 period at P1.0 using Timer 0
+	unsigned int phaseDifference;
+	float phaseAngle;
 	TR0=0; //Stop timer 0
 	TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
 	TH0=0; TL0=0; //Reset the timer
-	while(P1_0==1); //Wait for the signal to be 0
-	while(P1_0==0); //Wait for the signal to be 1
-	TR0=1;	//Start timing
-	while(P1_0==1);
-	TR0=0;	//Stop timer 0
-	// [TH0,TL0] is half the period in multiples of 12/CLK, so: 
-	quarterPeriod=(TH0*0x100+TL0)/2; //Assumed period is unsigned int
+	while(P1_0==1){} //Wait for the reference signal to be 0
+	while(P1_0==0){} //Wait for the reference signal to be 1
+	TR0=1;
+	while(P1_1==0){}
+	TR0=0;
 	
-	return quarterPeriod;
+	phaseDifference=(TH0*0x100+TL0);
+	phaseAngle = phaseDifference*(1.0/(2.0*getHalfPeriod(0)))*360.0;
+	return phaseAngle;
+}
+void main (void) 
+{
+
+	
+	while(1) 
+	{ 
+		
+		printf("Rref V RMS: %.2lf Phase angle: 0 deg\tTest V RMS: %.2lf Phase angle: %.2lf deg",RMS(REF),RMS(TEST),getPhaseAngle());
+	}
 }
