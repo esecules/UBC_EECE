@@ -1,10 +1,11 @@
 ;--------------------------------------------------------
 ; File Created by C51
 ; Version 1.0.0 #1034 (Dec 12 2012) (MSVC)
-; This file was generated Wed Mar 05 14:45:44 2014
+; This file was generated Wed Mar 05 19:03:10 2014
 ;--------------------------------------------------------
 $name lab5_code_v1
 $optc51 --model-small
+$printf_float
 	R_DSEG    segment data
 	R_CSEG    segment code
 	R_BSEG    segment bit
@@ -27,8 +28,7 @@ $optc51 --model-small
 	public _getPhaseAngle
 	public _getQuarterPeriod
 	public _getHalfPeriod
-	public _RMS
-	public _voltage
+	public _oneShot
 	public _GetADC
 	public _SPIWrite
 	public _circle
@@ -297,15 +297,17 @@ _circle_lut_1_34:
 	ds 6
 _circle_disp_1_34:
 	ds 4
-_main_count_1_62:
-	ds 2
-_main_j_1_62:
-	ds 2
-_main_freq_1_62:
+_oneShot_peak_1_42:
 	ds 4
-_main_lut_1_62:
+_main_count_1_68:
+	ds 2
+_main_j_1_68:
+	ds 2
+_main_freq_1_68:
+	ds 4
+_main_lut_1_68:
 	ds 10
-_main_disp_1_62:
+_main_disp_1_68:
 	ds 4
 _main_sloc0_1_0:
 	ds 2
@@ -463,8 +465,8 @@ _wait2ms:
 ;------------------------------------------------------------
 ;lut                       Allocated with name '_checkLED_lut_1_30'
 ;disp                      Allocated with name '_checkLED_disp_1_30'
-;i                         Allocated to registers r2 r3 
-;count                     Allocated to registers r4 r5 
+;i                         Allocated to registers r4 r5 
+;count                     Allocated to registers r2 r3 
 ;------------------------------------------------------------
 ;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:55: void checkLED(void){
 ;	-----------------------------------------
@@ -487,77 +489,81 @@ _checkLED:
 	mov	(_checkLED_disp_1_30 + 0x0001),#0xBF
 	mov	(_checkLED_disp_1_30 + 0x0002),#0x7F
 	mov	(_checkLED_disp_1_30 + 0x0003),#0xEF
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:58: int i= 0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:59: int count = 0;
 	mov	r2,#0x00
 	mov	r3,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:59: int count = 0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:60: while(i < 20){
 	mov	r4,#0x00
 	mov	r5,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:60: while(i < 9){
-L005005?:
+L005003?:
 	clr	c
-	mov	a,r2
-	subb	a,#0x09
-	mov	a,r3
+	mov	a,r4
+	subb	a,#0x14
+	mov	a,r5
 	xrl	a,#0x80
 	subb	a,#0x80
-	jc	L005014?
+	jc	L005012?
 	ret
-L005014?:
+L005012?:
 ;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:61: count++; 
-	inc	r4
-	cjne	r4,#0x00,L005015?
-	inc	r5
-L005015?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:62: if(count == 166){
-	cjne	r4,#0xA6,L005004?
-	cjne	r5,#0x00,L005004?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:63: i++;
 	inc	r2
-	cjne	r2,#0x00,L005018?
+	cjne	r2,#0x00,L005013?
 	inc	r3
-L005018?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:64: if(i == 10)
-	cjne	r2,#0x0A,L005002?
+L005013?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:62: if(count == 166){
+	cjne	r2,#0xA6,L005002?
 	cjne	r3,#0x00,L005002?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:65: i=0;
-	mov	r2,#0x00
-	mov	r3,#0x00
-L005002?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:66: P2=lut[i];
-	mov	a,r2
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:63: i++;
+	inc	r4
+	cjne	r4,#0x00,L005016?
+	inc	r5
+L005016?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:64: P2=lut[i%10];
+	mov	__modsint_PARM_2,#0x0A
+	clr	a
+	mov	(__modsint_PARM_2 + 1),a
+	mov	dpl,r4
+	mov	dph,r5
+	push	ar4
+	push	ar5
+	lcall	__modsint
+	mov	r6,dpl
+	mov	r7,dph
+	pop	ar5
+	pop	ar4
+	mov	a,r6
 	add	a,#_checkLED_lut_1_30
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:67: count=0;
-	mov	r4,#0x00
-	mov	r5,#0x00
-L005004?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:69: P3=disp[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:65: count=0;
+	mov	r2,#0x00
+	mov	r3,#0x00
+L005002?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:67: P3=disp[0];
 	mov	_P3,_checkLED_disp_1_30
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:70: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:68: wait2ms();
 	push	ar2
 	push	ar3
 	push	ar4
 	push	ar5
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:71: P3=disp[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:69: P3=disp[1];
 	mov	_P3,(_checkLED_disp_1_30 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:70: wait2ms();
+	lcall	_wait2ms
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:71: P3=disp[2];
+	mov	_P3,(_checkLED_disp_1_30 + 0x0002)
 ;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:72: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:73: P3=disp[2];
-	mov	_P3,(_checkLED_disp_1_30 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:74: wait2ms();
-	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:75: P3=disp[3];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:73: P3=disp[3];
 	mov	_P3,(_checkLED_disp_1_30 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:76: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:74: wait2ms();
 	lcall	_wait2ms
 	pop	ar5
 	pop	ar4
 	pop	ar3
 	pop	ar2
-	ljmp	L005005?
+	ljmp	L005003?
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'circle'
 ;------------------------------------------------------------
@@ -565,203 +571,268 @@ L005004?:
 ;lut                       Allocated with name '_circle_lut_1_34'
 ;disp                      Allocated with name '_circle_disp_1_34'
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:79: void circle(int step){
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:77: void circle(int step){
 ;	-----------------------------------------
 ;	 function circle
 ;	-----------------------------------------
 _circle:
 	mov	r2,dpl
 	mov	r3,dph
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:80: char lut[6] = {0B_11111110,0B_11111101,0B_11111011,0B_11101111,0B_11011111,0B_10111111};
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:78: char lut[6] = {0B_11111110,0B_11111101,0B_11111011,0B_11101111,0B_11011111,0B_10111111};
 	mov	_circle_lut_1_34,#0xFE
 	mov	(_circle_lut_1_34 + 0x0001),#0xFD
 	mov	(_circle_lut_1_34 + 0x0002),#0xFB
 	mov	(_circle_lut_1_34 + 0x0003),#0xEF
 	mov	(_circle_lut_1_34 + 0x0004),#0xDF
 	mov	(_circle_lut_1_34 + 0x0005),#0xBF
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:81: char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:79: char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
 	mov	_circle_disp_1_34,#0xDF
 	mov	(_circle_disp_1_34 + 0x0001),#0xBF
 	mov	(_circle_disp_1_34 + 0x0002),#0x7F
 	mov	(_circle_disp_1_34 + 0x0003),#0xEF
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:82: switch(step){
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:80: switch(step){
 	mov	a,r3
-	jnb	acc.7,L006021?
+	jnb	acc.7,L006025?
 	ret
-L006021?:
+L006025?:
 	clr	c
-	mov	a,#0x0D
+	mov	a,#0x11
 	subb	a,r2
 	clr	a
 	xrl	a,#0x80
 	mov	b,r3
 	xrl	b,#0x80
 	subb	a,b
-	jnc	L006022?
+	jnc	L006026?
 	ret
-L006022?:
+L006026?:
 	mov	a,r2
-	add	a,r2
-	add	a,r2
-	mov	dptr,#L006023?
-	jmp	@a+dptr
-L006023?:
-	ljmp	L006001?
-	ljmp	L006002?
-	ljmp	L006003?
-	ljmp	L006004?
-	ljmp	L006005?
-	ljmp	L006006?
-	ljmp	L006007?
-	ljmp	L006008?
-	ljmp	L006009?
-	ljmp	L006010?
-	ljmp	L006011?
-	ljmp	L006012?
-	ljmp	L006013?
-	ljmp	L006014?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:83: case 0:
+L006029?:
+	add	a,#(L006027?-3-L006029?)
+	movc	a,@a+pc
+	push	acc
+	mov	a,r2
+L006030?:
+	add	a,#(L006028?-3-L006030?)
+	movc	a,@a+pc
+	push	acc
+	ret
+L006027?:
+	db	L006001?
+	db	L006002?
+	db	L006003?
+	db	L006004?
+	db	L006005?
+	db	L006006?
+	db	L006007?
+	db	L006008?
+	db	L006009?
+	db	L006010?
+	db	L006011?
+	db	L006012?
+	db	L006013?
+	db	L006014?
+	db	L006015?
+	db	L006016?
+	db	L006017?
+	db	L006018?
+L006028?:
+	db	L006001?>>8
+	db	L006002?>>8
+	db	L006003?>>8
+	db	L006004?>>8
+	db	L006005?>>8
+	db	L006006?>>8
+	db	L006007?>>8
+	db	L006008?>>8
+	db	L006009?>>8
+	db	L006010?>>8
+	db	L006011?>>8
+	db	L006012?>>8
+	db	L006013?>>8
+	db	L006014?>>8
+	db	L006015?>>8
+	db	L006016?>>8
+	db	L006017?>>8
+	db	L006018?>>8
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:81: case 0:
 L006001?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:84: P2=lut[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:82: P2=lut[0];
 	mov	_P2,_circle_lut_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:85: P3=disp[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:83: P3=disp[0];
 	mov	_P3,_circle_disp_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:86: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:87: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:84: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:85: break;
 	ljmp	_wait
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:88: case 1:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:86: case 1:
 L006002?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:89: P2=lut[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:87: P2=lut[1];
 	mov	_P2,(_circle_lut_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:90: P3=disp[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:88: P3=disp[0];
 	mov	_P3,_circle_disp_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:91: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:92: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:89: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:90: break;
 	ljmp	_wait
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:93: case 2:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:91: case 2:
 L006003?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:94: P2=lut[2];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:92: P2=lut[2];
 	mov	_P2,(_circle_lut_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:95: P3=disp[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:93: P3=disp[0];
 	mov	_P3,_circle_disp_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:96: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:97: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:94: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:95: break;
 	ljmp	_wait
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:98: case 3:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:96: case 3:
 L006004?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:99: P2=lut[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:97: P2=lut[1];
 	mov	_P2,(_circle_lut_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:100: P3=disp[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:98: P3=disp[1];
 	mov	_P3,(_circle_disp_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:101: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:102: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:103: case 4:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:99: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:100: break;
 	ljmp	_wait
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:101: case 4:
 L006005?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:104: P2=lut[2];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:102: P2=lut[2];
 	mov	_P2,(_circle_lut_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:105: P3=disp[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:103: P3=disp[1];
 	mov	_P3,(_circle_disp_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:106: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:107: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:108: case 5:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:104: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:105: break;
 	ljmp	_wait
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:106: case 5:
 L006006?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:109: P2=lut[1];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:107: P2=lut[1];
 	mov	_P2,(_circle_lut_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:110: P3=disp[2];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:108: P3=disp[2];
 	mov	_P3,(_circle_disp_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:111: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:112: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:113: case 6:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:109: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:110: break;
 	ljmp	_wait
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:111: case 6:
 L006007?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:114: P2=lut[2];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:112: P2=lut[2];
 	mov	_P2,(_circle_lut_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:115: P3=disp[2];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:113: P3=disp[2];
 	mov	_P3,(_circle_disp_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:116: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:117: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:118: case 7:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:114: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:115: break;
 	ljmp	_wait
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:116: case 7:
 L006008?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:119: P2=lut[3];
-	mov	_P2,(_circle_lut_1_34 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:120: P3=disp[2];
-	mov	_P3,(_circle_disp_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:121: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:122: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:123: case 8:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:117: P2=lut[1];
+	mov	_P2,(_circle_lut_1_34 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:118: P3=disp[3];
+	mov	_P3,(_circle_disp_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:119: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:120: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:121: case 8:
 	ljmp	_wait
 L006009?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:124: P2=lut[4];
-	mov	_P2,(_circle_lut_1_34 + 0x0004)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:125: P3=disp[2];
-	mov	_P3,(_circle_disp_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:126: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:127: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:128: case 9:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:122: P2=lut[2];
+	mov	_P2,(_circle_lut_1_34 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:123: P3=disp[3];
+	mov	_P3,(_circle_disp_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:124: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:125: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:126: case 9:
 	ljmp	_wait
 L006010?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:129: P2=lut[5];
-	mov	_P2,(_circle_lut_1_34 + 0x0005)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:130: P3=disp[2];
-	mov	_P3,(_circle_disp_1_34 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:131: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:132: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:133: case 10:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:127: P2=lut[3];
+	mov	_P2,(_circle_lut_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:128: P3=disp[3];
+	mov	_P3,(_circle_disp_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:129: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:130: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:131: case 10:
 	ljmp	_wait
 L006011?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:134: P2=lut[4];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:132: P2=lut[4];
 	mov	_P2,(_circle_lut_1_34 + 0x0004)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:135: P3=disp[1];
-	mov	_P3,(_circle_disp_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:136: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:137: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:138: case 11:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:133: P3=disp[3];
+	mov	_P3,(_circle_disp_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:134: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:135: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:136: case 11:
 	ljmp	_wait
 L006012?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:139: P2=lut[5];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:137: P2=lut[5];
 	mov	_P2,(_circle_lut_1_34 + 0x0005)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:140: P3=disp[1];
-	mov	_P3,(_circle_disp_1_34 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:141: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:142: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:143: case 12:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:138: P3=disp[3];
+	mov	_P3,(_circle_disp_1_34 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:139: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:140: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:141: case 12:
 	ljmp	_wait
 L006013?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:144: P2=lut[4];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:142: P2=lut[4];
 	mov	_P2,(_circle_lut_1_34 + 0x0004)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:145: P3=disp[0];
-	mov	_P3,_circle_disp_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:146: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:147: break;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:148: case 13:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:143: P3=disp[2];
+	mov	_P3,(_circle_disp_1_34 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:144: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:145: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:146: case 13:
 	ljmp	_wait
 L006014?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:149: P2=lut[5];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:147: P2=lut[5];
 	mov	_P2,(_circle_lut_1_34 + 0x0005)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:150: P3=disp[0];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:148: P3=disp[2];
+	mov	_P3,(_circle_disp_1_34 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:149: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:150: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:151: case 14:
+	ljmp	_wait
+L006015?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:152: P2=lut[4];
+	mov	_P2,(_circle_lut_1_34 + 0x0004)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:153: P3=disp[1];
+	mov	_P3,(_circle_disp_1_34 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:154: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:155: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:156: case 15:
+	ljmp	_wait
+L006016?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:157: P2=lut[5];
+	mov	_P2,(_circle_lut_1_34 + 0x0005)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:158: P3=disp[1];
+	mov	_P3,(_circle_disp_1_34 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:159: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:160: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:161: case 16:
+	ljmp	_wait
+L006017?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:162: P2=lut[4];
+	mov	_P2,(_circle_lut_1_34 + 0x0004)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:163: P3=disp[0];
 	mov	_P3,_circle_disp_1_34
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:151: wait();
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:154: }
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:164: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:165: break;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:166: case 17:
+	ljmp	_wait
+L006018?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:167: P2=lut[5];
+	mov	_P2,(_circle_lut_1_34 + 0x0005)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:168: P3=disp[0];
+	mov	_P3,_circle_disp_1_34
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:169: wait();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:172: }
 	ljmp	_wait
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'SPIWrite'
 ;------------------------------------------------------------
 ;value                     Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:156: void SPIWrite( unsigned char value) 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:174: void SPIWrite( unsigned char value) 
 ;	-----------------------------------------
 ;	 function SPIWrite
 ;	-----------------------------------------
 _SPIWrite:
 	mov	r2,dpl
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:158: SPSTA&=(~SPIF); // Clear the SPIF flag in SPSTA 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:176: SPSTA&=(~SPIF); // Clear the SPIF flag in SPSTA 
 	anl	_SPSTA,#0x7F
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:159: SPDAT=value; 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:177: SPDAT=value; 
 	mov	_SPDAT,r2
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:160: while((SPSTA & SPIF)!=SPIF); //Wait for transmission to end 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:178: while((SPSTA & SPIF)!=SPIF); //Wait for transmission to end 
 L007001?:
 	mov	a,#0x80
 	anl	a,_SPSTA
@@ -774,26 +845,26 @@ L007001?:
 ;channel                   Allocated to registers r2 
 ;adc                       Allocated to registers r2 r3 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:164: unsigned int GetADC(unsigned char channel) 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:182: unsigned int GetADC(unsigned char channel) 
 ;	-----------------------------------------
 ;	 function GetADC
 ;	-----------------------------------------
 _GetADC:
 	mov	r2,dpl
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:169: SPCON&=(~SPEN); // Disable SPI 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:187: SPCON&=(~SPEN); // Disable SPI 
 	anl	_SPCON,#0xBF
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:170: SPCON=MSTR|CPOL|CPHA|SPR1|SPR0|SSDIS; 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:188: SPCON=MSTR|CPOL|CPHA|SPR1|SPR0|SSDIS; 
 	mov	_SPCON,#0x3F
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:171: SPCON|=SPEN; // Enable SPI
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:189: SPCON|=SPEN; // Enable SPI
 	orl	_SPCON,#0x40
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:172: P1_4=0; // Activate the MCP3004 ADC. 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:190: P1_4=0; // Activate the MCP3004 ADC. 
 	clr	_P1_4
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:173: SPIWrite(channel|0x18); // Send start bit, single/diff* bit, D2, D1, and D0 bits. 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:191: SPIWrite(channel|0x18); // Send start bit, single/diff* bit, D2, D1, and D0 bits. 
 	mov	a,#0x18
 	orl	a,r2
 	mov	dpl,a
 	lcall	_SPIWrite
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:174: for(adc=0; adc<10; adc++){}; // Wait for S/H to setup 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:192: for(adc=0; adc<10; adc++){}; // Wait for S/H to setup 
 	mov	r2,#0x0A
 	mov	r3,#0x00
 L008003?:
@@ -804,24 +875,24 @@ L008009?:
 	mov	a,r2
 	orl	a,r3
 	jnz	L008003?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:175: SPIWrite(0x55); // Read bits 9 down to 4 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:193: SPIWrite(0x55); // Read bits 9 down to 4 
 	mov	dpl,#0x55
 	lcall	_SPIWrite
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:176: adc=((SPDAT&0x3f)*0x100); 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:194: adc=((SPDAT&0x3f)*0x100); 
 	mov	a,#0x3F
 	anl	a,_SPDAT
 	mov	r3,a
 	mov	r2,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:177: SPIWrite(0x55); // Read bits 3 down to 0 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:195: SPIWrite(0x55); // Read bits 3 down to 0 
 	mov	dpl,#0x55
 	push	ar2
 	push	ar3
 	lcall	_SPIWrite
 	pop	ar3
 	pop	ar2
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:178: P1_4=1; // Deactivate the MCP3004 ADC. 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:196: P1_4=1; // Deactivate the MCP3004 ADC. 
 	setb	_P1_4
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:179: adc+=(SPDAT&0xf0); // SPDR contains the low part of the result. 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:197: adc+=(SPDAT&0xf0); // SPDR contains the low part of the result. 
 	mov	a,#0xF0
 	anl	a,_SPDAT
 	mov	r4,a
@@ -831,7 +902,7 @@ L008009?:
 	mov	r2,a
 	mov	a,r5
 	addc	a,r3
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:180: adc>>=4;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:198: adc>>=4;
 	swap	a
 	xch	a,r2
 	swap	a
@@ -842,84 +913,136 @@ L008009?:
 	xch	a,r2
 	xrl	a,r2
 	xch	a,r2
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:182: return adc;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:200: return adc;
 	mov	dpl,r2
 	mov	dph,a
 	ret
 ;------------------------------------------------------------
-;Allocation info for local variables in function 'voltage'
+;Allocation info for local variables in function 'oneShot'
 ;------------------------------------------------------------
 ;channel                   Allocated to registers r2 
+;temp                      Allocated to registers r7 r0 r1 r3 
+;peak                      Allocated with name '_oneShot_peak_1_42'
+;rms                       Allocated to registers r2 r3 r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:185: float voltage (unsigned char channel) 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:215: float oneShot(unsigned char channel)
 ;	-----------------------------------------
-;	 function voltage
+;	 function oneShot
 ;	-----------------------------------------
-_voltage:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:187: return ( (GetADC(channel)*4.77)/1023.0 ); // VCC=4.77V (measured) 
-	lcall	_GetADC
-	lcall	___uint2fs
+_oneShot:
 	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
-	push	ar2
-	push	ar3
-	push	ar4
-	push	ar5
-	mov	dptr,#0xA3D7
-	mov	b,#0x98
-	mov	a,#0x40
-	lcall	___fsmul
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
-	mov	a,sp
-	add	a,#0xfc
-	mov	sp,a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:218: float peak = 0;
+	mov	_oneShot_peak_1_42,#0x00
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:220: if(channel==0)
 	clr	a
-	push	acc
-	mov	a,#0xC0
-	push	acc
-	mov	a,#0x7F
-	push	acc
-	mov	a,#0x44
-	push	acc
+	mov	(_oneShot_peak_1_42 + 1),a
+	mov	(_oneShot_peak_1_42 + 2),a
+	mov	(_oneShot_peak_1_42 + 3),a
+	mov	a,r2
+	jnz	L009026?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:222: while(P1_0==1){}
+L009001?:
+	jb	_P1_0,L009001?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:223: while(P1_0==0){}
+L009004?:
+	jnb	_P1_0,L009004?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:224: while(P1_0==1)
+L009009?:
+	jb	_P1_0,L009043?
+	ljmp	L009027?
+L009043?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:226: temp = GetADC(channel);
 	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
-	lcall	___fsdiv
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
+	push	ar2
+	lcall	_GetADC
+	lcall	___uint2fs
+	mov	r7,dpl
+	mov	r0,dph
+	mov	r1,b
+	mov	r3,a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:228: if(temp > peak) peak = temp;
+	push	ar3
+	push	ar7
+	push	ar0
+	push	ar1
+	push	_oneShot_peak_1_42
+	push	(_oneShot_peak_1_42 + 1)
+	push	(_oneShot_peak_1_42 + 2)
+	push	(_oneShot_peak_1_42 + 3)
+	mov	dpl,r7
+	mov	dph,r0
+	mov	b,r1
+	mov	a,r3
+	lcall	___fsgt
+	mov	r4,dpl
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar3
+	pop	ar2
+	mov	a,r4
+	jz	L009009?
+	mov	_oneShot_peak_1_42,r7
+	mov	(_oneShot_peak_1_42 + 1),r0
+	mov	(_oneShot_peak_1_42 + 2),r1
+	mov	(_oneShot_peak_1_42 + 3),r3
+	sjmp	L009009?
+L009026?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:231: else if(channel==1)
+	cjne	r2,#0x01,L009027?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:233: while(P1_1==1){}
+L009012?:
+	jb	_P1_1,L009012?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:234: while(P1_1==0){}
+L009015?:
+	jnb	_P1_1,L009015?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:235: while(P1_1==1)
+L009020?:
+	jnb	_P1_1,L009027?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:237: temp = GetADC(channel);
 	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
-	ret
-;------------------------------------------------------------
-;Allocation info for local variables in function 'RMS'
-;------------------------------------------------------------
-;channel                   Allocated to registers r2 
-;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:190: float RMS (unsigned char channel)
-;	-----------------------------------------
-;	 function RMS
-;	-----------------------------------------
-_RMS:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:192: return ( (GetADC(channel)/1.41421356237) ); //sqrt(2) = 1.41421356237
+	push	ar2
 	lcall	_GetADC
 	lcall	___uint2fs
-	mov	r2,dpl
-	mov	r3,dph
-	mov	r4,b
-	mov	r5,a
+	mov	r7,dpl
+	mov	r0,dph
+	mov	r1,b
+	mov	r3,a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:239: if(temp > peak) peak = temp;
+	push	ar3
+	push	ar7
+	push	ar0
+	push	ar1
+	push	_oneShot_peak_1_42
+	push	(_oneShot_peak_1_42 + 1)
+	push	(_oneShot_peak_1_42 + 2)
+	push	(_oneShot_peak_1_42 + 3)
+	mov	dpl,r7
+	mov	dph,r0
+	mov	b,r1
+	mov	a,r3
+	lcall	___fsgt
+	mov	r4,dpl
+	mov	a,sp
+	add	a,#0xfc
+	mov	sp,a
+	pop	ar1
+	pop	ar0
+	pop	ar7
+	pop	ar3
+	pop	ar2
+	mov	a,r4
+	jz	L009020?
+	mov	_oneShot_peak_1_42,r7
+	mov	(_oneShot_peak_1_42 + 1),r0
+	mov	(_oneShot_peak_1_42 + 2),r1
+	mov	(_oneShot_peak_1_42 + 3),r3
+	sjmp	L009020?
+L009027?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:242: rms = (peak / 1.41421356237);
 	mov	a,#0xF3
 	push	acc
 	mov	a,#0x04
@@ -928,10 +1051,10 @@ _RMS:
 	push	acc
 	mov	a,#0x3F
 	push	acc
-	mov	dpl,r2
-	mov	dph,r3
-	mov	b,r4
-	mov	a,r5
+	mov	dpl,_oneShot_peak_1_42
+	mov	dph,(_oneShot_peak_1_42 + 1)
+	mov	b,(_oneShot_peak_1_42 + 2)
+	mov	a,(_oneShot_peak_1_42 + 3)
 	lcall	___fsdiv
 	mov	r2,dpl
 	mov	r3,dph
@@ -940,6 +1063,7 @@ _RMS:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:243: return rms;
 	mov	dpl,r2
 	mov	dph,r3
 	mov	b,r4
@@ -952,36 +1076,36 @@ _RMS:
 ;halfPeriodRef             Allocated to registers 
 ;halfPeriodTest            Allocated to registers 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:212: unsigned int getHalfPeriod(unsigned char channel)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:263: unsigned int getHalfPeriod(unsigned char channel)
 ;	-----------------------------------------
 ;	 function getHalfPeriod
 ;	-----------------------------------------
 _getHalfPeriod:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:216: if(channel==REF)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:267: if(channel==0)
 	mov	a,dpl
 	mov	r2,a
-	jnz	L011023?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:219: TR0=0; //Stop timer 0
+	jnz	L010023?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:270: TR0=0; //Stop timer 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:220: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:271: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
 	mov	_TMOD,#0x01
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:221: TH0=0; TL0=0; //Reset the timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:272: TH0=0; TL0=0; //Reset the timer
 	mov	_TH0,#0x00
 	mov	_TL0,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:222: while(P1_0==1){} //Wait for the signal to be 0
-L011001?:
-	jb	_P1_0,L011001?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:223: while(P1_0==0){} //Wait for the signal to be 1
-L011004?:
-	jnb	_P1_0,L011004?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:224: TR0=1;	//Start timing
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:273: while(P1_0==1){} //Wait for the signal to be 0
+L010001?:
+	jb	_P1_0,L010001?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:274: while(P1_0==0){} //Wait for the signal to be 1
+L010004?:
+	jnb	_P1_0,L010004?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:275: TR0=1;	//Start timing
 	setb	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:225: while(P1_0==1){}
-L011007?:
-	jb	_P1_0,L011007?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:226: TR0=0;	//Stop timer 0
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:276: while(P1_0==1){}
+L010007?:
+	jb	_P1_0,L010007?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:277: TR0=0;	//Stop timer 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:228: halfPeriodRef=(TH0*0x100+TL0);	//Assumed period is unsigned int
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:279: halfPeriodRef=(TH0*0x100+TL0);	//Assumed period is unsigned int
 	mov	r4,_TH0
 	mov	r3,#0x00
 	mov	r5,_TL0
@@ -992,32 +1116,32 @@ L011007?:
 	mov	a,r6
 	addc	a,r4
 	mov	dph,a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:230: return halfPeriodRef;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:281: return halfPeriodRef;
 	ret
-L011023?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:232: else if(channel==TEST)
-	cjne	r2,#0x01,L011020?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:235: TR0=0; //Stop timer 0
+L010023?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:283: else if(channel==1)
+	cjne	r2,#0x01,L010020?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:286: TR0=0; //Stop timer 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:236: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:287: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
 	mov	_TMOD,#0x01
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:237: TH0=0; TL0=0; //Reset the timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:288: TH0=0; TL0=0; //Reset the timer
 	mov	_TH0,#0x00
 	mov	_TL0,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:238: while(P1_1==1){} //Wait for the signal to be 0
-L011010?:
-	jb	_P1_1,L011010?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:239: while(P1_1==0){} //Wait for the signal to be 1
-L011013?:
-	jnb	_P1_1,L011013?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:240: TR0=1;	//Start timing
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:289: while(P1_1==1){} //Wait for the signal to be 0
+L010010?:
+	jb	_P1_1,L010010?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:290: while(P1_1==0){} //Wait for the signal to be 1
+L010013?:
+	jnb	_P1_1,L010013?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:291: TR0=1;	//Start timing
 	setb	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:241: while(P1_1==1){}
-L011016?:
-	jb	_P1_1,L011016?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:242: TR0=0;	//Stop timer 0
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:292: while(P1_1==1){}
+L010016?:
+	jb	_P1_1,L010016?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:293: TR0=0;	//Stop timer 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:244: halfPeriodTest=(TH0*0x100+TL0);	//Assumed period is unsigned int
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:295: halfPeriodTest=(TH0*0x100+TL0);	//Assumed period is unsigned int
 	mov	r3,_TH0
 	mov	r2,#0x00
 	mov	r4,_TL0
@@ -1028,10 +1152,10 @@ L011016?:
 	mov	a,r5
 	addc	a,r3
 	mov	dph,a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:246: return halfPeriodTest;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:249: return -1;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:297: return halfPeriodTest;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:300: return -1;
 	ret
-L011020?:
+L010020?:
 	mov	dptr,#0xFFFF
 	ret
 ;------------------------------------------------------------
@@ -1039,12 +1163,12 @@ L011020?:
 ;------------------------------------------------------------
 ;channel                   Allocated to registers r2 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:252: unsigned int getQuarterPeriod(unsigned char channel)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:303: unsigned int getQuarterPeriod(unsigned char channel)
 ;	-----------------------------------------
 ;	 function getQuarterPeriod
 ;	-----------------------------------------
 _getQuarterPeriod:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:254: return getHalfPeriod(channel);
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:305: return getHalfPeriod(channel);
 	ljmp	_getHalfPeriod
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'getPhaseAngle'
@@ -1052,32 +1176,32 @@ _getQuarterPeriod:
 ;phaseDifference           Allocated to registers r2 r3 
 ;phaseAngle                Allocated to registers r2 r3 r4 r5 
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:256: float getPhaseAngle()
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:307: float getPhaseAngle()
 ;	-----------------------------------------
 ;	 function getPhaseAngle
 ;	-----------------------------------------
 _getPhaseAngle:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:260: TR0=0; //Stop timer 0
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:311: TR0=0; //Stop timer 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:261: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:312: TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
 	mov	_TMOD,#0x01
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:262: TH0=0; TL0=0; //Reset the timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:313: TH0=0; TL0=0; //Reset the timer
 	mov	_TH0,#0x00
 	mov	_TL0,#0x00
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:263: while(P1_0==1){} //Wait for the reference signal to be 0
-L013001?:
-	jb	_P1_0,L013001?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:264: while(P1_0==0){} //Wait for the reference signal to be 1
-L013004?:
-	jnb	_P1_0,L013004?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:265: TR0=1;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:314: while(P1_1==1){} //Wait for the reference signal to be 0
+L012001?:
+	jb	_P1_1,L012001?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:315: while(P1_1==0){} //Wait for the reference signal to be 1
+L012004?:
+	jnb	_P1_1,L012004?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:316: TR0=1;
 	setb	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:266: while(P1_1==0){}
-L013007?:
-	jnb	_P1_1,L013007?
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:267: TR0=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:317: while(P1_0==0){}
+L012007?:
+	jnb	_P1_0,L012007?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:318: TR0=0;
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:269: phaseDifference=(TH0*0x100+TL0);
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:320: phaseDifference=(TH0*0x100+TL0);
 	mov	r3,_TH0
 	mov	r2,#0x00
 	mov	r4,_TL0
@@ -1088,8 +1212,8 @@ L013007?:
 	mov	a,r5
 	addc	a,r3
 	mov	r3,a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:270: phaseAngle = phaseDifference*(1.0/(2.0*getHalfPeriod(0)))*360.0;
-	mov	dpl,#0x00
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:321: phaseAngle = phaseDifference*(1.0/(2.0*getHalfPeriod(REF)))*360.0;
+	mov	dpl,#0x01
 	push	ar2
 	push	ar3
 	lcall	_getHalfPeriod
@@ -1161,7 +1285,7 @@ L013007?:
 	mov	a,sp
 	add	a,#0xfc
 	mov	sp,a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:271: return phaseAngle;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:322: return phaseAngle;
 	mov	dpl,r2
 	mov	dph,r3
 	mov	b,r4
@@ -1170,94 +1294,93 @@ L013007?:
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'main'
 ;------------------------------------------------------------
-;count                     Allocated with name '_main_count_1_62'
-;j                         Allocated with name '_main_j_1_62'
-;freq                      Allocated with name '_main_freq_1_62'
-;lut                       Allocated with name '_main_lut_1_62'
-;disp                      Allocated with name '_main_disp_1_62'
+;count                     Allocated with name '_main_count_1_68'
+;j                         Allocated with name '_main_j_1_68'
+;freq                      Allocated with name '_main_freq_1_68'
+;lut                       Allocated with name '_main_lut_1_68'
+;disp                      Allocated with name '_main_disp_1_68'
 ;sloc0                     Allocated with name '_main_sloc0_1_0'
 ;sloc1                     Allocated with name '_main_sloc1_1_0'
 ;sloc2                     Allocated with name '_main_sloc2_1_0'
 ;sloc3                     Allocated with name '_main_sloc3_1_0'
 ;------------------------------------------------------------
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:273: void main (void) 
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:324: void main (void) 
 ;	-----------------------------------------
 ;	 function main
 ;	-----------------------------------------
 _main:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:275: int count = 0;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:276: int j = 0;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:277: unsigned long int freq=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:326: int count = 0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:327: int j = 0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:328: unsigned long int freq=0;
 	clr	a
-	mov	_main_count_1_62,a
-	mov	(_main_count_1_62 + 1),a
-	mov	_main_j_1_62,a
-	mov	(_main_j_1_62 + 1),a
-	mov	_main_freq_1_62,a
-	mov	(_main_freq_1_62 + 1),a
-	mov	(_main_freq_1_62 + 2),a
-	mov	(_main_freq_1_62 + 3),a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:278: char lut[10] = {0B_10001000,0B_11111001,0B_01001100,0B_01101000,0B_00111001,0B_00101010,0B_00001010,0B_11111000,0B_00001000,0B_00111000};
-	mov	_main_lut_1_62,#0x88
-	mov	(_main_lut_1_62 + 0x0001),#0xF9
-	mov	(_main_lut_1_62 + 0x0002),#0x4C
-	mov	(_main_lut_1_62 + 0x0003),#0x68
-	mov	(_main_lut_1_62 + 0x0004),#0x39
-	mov	(_main_lut_1_62 + 0x0005),#0x2A
-	mov	(_main_lut_1_62 + 0x0006),#0x0A
-	mov	(_main_lut_1_62 + 0x0007),#0xF8
-	mov	(_main_lut_1_62 + 0x0008),#0x08
-	mov	(_main_lut_1_62 + 0x0009),#0x38
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:279: char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
-	mov	_main_disp_1_62,#0xDF
-	mov	(_main_disp_1_62 + 0x0001),#0xBF
-	mov	(_main_disp_1_62 + 0x0002),#0x7F
-	mov	(_main_disp_1_62 + 0x0003),#0xEF
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:280: checkLED();
-	lcall	_checkLED
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:281: TR0=0; // Disable timer/counter 0
+	mov	_main_count_1_68,a
+	mov	(_main_count_1_68 + 1),a
+	mov	_main_j_1_68,a
+	mov	(_main_j_1_68 + 1),a
+	mov	_main_freq_1_68,a
+	mov	(_main_freq_1_68 + 1),a
+	mov	(_main_freq_1_68 + 2),a
+	mov	(_main_freq_1_68 + 3),a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:329: char lut[10] = {0B_10001000,0B_11111001,0B_01001100,0B_01101000,0B_00111001,0B_00101010,0B_00001010,0B_11111000,0B_00001000,0B_00111000};
+	mov	_main_lut_1_68,#0x88
+	mov	(_main_lut_1_68 + 0x0001),#0xF9
+	mov	(_main_lut_1_68 + 0x0002),#0x4C
+	mov	(_main_lut_1_68 + 0x0003),#0x68
+	mov	(_main_lut_1_68 + 0x0004),#0x39
+	mov	(_main_lut_1_68 + 0x0005),#0x2A
+	mov	(_main_lut_1_68 + 0x0006),#0x0A
+	mov	(_main_lut_1_68 + 0x0007),#0xF8
+	mov	(_main_lut_1_68 + 0x0008),#0x08
+	mov	(_main_lut_1_68 + 0x0009),#0x38
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:330: char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
+	mov	_main_disp_1_68,#0xDF
+	mov	(_main_disp_1_68 + 0x0001),#0xBF
+	mov	(_main_disp_1_68 + 0x0002),#0x7F
+	mov	(_main_disp_1_68 + 0x0003),#0xEF
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:332: TR0=0; // Disable timer/counter 0
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:282: TMOD=0B_00010101; // Set timer/counter 0 as 16-bit counter and timer2 as a 16bit timer
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:333: TMOD=0B_00010101; // Set timer/counter 0 as 16-bit counter and timer2 as a 16bit timer
 	mov	_TMOD,#0x15
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:283: while(1) 
-L014019?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:285: if(count == 0){
-	mov	a,_main_count_1_62
-	orl	a,(_main_count_1_62 + 1)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:287: TL0=0;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:288: TH0=0;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:289: TH1=0;
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:290: TL1=0;
-	jnz	L014002?
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:334: while(1) 
+L013019?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:336: if(count == 0){
+	mov	a,_main_count_1_68
+	orl	a,(_main_count_1_68 + 1)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:338: TL0=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:339: TH0=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:340: TH1=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:341: TL1=0;
+	jnz	L013002?
 	mov	_TL0,a
 	mov	_TH0,a
 	mov	_TH1,a
 	mov	_TL1,a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:292: TR0=1;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:343: TR0=1;
 	setb	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:293: TR1=1;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:344: TR1=1;
 	setb	_TR1
-L014002?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:296: count++;
-	inc	_main_count_1_62
+L013002?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:347: count++;
+	inc	_main_count_1_68
 	clr	a
-	cjne	a,_main_count_1_62,L014032?
-	inc	(_main_count_1_62 + 1)
-L014032?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:297: if(count == 71){
-	mov	a,#0x47
-	cjne	a,_main_count_1_62,L014033?
-	clr	a
-	cjne	a,(_main_count_1_62 + 1),L014033?
-	sjmp	L014034?
-L014033?:
-	ljmp	L014004?
-L014034?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:299: TR0=0;
+	cjne	a,_main_count_1_68,L013032?
+	inc	(_main_count_1_68 + 1)
+L013032?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:348: if(count >= 71){
+	clr	c
+	mov	a,_main_count_1_68
+	subb	a,#0x47
+	mov	a,(_main_count_1_68 + 1)
+	xrl	a,#0x80
+	subb	a,#0x80
+	jnc	L013033?
+	ljmp	L013004?
+L013033?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:350: TR0=0;
 	clr	_TR0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:300: TR1=0;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:351: TR1=0;
 	clr	_TR1
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:301: freq=(TH0*256+TL0);
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:352: freq=(TH0*256+TL0);
 	mov	_main_sloc0_1_0,_TH0
 	mov	(_main_sloc0_1_0 + 1),_main_sloc0_1_0
 	mov	_main_sloc0_1_0,#0x00
@@ -1269,31 +1392,31 @@ L014034?:
 	mov	a,(_main_sloc1_1_0 + 1)
 	addc	a,(_main_sloc0_1_0 + 1)
 	mov	(_main_sloc1_1_0 + 1),a
-	mov	_main_freq_1_62,_main_sloc1_1_0
+	mov	_main_freq_1_68,_main_sloc1_1_0
 	mov	a,(_main_sloc1_1_0 + 1)
-	mov	(_main_freq_1_62 + 1),a
+	mov	(_main_freq_1_68 + 1),a
 	rlc	a
 	subb	a,acc
-	mov	(_main_freq_1_62 + 2),a
-	mov	(_main_freq_1_62 + 3),a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:302: count=0;
+	mov	(_main_freq_1_68 + 2),a
+	mov	(_main_freq_1_68 + 3),a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:353: count=0;
 	clr	a
-	mov	_main_count_1_62,a
-	mov	(_main_count_1_62 + 1),a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:303: printf("Rref V RMS: %.2lf Test V RMS: %.2lf\tPhase dif: %.2lf deg\r",RMS(REF),RMS(TEST),getPhaseAngle());
+	mov	_main_count_1_68,a
+	mov	(_main_count_1_68 + 1),a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:354: printf("Rref V RMS: %6.2fV Test V RMS: %6.2fV\tPhase dif: %6.2f deg\r\n",oneShot(REF),oneShot(TEST),getPhaseAngle());
 	lcall	_getPhaseAngle
 	mov	_main_sloc2_1_0,dpl
 	mov	(_main_sloc2_1_0 + 1),dph
 	mov	(_main_sloc2_1_0 + 2),b
 	mov	(_main_sloc2_1_0 + 3),a
-	mov	dpl,#0x01
-	lcall	_RMS
+	mov	dpl,#0x00
+	lcall	_oneShot
 	mov	_main_sloc3_1_0,dpl
 	mov	(_main_sloc3_1_0 + 1),dph
 	mov	(_main_sloc3_1_0 + 2),b
 	mov	(_main_sloc3_1_0 + 3),a
-	mov	dpl,#0x00
-	lcall	_RMS
+	mov	dpl,#0x01
+	lcall	_oneShot
 	mov	r4,dpl
 	mov	r5,dph
 	mov	r2,b
@@ -1320,58 +1443,58 @@ L014034?:
 	mov	a,sp
 	add	a,#0xf1
 	mov	sp,a
-L014004?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:305: if(freq > 0 ){
-	mov	a,_main_freq_1_62
-	orl	a,(_main_freq_1_62 + 1)
-	orl	a,(_main_freq_1_62 + 2)
-	orl	a,(_main_freq_1_62 + 3)
-	jnz	L014035?
-	ljmp	L014016?
-L014035?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:306: if(freq < 1000){ //0 Hz - 999 Hz	  	
+L013004?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:356: if(freq > 0 ){
+	mov	a,_main_freq_1_68
+	orl	a,(_main_freq_1_68 + 1)
+	orl	a,(_main_freq_1_68 + 2)
+	orl	a,(_main_freq_1_68 + 3)
+	jnz	L013034?
+	ljmp	L013016?
+L013034?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:357: if(freq < 1000){ //0 Hz - 999 Hz	  	
 	clr	c
-	mov	a,_main_freq_1_62
+	mov	a,_main_freq_1_68
 	subb	a,#0xE8
-	mov	a,(_main_freq_1_62 + 1)
+	mov	a,(_main_freq_1_68 + 1)
 	subb	a,#0x03
-	mov	a,(_main_freq_1_62 + 2)
+	mov	a,(_main_freq_1_68 + 2)
 	subb	a,#0x00
-	mov	a,(_main_freq_1_62 + 3)
+	mov	a,(_main_freq_1_68 + 3)
 	subb	a,#0x00
-	jc	L014036?
-	ljmp	L014011?
-L014036?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:307: P2=lut[freq%10];
+	jc	L013035?
+	ljmp	L013011?
+L013035?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:358: P2=lut[freq%10];
 	mov	__modulong_PARM_2,#0x0A
 	clr	a
 	mov	(__modulong_PARM_2 + 1),a
 	mov	(__modulong_PARM_2 + 2),a
 	mov	(__modulong_PARM_2 + 3),a
-	mov	dpl,_main_freq_1_62
-	mov	dph,(_main_freq_1_62 + 1)
-	mov	b,(_main_freq_1_62 + 2)
-	mov	a,(_main_freq_1_62 + 3)
+	mov	dpl,_main_freq_1_68
+	mov	dph,(_main_freq_1_68 + 1)
+	mov	b,(_main_freq_1_68 + 2)
+	mov	a,(_main_freq_1_68 + 3)
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:308: P3=disp[0];
-	mov	_P3,_main_disp_1_62
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:309: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:359: P3=disp[0];
+	mov	_P3,_main_disp_1_68
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:360: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:310: P2=lut[(freq/10)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:361: P2=lut[(freq/10)%10];
 	mov	__divulong_PARM_2,#0x0A
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
 	mov	(__divulong_PARM_2 + 2),a
 	mov	(__divulong_PARM_2 + 3),a
-	mov	dpl,_main_freq_1_62
-	mov	dph,(_main_freq_1_62 + 1)
-	mov	b,(_main_freq_1_62 + 2)
-	mov	a,(_main_freq_1_62 + 3)
+	mov	dpl,_main_freq_1_68
+	mov	dph,(_main_freq_1_68 + 1)
+	mov	b,(_main_freq_1_68 + 2)
+	mov	a,(_main_freq_1_68 + 3)
 	lcall	__divulong
 	mov	r2,dpl
 	mov	r3,dph
@@ -1389,23 +1512,23 @@ L014036?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:311: P3=disp[1];
-	mov	_P3,(_main_disp_1_62 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:312: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:362: P3=disp[1];
+	mov	_P3,(_main_disp_1_68 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:363: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:313: P2=lut[(freq/100)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:364: P2=lut[(freq/100)%10];
 	mov	__divulong_PARM_2,#0x64
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
 	mov	(__divulong_PARM_2 + 2),a
 	mov	(__divulong_PARM_2 + 3),a
-	mov	dpl,_main_freq_1_62
-	mov	dph,(_main_freq_1_62 + 1)
-	mov	b,(_main_freq_1_62 + 2)
-	mov	a,(_main_freq_1_62 + 3)
+	mov	dpl,_main_freq_1_68
+	mov	dph,(_main_freq_1_68 + 1)
+	mov	b,(_main_freq_1_68 + 2)
+	mov	a,(_main_freq_1_68 + 3)
 	lcall	__divulong
 	mov	r2,dpl
 	mov	r3,dph
@@ -1423,41 +1546,41 @@ L014036?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:314: P3=disp[2];
-	mov	_P3,(_main_disp_1_62 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:315: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:365: P3=disp[2];
+	mov	_P3,(_main_disp_1_68 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:366: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:316: P2=lut[3];
-	mov	_P2,(_main_lut_1_62 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:317: P3=disp[3];
-	mov	_P3,(_main_disp_1_62 + 0x0003)
-	ljmp	L014019?
-L014011?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:319: else if(freq < 10000){ //1.00 kHz - 9.99 kHz
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:367: P2=lut[3];
+	mov	_P2,(_main_lut_1_68 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:368: P3=disp[3];
+	mov	_P3,(_main_disp_1_68 + 0x0003)
+	ljmp	L013019?
+L013011?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:370: else if(freq < 10000){ //1.00 kHz - 9.99 kHz
 	clr	c
-	mov	a,_main_freq_1_62
+	mov	a,_main_freq_1_68
 	subb	a,#0x10
-	mov	a,(_main_freq_1_62 + 1)
+	mov	a,(_main_freq_1_68 + 1)
 	subb	a,#0x27
-	mov	a,(_main_freq_1_62 + 2)
+	mov	a,(_main_freq_1_68 + 2)
 	subb	a,#0x00
-	mov	a,(_main_freq_1_62 + 3)
+	mov	a,(_main_freq_1_68 + 3)
 	subb	a,#0x00
-	jc	L014037?
-	ljmp	L014008?
-L014037?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:320: P2=lut[(freq/1000)%10];
+	jc	L013036?
+	ljmp	L013008?
+L013036?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:371: P2=lut[(freq/1000)%10];
 	mov	__divulong_PARM_2,#0xE8
 	mov	(__divulong_PARM_2 + 1),#0x03
 	mov	(__divulong_PARM_2 + 2),#0x00
 	mov	(__divulong_PARM_2 + 3),#0x00
-	mov	dpl,_main_freq_1_62
-	mov	dph,(_main_freq_1_62 + 1)
-	mov	b,(_main_freq_1_62 + 2)
-	mov	a,(_main_freq_1_62 + 3)
+	mov	dpl,_main_freq_1_68
+	mov	dph,(_main_freq_1_68 + 1)
+	mov	b,(_main_freq_1_68 + 2)
+	mov	a,(_main_freq_1_68 + 3)
 	lcall	__divulong
 	mov	_main_sloc3_1_0,dpl
 	mov	(_main_sloc3_1_0 + 1),dph
@@ -1475,16 +1598,16 @@ L014037?:
 	lcall	__modulong
 	mov	r6,dpl
 	mov	a,r6
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:321: P2&=0B_11110111;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:372: P2&=0B_11110111;
 	anl	_P2,#0xF7
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:322: P3=disp[0];
-	mov	_P3,_main_disp_1_62
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:323: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:373: P3=disp[0];
+	mov	_P3,_main_disp_1_68
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:374: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:324: P2=lut[((freq/1000)/10)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:375: P2=lut[((freq/1000)/10)%10];
 	mov	__divulong_PARM_2,#0x0A
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
@@ -1511,14 +1634,14 @@ L014037?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:325: P3=disp[1];
-	mov	_P3,(_main_disp_1_62 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:326: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:376: P3=disp[1];
+	mov	_P3,(_main_disp_1_68 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:377: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:327: P2=lut[((freq/1000)/100)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:378: P2=lut[((freq/1000)/100)%10];
 	mov	__divulong_PARM_2,#0x64
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
@@ -1545,43 +1668,43 @@ L014037?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:328: P3=disp[2];
-	mov	_P3,(_main_disp_1_62 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:329: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:379: P3=disp[2];
+	mov	_P3,(_main_disp_1_68 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:380: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:330: P2=lut[3];
-	mov	_P2,(_main_lut_1_62 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:331: P3=disp[3];
-	mov	_P3,(_main_disp_1_62 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:332: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:381: P2=lut[3];
+	mov	_P2,(_main_lut_1_68 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:382: P3=disp[3];
+	mov	_P3,(_main_disp_1_68 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:383: wait2ms();
 	lcall	_wait2ms
-	ljmp	L014019?
-L014008?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:334: else if(freq < 100000){ //10.0 kHz - 99.9 kHz
+	ljmp	L013019?
+L013008?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:385: else if(freq < 100000){ //10.0 kHz - 99.9 kHz
 	clr	c
-	mov	a,_main_freq_1_62
+	mov	a,_main_freq_1_68
 	subb	a,#0xA0
-	mov	a,(_main_freq_1_62 + 1)
+	mov	a,(_main_freq_1_68 + 1)
 	subb	a,#0x86
-	mov	a,(_main_freq_1_62 + 2)
+	mov	a,(_main_freq_1_68 + 2)
 	subb	a,#0x01
-	mov	a,(_main_freq_1_62 + 3)
+	mov	a,(_main_freq_1_68 + 3)
 	subb	a,#0x00
-	jc	L014038?
-	ljmp	L014019?
-L014038?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:335: P2=lut[(freq/10000)%10];
+	jc	L013037?
+	ljmp	L013019?
+L013037?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:386: P2=lut[(freq/10000)%10];
 	mov	__divulong_PARM_2,#0x10
 	mov	(__divulong_PARM_2 + 1),#0x27
 	mov	(__divulong_PARM_2 + 2),#0x00
 	mov	(__divulong_PARM_2 + 3),#0x00
-	mov	dpl,_main_freq_1_62
-	mov	dph,(_main_freq_1_62 + 1)
-	mov	b,(_main_freq_1_62 + 2)
-	mov	a,(_main_freq_1_62 + 3)
+	mov	dpl,_main_freq_1_68
+	mov	dph,(_main_freq_1_68 + 1)
+	mov	b,(_main_freq_1_68 + 2)
+	mov	a,(_main_freq_1_68 + 3)
 	lcall	__divulong
 	mov	_main_sloc3_1_0,dpl
 	mov	(_main_sloc3_1_0 + 1),dph
@@ -1599,14 +1722,14 @@ L014038?:
 	lcall	__modulong
 	mov	r6,dpl
 	mov	a,r6
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:336: P3=disp[0];
-	mov	_P3,_main_disp_1_62
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:337: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:387: P3=disp[0];
+	mov	_P3,_main_disp_1_68
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:388: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:338: P2=lut[((freq/10000)/10)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:389: P2=lut[((freq/10000)/10)%10];
 	mov	__divulong_PARM_2,#0x0A
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
@@ -1633,16 +1756,16 @@ L014038?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:339: P2&=0B_11110111;
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:390: P2&=0B_11110111;
 	anl	_P2,#0xF7
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:340: P3=disp[1];
-	mov	_P3,(_main_disp_1_62 + 0x0001)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:341: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:391: P3=disp[1];
+	mov	_P3,(_main_disp_1_68 + 0x0001)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:392: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:342: P2=lut[((freq/10000)/100)%10];
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:393: P2=lut[((freq/10000)/100)%10];
 	mov	__divulong_PARM_2,#0x64
 	clr	a
 	mov	(__divulong_PARM_2 + 1),a
@@ -1669,65 +1792,66 @@ L014038?:
 	lcall	__modulong
 	mov	r2,dpl
 	mov	a,r2
-	add	a,#_main_lut_1_62
+	add	a,#_main_lut_1_68
 	mov	r0,a
 	mov	_P2,@r0
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:343: P3=disp[2];
-	mov	_P3,(_main_disp_1_62 + 0x0002)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:344: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:394: P3=disp[2];
+	mov	_P3,(_main_disp_1_68 + 0x0002)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:395: wait2ms();
 	lcall	_wait2ms
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:345: P2=lut[3];
-	mov	_P2,(_main_lut_1_62 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:346: P3=disp[3];
-	mov	_P3,(_main_disp_1_62 + 0x0003)
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:347: wait2ms();
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:396: P2=lut[3];
+	mov	_P2,(_main_lut_1_68 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:397: P3=disp[3];
+	mov	_P3,(_main_disp_1_68 + 0x0003)
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:398: wait2ms();
 	lcall	_wait2ms
-	ljmp	L014019?
-L014016?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:351: count += 35;
+	ljmp	L013019?
+L013016?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:402: count += 35;
 	mov	a,#0x23
-	add	a,_main_count_1_62
-	mov	_main_count_1_62,a
+	add	a,_main_count_1_68
+	mov	_main_count_1_68,a
 	clr	a
-	addc	a,(_main_count_1_62 + 1)
-	mov	(_main_count_1_62 + 1),a
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:352: circle(j);
-	mov	dpl,_main_j_1_62
-	mov	dph,(_main_j_1_62 + 1)
+	addc	a,(_main_count_1_68 + 1)
+	mov	(_main_count_1_68 + 1),a
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:403: circle(j);
+	mov	dpl,_main_j_1_68
+	mov	dph,(_main_j_1_68 + 1)
 	lcall	_circle
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:353: j++;
-	inc	_main_j_1_62
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:404: j++;
+	inc	_main_j_1_68
 	clr	a
-	cjne	a,_main_j_1_62,L014039?
-	inc	(_main_j_1_62 + 1)
-L014039?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:354: if(j > 13)
+	cjne	a,_main_j_1_68,L013038?
+	inc	(_main_j_1_68 + 1)
+L013038?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:405: if(j > 17)
 	clr	c
-	mov	a,#0x0D
-	subb	a,_main_j_1_62
+	mov	a,#0x11
+	subb	a,_main_j_1_68
 	clr	a
 	xrl	a,#0x80
-	mov	b,(_main_j_1_62 + 1)
+	mov	b,(_main_j_1_68 + 1)
 	xrl	b,#0x80
 	subb	a,b
-	jc	L014040?
-	ljmp	L014019?
-L014040?:
-;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:355: j=0;
+	jc	L013039?
+	ljmp	L013019?
+L013039?:
+;	C:\Users\esecules\Documents\GitHub\UBC_EECE\EECE281_Individual\Lab5\lab5-code-v1.c:406: j=0;
 	clr	a
-	mov	_main_j_1_62,a
-	mov	(_main_j_1_62 + 1),a
-	ljmp	L014019?
+	mov	_main_j_1_68,a
+	mov	(_main_j_1_68 + 1),a
+	ljmp	L013019?
 	rseg R_CSEG
 
 	rseg R_XINIT
 
 	rseg R_CONST
 __str_0:
-	db 'Rref V RMS: %.2lf Test V RMS: %.2lf'
+	db 'Rref V RMS: %6.2fV Test V RMS: %6.2fV'
 	db 0x09
-	db 'Phase dif: %.2lf deg'
+	db 'Phase dif: %6.2f deg'
 	db 0x0D
+	db 0x0A
 	db 0x00
 
 	CSEG

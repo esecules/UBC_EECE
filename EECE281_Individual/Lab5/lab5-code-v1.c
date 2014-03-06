@@ -3,8 +3,8 @@
 
 
 // ~C51~
-#define REF 0
-#define TEST 1
+#define REF 1
+#define TEST 0
 #define CLK 22118400L 
 #define BAUD 115200L 
 #define BRG_VAL (0x100-(CLK/(32L*BAUD)))
@@ -200,33 +200,35 @@ unsigned int GetADC(unsigned char channel)
 	return adc;
 }
 
-float voltage (unsigned char channel) 
-{ 
-	return ( (GetADC(channel)*4.77)/1023.0 ); // VCC=4.77V (measured) 
-}
+//float voltage (unsigned char channel) 
+//{ 
+//	return ( (GetADC(channel)*4.77)/1023.0 ); // VCC=4.77V (measured) 
+//}
 
-float RMS (unsigned char channel)
-{
-	return ( (oneShot(channel)/1.41421356237) ); //sqrt(2) = 1.41421356237
-}
+//float RMS (unsigned char channel)
+//{
+//	float rms=0;
+//	rms =  (oneShot(channel))/((float)*1.41421356237);
+//	return rms; //sqrt(2) = 1.41421356237
+//}
 
 float oneShot(unsigned char channel)
 {
 	float temp = 0;
 	float peak = 0;
-	
-	if(channel==REF)
+	float rms = 0;
+	if(channel==0)
 	{
 		while(P1_0==1){}
 		while(P1_0==0){}
 		while(P1_0==1)
 		{
 			temp = GetADC(channel);
-			
+			//printf("%f\r\n",temp);
 			if(temp > peak) peak = temp;
 		}
 	}
-	else if(channel==TEST)
+	else if(channel==1)
 	{
 		while(P1_1==1){}
 		while(P1_1==0){}
@@ -237,8 +239,8 @@ float oneShot(unsigned char channel)
 			if(temp > peak) peak = temp;
 		}
 	}
-	
-	return peak;
+	rms = (peak / 1.41421356237);
+	return rms;
 }
 
 // Signal   LP51B    MCP3004
@@ -262,7 +264,7 @@ unsigned int getHalfPeriod(unsigned char channel)
 {
 	unsigned int halfPeriodRef, halfPeriodTest;
 	
-	if(channel==REF)
+	if(channel==0)
 	{
 		// Measure 1/2 period at P1.0 using Timer 0
 		TR0=0; //Stop timer 0
@@ -278,7 +280,7 @@ unsigned int getHalfPeriod(unsigned char channel)
 	
 		return halfPeriodRef;
 	}
-	else if(channel==TEST)
+	else if(channel==1)
 	{
 		// Measure 1/2 period at P1.0 using Timer 0
 		TR0=0; //Stop timer 0
@@ -309,14 +311,14 @@ float getPhaseAngle()
 	TR0=0; //Stop timer 0
 	TMOD=0B_0000_0001; //Set timer 0 as 16-bit timer
 	TH0=0; TL0=0; //Reset the timer
-	while(P1_0==1){} //Wait for the reference signal to be 0
-	while(P1_0==0){} //Wait for the reference signal to be 1
+	while(P1_1==1){} //Wait for the reference signal to be 0
+	while(P1_1==0){} //Wait for the reference signal to be 1
 	TR0=1;
-	while(P1_1==0){}
+	while(P1_0==0){}
 	TR0=0;
 	
 	phaseDifference=(TH0*0x100+TL0);
-	phaseAngle = phaseDifference*(1.0/(2.0*getHalfPeriod(0)))*360.0;
+	phaseAngle = phaseDifference*(1.0/(2.0*getHalfPeriod(REF)))*360.0;
 	return phaseAngle;
 }
 void main (void) 
@@ -326,7 +328,7 @@ void main (void)
 	unsigned long int freq=0;
 	char lut[10] = {0B_10001000,0B_11111001,0B_01001100,0B_01101000,0B_00111001,0B_00101010,0B_00001010,0B_11111000,0B_00001000,0B_00111000};
 	char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
-	checkLED();
+//	checkLED();
 	TR0=0; // Disable timer/counter 0
 	TMOD=0B_00010101; // Set timer/counter 0 as 16-bit counter and timer2 as a 16bit timer
 	while(1) 
@@ -343,13 +345,13 @@ void main (void)
 		// Wait one second
 		}
 		 count++;
-		if(count == 71){
+		if(count >= 71){
 			// Stop counter 0, TH0-TL0 has the frequency!
 			TR0=0;
 			TR1=0;
 			freq=(TH0*256+TL0);
 			count=0;
-			printf("Rref V RMS: %.2lf Test V RMS: %.2lf\tPhase dif: %.2lf deg\r",RMS(REF),RMS(TEST),getPhaseAngle());
+			printf("Rref V RMS: %6.2fV Test V RMS: %6.2fV\tPhase dif: %6.2f deg\r\n",oneShot(REF),oneShot(TEST),getPhaseAngle());
 		}
 		if(freq > 0 ){
 			if(freq < 1000){ //0 Hz - 999 Hz	  	
