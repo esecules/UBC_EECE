@@ -207,7 +207,38 @@ float voltage (unsigned char channel)
 
 float RMS (unsigned char channel)
 {
-	return ( (GetADC(channel)/1.41421356237) ); //sqrt(2) = 1.41421356237
+	return ( (oneShot(channel)/1.41421356237) ); //sqrt(2) = 1.41421356237
+}
+
+float oneShot(unsigned char channel)
+{
+	float temp = 0;
+	float peak = 0;
+	
+	if(channel==REF)
+	{
+		while(P1_0==1){}
+		while(P1_0==0){}
+		while(P1_0==1)
+		{
+			temp = GetADC(channel);
+			
+			if(temp > peak) peak = temp;
+		}
+	}
+	else if(channel==TEST)
+	{
+		while(P1_1==1){}
+		while(P1_1==0){}
+		while(P1_1==1)
+		{
+			temp = GetADC(channel);
+			
+			if(temp > peak) peak = temp;
+		}
+	}
+	
+	return peak;
 }
 
 // Signal   LP51B    MCP3004
@@ -369,7 +400,7 @@ void main (void)
 	    	count += 35;
 	    	circle(j);
 	    	j++;
-	    	if(j > 15)
+	    	if(j > 17)
 	    		j=0;
 	    }
 	}
