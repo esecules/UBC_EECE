@@ -59,7 +59,7 @@ void checkLED(void){
 	int count = 0;
 	while(i < 20){
 		count++; 
-		if(count == 166){
+		if(count == 10){
 			i++;
 			P2=lut[i%10];
 			count=0;
@@ -72,6 +72,7 @@ void checkLED(void){
 		wait2ms();
 		P3=disp[3];
 		wait2ms();
+		P3 = 0xff;
 	}
 }
 void circle(int step){
@@ -201,10 +202,10 @@ unsigned int GetADC(unsigned char channel)
 	return adc*4.77/1023;
 }
 
-//float voltage (unsigned char channel) 
-//{ 
-//	return ( (GetADC(channel)*4.77)/1023.0 ); // VCC=4.77V (measured) 
-//}
+float voltage (unsigned char channel) 
+{ 
+	return ( (GetADC(channel))); // VCC=4.77V (measured) 
+}
 
 //float RMS (unsigned char channel)
 //{
@@ -303,7 +304,7 @@ unsigned int getHalfPeriod(unsigned char channel)
 
 unsigned int getQuarterPeriod(unsigned char channel)
 {	
-	return getHalfPeriod(channel);
+	return getHalfPeriod(channel)/2.0;
 }
 float getPhaseAngle()
 {
@@ -329,82 +330,79 @@ void main (void)
 	unsigned long int freq=0;
 	char lut[10] = {0B_10001000,0B_11111001,0B_01001100,0B_01101000,0B_00111001,0B_00101010,0B_00001010,0B_11111000,0B_00001000,0B_00111000};
 	char disp[4] = {0B_11011111,0B_10111111,0B_01111111,0B_11101111};
-//	checkLED();
+	checkLED();
 	TR0=0; // Disable timer/counter 0
 	TMOD=0B_00010101; // Set timer/counter 0 as 16-bit counter and timer2 as a 16bit timer
 	while(1) 
-	{ 		
-		if(count == 0){
-		// Reset the counter
-		TL0=0;
-		TH0=0;
-		TH1=0;
-		TL1=0;
-		// Start counting
-		TR0=1;
-		TR1=1;
-		// Wait one second
-		}
-		 count++;
-		if(count >= 71){
-			// Stop counter 0, TH0-TL0 has the frequency!
-			TR0=0;
-			TR1=0;
-			freq=(TH0*256+TL0);
-			count=0;
-			printf("Rref V RMS: %6.2fV Test V RMS: %6.2fV\tPhase dif: %6.2f deg\r\n",oneShot(REF),oneShot(TEST),getPhaseAngle());
-		}
-		if(freq > 0 ){
-			if(freq < 1000){ //0 Hz - 999 Hz	  	
-		    	P2=lut[freq%10];
-			   	P3=disp[0];
-			   	wait2ms();
-			   	P2=lut[(freq/10)%10];
-			   	P3=disp[1];
-			   	wait2ms();
-			   	P2=lut[(freq/100)%10];
-				P3=disp[2];
-				wait2ms();
-				P2=lut[3];
-				P3=disp[3];
-			}
-			else if(freq < 10000){ //1.00 kHz - 9.99 kHz
-				P2=lut[(freq/1000)%10];
-				P2&=0B_11110111;
-			   	P3=disp[0];
-			   	wait2ms();
-			   	P2=lut[((freq/1000)/10)%10];
-			   	P3=disp[1];
-			   	wait2ms();
-			   	P2=lut[((freq/1000)/100)%10];
-				P3=disp[2];
-				wait2ms();
-				P2=lut[3];
-				P3=disp[3];
-				wait2ms();
-			}
-			else if(freq < 100000){ //10.0 kHz - 99.9 kHz
-	    		P2=lut[(freq/10000)%10];
-			   	P3=disp[0];
-			   	wait2ms();
-			   	P2=lut[((freq/10000)/10)%10];
-			   	P2&=0B_11110111;
-			   	P3=disp[1];
-			   	wait2ms();
-			   	P2=lut[((freq/10000)/100)%10];
-				P3=disp[2];
-				wait2ms();
-				P2=lut[3];
-				P3=disp[3];
-				wait2ms();
-	    	}
+	{
+		if(!(P4&4)){ 
+			printf("AC VOltage\t");
+			freq=1.0/(2*getHalfPeriod(REF));
+			if(freq > 0 ){
+				printf("Rref V RMS: %.2fV Test V RMS: %.2fV\tPhase dif: %.2f deg\r",oneShot(REF),oneShot(TEST),getPhaseAngle());
+				if(freq < 1000){ //0 Hz - 999 Hz	  	
+			    	P2=lut[freq%10];
+				   	P3=disp[0];
+				   	wait2ms();
+				   	P2=lut[(freq/10)%10];
+				   	P3=disp[1];
+				   	wait2ms();
+				   	P2=lut[(freq/100)%10];
+					P3=disp[2];
+					wait2ms();
+					P2=lut[1];
+					P3=disp[3];
+				}
+				else if(freq < 10000){ //1.00 kHz - 9.99 kHz
+					P2=lut[(freq/1000)%10];
+					P2&=0B_11110111;
+				   	P3=disp[0];
+				   	wait2ms();
+				   	P2=lut[((freq/1000)/10)%10];
+				   	P3=disp[1];
+				   	wait2ms();
+				   	P2=lut[((freq/1000)/100)%10];
+					P3=disp[2];
+					wait2ms();
+					P2=lut[3];
+					P3=disp[3];
+					wait2ms();
+				}
+				else if(freq < 100000){ //10.0 kHz - 99.9 kHz
+		    		P2=lut[(freq/10000)%10];
+				   	P3=disp[0];
+				   	wait2ms();
+				   	P2=lut[((freq/10000)/10)%10];
+				   	P2&=0B_11110111;
+				   	P3=disp[1];
+				   	wait2ms();
+				   	P2=lut[((freq/10000)/100)%10];
+					P3=disp[2];
+					wait2ms();
+					P2=lut[3];
+					P3=disp[3];
+					wait2ms();
+					P3 = 0xff;
+		    	}
+		    }
+		    else{
+		    	//P2 = 0Xff;
+		    	circle(j);
+		    	j++;
+		    	if(j > 17)
+		    		j=0;
+		    }
 	    }
-	    else{
-	    	count += 35;
-	    	circle(j);
-	    	j++;
-	    	if(j > 17)
-	    		j=0;
-	    }
+	    else if(P4&4){
+	    	printf("DC Voltage V1: %.2f\tV2: %.2f\r",voltage(0),voltage(1));
+	    	P2 = 0B_01001001; //d
+	    	P3 = disp[1];
+	    	wait2ms();
+	    	P2 = 0B_10001110; // C
+	    	P3 = disp[2];
+	    	wait2ms();
+	    	P2 = 0xff;
+	    }else printf("Error %x\r\n",P4);
+	   
 	}
 }
